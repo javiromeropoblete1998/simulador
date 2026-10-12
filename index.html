@@ -1,0 +1,232 @@
+<!DOCTYPE html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>Simulador monitor-desfibrilador</title>
+<style>
+*{box-sizing:border-box}html,body{height:100%;margin:0}
+body{background:#0b1215;color:#e8eeee;font:16px/1.4 system-ui,"Segoe UI",sans-serif;-webkit-tap-highlight-color:transparent}
+button,select,input{font:inherit;color:inherit}button{cursor:pointer}
+.lp{max-width:640px;margin:0 auto;padding:20px}.lp h1{font-size:24px}.lp p,.mu{color:#9ab}
+a.big,button.big{display:block;width:100%;text-align:left;font:inherit;color:#e8eeee;padding:18px;margin:12px 0;border:1px solid #2a3a3f;border-radius:12px;background:#121c20;color:#e8eeee;text-decoration:none}a.big b,button.big b{display:block;font-size:19px}
+.fm{display:flex;gap:8px;margin:12px 0}.fm input{flex:1;padding:14px;border-radius:10px;border:1px solid #2a3a3f;background:#0f181b;font-size:22px;letter-spacing:4px;text-transform:uppercase;text-align:center}.fm button{padding:0 20px;border-radius:10px;border:0;background:#0b6e78;font-weight:600}
+/* monitor */
+body.mon{background:#080c0e;display:grid;grid-template-rows:auto 1fr auto;height:100dvh;overflow:hidden}
+#top{display:flex;gap:10px;align-items:center;padding:6px 10px;min-height:38px;border-bottom:1px solid #1d2a2d}
+#al{color:#ff5252;font-size:18px;min-width:90px}#ms{flex:1;color:#8aa;font-size:14px}#cd{color:#4cc9f0;font-size:13px;letter-spacing:1px}
+#mid{display:grid;grid-template-columns:1fr 210px;min-height:0}#cv{width:100%;height:100%;display:block;min-height:0}
+#nm{display:flex;flex-direction:column;border-left:1px solid #1d2a2d;overflow:auto}
+.n{padding:6px 12px;border-bottom:1px solid #1d2a2d;flex:1;display:flex;flex-direction:column;justify-content:center}.n i{font-style:normal;font-size:12px;color:#8aa}.n b{font-size:42px;line-height:1;font-variant-numeric:tabular-nums}.n small{font-size:12px;color:#8aa}
+.g b{color:#3ddc84}.c b{color:#4cc9f0}.y b{color:#ffd23f}.w b{color:#f2f2f2}.n.w b{font-size:30px}
+#bt{display:flex;flex-wrap:wrap;gap:10px;padding:8px 10px;border-top:1px solid #1d2a2d;background:#0d1417}
+.gp{border:1px solid #243236;border-radius:8px;padding:6px 8px;flex:1;min-width:230px}.gp h4{margin:0 0 5px;font-size:12px;color:#8aa;font-weight:600}
+.rw{display:flex;gap:6px;align-items:center;margin:4px 0}.rw b{min-width:64px;text-align:center;font-size:20px}
+.mon button{background:#1a2529;border:1px solid #33454a;border-radius:6px;padding:9px 12px;font-size:15px;min-height:42px}
+.mon button.on{background:#e0a800;color:#000}.mon button.red{background:#c62828;border-color:#e57373;font-weight:700}.mon button.grn{background:#2e7d32}
+.mon small{color:#8aa;font-size:12px}
+@media(max-width:760px){#mid{grid-template-columns:1fr;grid-template-rows:55% 45%}#nm{flex-direction:row;flex-wrap:wrap;border-left:0}.n{min-width:30%}.n b{font-size:30px}}
+.fl{animation:fl .25s}@keyframes fl{from{background:#fff}to{background:#080c0e}}
+/* panel instructor */
+body.ctl{display:grid;grid-template-rows:auto auto 1fr auto;height:100dvh;overflow:hidden}
+#hd{display:flex;align-items:center;gap:8px;padding:8px 12px;padding-top:max(8px,env(safe-area-inset-top))}
+.dot{width:11px;height:11px;border-radius:50%;background:#e57373}.dot.on{background:#3ddc84}#hd #cd{margin-left:auto;font-size:16px;font-weight:700;letter-spacing:3px}
+#lvw{position:relative;margin:0 10px;border:1px solid #1d2a2d;border-radius:10px;background:#050809;overflow:hidden}
+#lv{width:100%;height:92px;display:block}#lvn{position:absolute;right:8px;top:4px;font-size:13px;color:#9ab;text-align:right}
+#pgs{overflow:auto;padding:10px 10px 18px}.pg{display:none}.pg.on{display:block}
+#tb{display:flex;border-top:1px solid #1d2a2d;background:#0f181b;padding-bottom:env(safe-area-inset-bottom)}
+#tb button{flex:1;padding:14px 4px;background:none;border:0;color:#9ab;font-size:15px;position:relative}#tb button.on{color:#4cc9f0;box-shadow:inset 0 3px #4cc9f0}
+#bd{position:absolute;top:6px;right:10px;background:#e57373;color:#000;border-radius:9px;font-size:11px;padding:0 6px;display:none}
+.chips{display:flex;gap:8px}.chip{flex:1;padding:12px;border-radius:999px;border:1px solid #2a3a3f;background:#121c20;text-align:center}.chip.on{background:#0b6e78;border-color:#4cc9f0}
+h3{font-size:14px;color:#9ab;margin:16px 0 8px;font-weight:600}
+.rg{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.rc{border:2px solid #22333a;border-radius:10px;background:#0f181b;padding:6px 8px;text-align:left}.rc.on{border-color:#3ddc84;background:#10231c}.rc canvas{width:100%;height:42px;display:block}.rc span{font-size:13px;display:block;margin-top:2px}
+.tl{border:1px solid #22333a;border-radius:10px;background:#0f181b;padding:8px 10px}.tl small{color:#9ab}.tl h4{margin:0 0 4px;font-size:16px}
+.tl b{display:block;font-size:40px;line-height:1.1;font-variant-numeric:tabular-nums}
+.bs{display:grid;grid-template-columns:repeat(4,1fr);gap:5px;margin-top:6px}.bs button{padding:12px 0;border-radius:8px;border:1px solid #2f444b;background:#16252a;font-size:15px;touch-action:manipulation}
+.sc{display:block;width:100%;text-align:left;padding:14px;margin-bottom:8px;border-radius:10px;border:1px solid #22333a;background:#0f181b}.sc b{display:block;font-size:17px}.sc small{color:#9ab}
+.sr{display:flex;gap:10px;align-items:center;margin:6px 0 10px}.sr input{flex:1;height:36px;accent-color:#4cc9f0}.sr output{min-width:70px;text-align:right;font-size:20px;font-weight:700}
+.tl select{width:100%;padding:11px;border-radius:8px;border:1px solid #2f444b;background:#16252a;margin-top:4px}.tl+.tl{margin-top:10px}
+#lgl div{padding:8px 0;border-bottom:1px solid #1d2a2d;font-size:15px}#lgl b{color:#4cc9f0}
+.sm{padding:9px 14px;border-radius:8px;border:1px solid #2f444b;background:#16252a;margin-bottom:8px}
+</style></head><body><script>
+const $=i=>document.getElementById(i),g=(x,m,s)=>Math.exp(-((x-m)**2)/(2*s*s)),hm=()=>new Date().toLocaleTimeString('es-ES');
+const ls=(k,v)=>{try{if(v===undefined)return localStorage.getItem(k);localStorage.setItem(k,v)}catch(_){}};
+const RH={sinus:['Ritmo sinusal',80,1],svt:['TSV',170,1],af:['Fibrilación auricular',110,1],flutter:['Flutter auricular',75,1],junc:['Ritmo de la unión',50,1],bav3:['BAV de 3er grado',35,1],vt:['Taquicardia ventricular',180,0],vf:['Fibrilación ventricular',0,0],torsades:['Torsades de pointes',0,0],asys:['Asistolia',0,0]};
+const EN=[30,50,70,100,120,150,170,200,360],LD=['vf','torsades','vt'],LC=['vt','svt','af','flutter'];
+const DP={rhythm:'sinus',hr:80,spo2:97,sbp:120,dbp:80,rr:16,co2:38,temp:36.6,pulse:1,art:0},DR={thr:70,eD:150,eC:100,oD:'sinus',oC:'sinus'};
+const S={...DP,...DR};
+
+/* ---------- generador de señales (compartido) ---------- */
+function vw(a,w,rr){if(a<-.1||a>.7)return 0;if(w===3)return .9*g(a,0,.07)-.5*g(a,.13,.07);const tc=.14+.12*Math.sqrt(rr);
+if(w===2)return .8*g(a,0,.035)-.3*g(a,tc+.04,.06);return -.12*g(a,-.025,.01)+g(a,0,.011)-.22*g(a,.027,.011)+.28*g(a,tc,.045)}
+class Gen{
+constructor(S,PC){this.S=S;this.PC=PC||null;this.t=0;this.Pw=[];this.V=[];this.B=[];this.SP=[];this.nB=0;this.nA=0;this.nP=0;this.cap=0;this.blank=0;this.capped=0}
+eff(){return this.t<this.blank?'asys':this.S.rhythm}
+step(dt){const S=this.S,PC=this.PC;this.t+=dt;const t=this.t,r=this.eff(),o={beats:[]};
+if(PC&&PC.on&&t>=this.nP){const rr=60/PC.rate;this.nP=t+rr;this.SP.push({t});o.sp=1;
+ if(PC.mA>=S.thr){this.cap=t+rr*1.6;this.V.push({t:t+.02,w:2,rr});this.B.push({t:t+.02,perf:1});if(!this.capped){this.capped=1;o.cap=1}}else if(this.capped){this.capped=0;o.lost=1}}
+if(r==='bav3'&&t>=this.nA){this.Pw.push(t);this.nA=t+.8}
+if(t>=this.nB){if(r==='vf'||r==='torsades'||r==='asys'||!S.hr)this.nB=t+.25;else{
+ const rr=(60/S.hr)*(r==='af'?.6+Math.random()*.8:1);this.nB=t+rr;
+ if(t>=this.cap){const hasP=r==='sinus',pr=hasP?Math.min(.16,.35*rr):0;if(hasP)this.Pw.push(t);this.V.push({t:t+pr,w:r==='vt'?3:r==='bav3'?2:0,rr});this.B.push({t:t+pr,perf:S.pulse})}}}
+let e=(Math.random()-.5)*.03+.025*Math.sin(1.4*t);
+if(r==='af')e+=.03*Math.sin(44*t)+.02*Math.sin(69*t+1);
+if(r==='flutter')e+=.18*(((t*5)%1)-.5);
+this.Pw=this.Pw.filter(x=>t-x<.6);this.V=this.V.filter(x=>t-x.t<1);this.SP=this.SP.filter(x=>t-x.t<1);this.B=this.B.slice(-10);
+for(const x of this.Pw)e+=.12*g(t-x,.08,.022);for(const x of this.V)e+=vw(t-x.t,x.w,x.rr);
+for(const s of this.SP)if(!s.d&&t>=s.t){s.d=1;e+=1.7}
+if(r==='vf')e+=.55*(.6*Math.sin(2*Math.PI*(4.6+.9*Math.sin(.9*t))*t)+.4*Math.sin(2*Math.PI*6.7*t+1.3))*(.75+.25*Math.sin(1.9*t));
+if(r==='torsades')e+=.9*Math.abs(Math.sin(2.2*t))*Math.sin(26*t);
+if(r==='asys')e+=.015*Math.sin(.8*t);
+let p=0;const am=Math.min(1.1,Math.max(.25,S.sbp/130));
+for(const b of this.B){if(b.perf){const a=t-b.t-.12;if(a>-.3&&a<1)p+=g(a,.1,a<.1?.045:.11)+.3*g(a,.38,.05)}
+ if(!b.d&&t>=b.t){b.d=1;o.beats.push(b)}}
+p=p*am+(Math.random()-.5)*.01;
+if(S.art){const a=Math.sin(2*Math.PI*1.85*t);e+=.6*a+.2*Math.sin(2*Math.PI*5.3*t);p+=.4*a}
+let c=0;if(S.rr>0){const ph=(t*S.rr/60)%1,ss=x=>x*x*(3-2*x);c=ph<.08?ss(ph/.08):ph<.42?1+.07*(ph-.08)/.34:ph<.5?1.07*(1-ss((ph-.42)/.08)):0;c*=S.co2}
+o.e=e;o.p=p;o.c=c;return o}}
+
+/* ---------- red: BroadcastChannel (mismo navegador) + WebSocket al servidor propio ---------- */
+let WS=null,BC=null,onmsg=()=>{};const SEEN=new Set();
+function send(o){o.id=Math.random().toString(36).slice(2);if(BC)BC.postMessage(o);if(WS&&WS.readyState===1)WS.send(JSON.stringify(o))}
+function recv(o){if(!o||SEEN.has(o.id))return;SEEN.add(o.id);if(SEEN.size>300)SEEN.delete(SEEN.values().next().value);onmsg(o)}
+function netInit(code,role){BC=new BroadcastChannel('simmon-'+code);BC.onmessage=e=>recv(e.data);if(!/^https?:$/.test(location.protocol))return;
+const go=()=>{WS=new WebSocket((location.protocol==='https:'?'wss://':'ws://')+location.host+'/ws?room='+code);WS.onopen=()=>{if(role==='c')send({t:'hello'})};
+WS.onmessage=e=>{try{recv(JSON.parse(e.data))}catch(_){}};WS.onclose=()=>setTimeout(go,2000);WS.onerror=()=>{try{WS.close()}catch(_){}}};go()}
+
+const [md,cdq]=location.hash.slice(1).split('/');
+const cl=c=>(c||'').toUpperCase().replace(/[^A-Z0-9]/g,'').slice(0,8);
+if(md==='monitor')monitor(cl(cdq)||Array.from({length:4},()=>'ABCDEFGHJKMNPQRSTUVWXYZ23456789'[Math.random()*31|0]).join(''));
+else if(md==='control'&&cl(cdq))control(cl(cdq));else land();
+addEventListener('hashchange',()=>location.reload());
+
+function land(){document.body.innerHTML=`<div class=lp><h1>Simulador de monitor-desfibrilador</h1>
+<p>Cada pareja de monitor y panel con el mismo código es una sesión independiente. Puedes tener varias a la vez.</p>
+<p><b>Alumnos (tablet, portátil o proyector):</b> pulsa el primer botón. Arriba a la derecha aparecerá el código de esa sesión. Si quieres elegirlo tú (por ejemplo GRUPO1), escríbelo antes en el campo.</p>
+<div class=fm><input id=cin maxlength=8 placeholder="CÓDIGO" value="${ls('cc')||''}"></div>
+<button class=big id=bm><b>Abrir el monitor del alumno</b>Ondas, constantes, desfibrilador, cardioversión, marcapasos y PNI.</button>
+<p><b>Instructor (móvil):</b> escribe el código que ves en el monitor y pulsa el segundo botón.</p>
+<button class=big id=cgo><b>Abrir el panel del instructor</b>Controla el ritmo y las constantes de esa sesión.</button>
+<p class=mu>Usa un código distinto en cada monitor. Si dos monitores comparten código, recibirán las mismas órdenes.</p></div>`;
+$('bm').onclick=()=>{const c=cl($('cin').value);location.hash='#monitor'+(c?'/'+c:'')};
+$('cgo').onclick=()=>{const c=cl($('cin').value);if(c){ls('cc',c);location.hash='#control/'+c}else $('cin').focus()}}
+
+/* ---------- panel del instructor ---------- */
+function control(code){
+const VT=[['hr','FC','lpm','#3ddc84',1,5,20,250],['spo2','SpO₂','%','#4cc9f0',1,5,50,100],['sbp','TA sistólica','mmHg','#f2f2f2',1,10,0,260],['dbp','TA diastólica','mmHg','#f2f2f2',1,10,0,160],['rr','FR','rpm','#f2f2f2',1,5,0,40],['co2','EtCO₂','mmHg','#ffd23f',1,5,0,60],['temp','Temperatura','°C','#f2f2f2',.1,.5,30,42]];
+const SC=[['Parada en FV','Sin pulso, SpO₂ no medible. Una descarga eficaz lo revierte.',{rhythm:'vf',hr:0,pulse:0,spo2:70,sbp:0,dbp:0,co2:10}],
+['AESP','Ritmo organizado sin pulso. No es descargable.',{rhythm:'sinus',hr:50,pulse:0,spo2:70,sbp:0,dbp:0,co2:10}],
+['Bradicardia sintomática','FC 35 con hipotensión. Piensa en marcapasos transcutáneo.',{rhythm:'sinus',hr:35,spo2:92,sbp:70,dbp:40,co2:34}],
+['BAV de 3er grado','FC 34, ondas P disociadas, hipotensión.',{rhythm:'bav3',hr:34,spo2:93,sbp:80,dbp:50,co2:34}],
+['TV con pulso inestable','FC 190 con hipotensión. Cardioversión sincronizada.',{rhythm:'vt',hr:190,pulse:1,spo2:90,sbp:75,dbp:45,co2:30}],
+['FA rápida','FC 150 con TA límite. Cardioversión sincronizada.',{rhythm:'af',hr:150,spo2:95,sbp:100,dbp:65,co2:36}],
+['TSV','FC 190, QRS estrecho regular.',{rhythm:'svt',hr:190,spo2:96,sbp:95,dbp:60,co2:35}],['Paciente normal','Ritmo sinusal con constantes normales.',{}]];
+document.body.className='ctl';
+document.body.innerHTML=`<div id=hd><i class=dot id=dt></i><b id=ls>Buscando monitor…</b><span id=cd>${code}</span></div>
+<div id=lvw><canvas id=lv></canvas><div id=lvn></div></div>
+<div id=pgs><div class="pg on" id=p0><div class=chips><button class=chip id=cp>Pulso presente</button><button class=chip id=ca>Artefacto RCP</button></div>
+<h3>Ritmo</h3><div class=rg id=rg></div><h3>Constantes</h3><div class=rg id=vt></div></div>
+<div class=pg id=p1></div>
+<div class=pg id=p2><div class=tl><h4>Desfibrilación (sin SYNC)</h4><small>Sobre FV, torsades y TV. Energía mínima para que sea eficaz:</small><div class=sr><input type=range id=r_eD min=30 max=360 step=10><output id=o_eD></output></div><small>Ritmo tras descarga eficaz</small><select id=s_oD></select></div>
+<div class=tl><h4>Cardioversión (con SYNC)</h4><small>Sobre TV con pulso, TSV, FA y flutter. Energía mínima para que sea eficaz:</small><div class=sr><input type=range id=r_eC min=30 max=360 step=10><output id=o_eC></output></div><small>Ritmo tras cardioversión eficaz</small><select id=s_oC></select></div>
+<div class=tl><h4>Marcapasos transcutáneo</h4><small>Intensidad mínima para conseguir captura:</small><div class=sr><input type=range id=r_thr min=20 max=200 step=5><output id=o_thr></output></div></div></div>
+<div class=pg id=p3><button class=sm id=lc>Borrar registro</button><div id=lgl><p class=mu>Aquí aparecerán las acciones del alumno.</p></div></div></div>
+<nav id=tb><button class=on>Paciente</button><button>Casos</button><button>Reglas</button><button>Registro<i id=bd></i></button></nav>`;
+let nlog=0,lastHb=0,was=0,tab=0;
+const sync=()=>send({t:'s',s:S});
+function chg(k,d){const v=VT.find(x=>x[0]===k);S[k]=Math.min(v[7],Math.max(v[6],Math.round((S[k]+d)*10)/10));ui();sync()}
+function rep(b,f){let to,iv;const st=()=>{clearTimeout(to);clearInterval(iv)};b.onpointerdown=e=>{e.preventDefault();f();to=setTimeout(()=>{iv=setInterval(f,90)},420)};['pointerup','pointerleave','pointercancel'].forEach(v=>b.addEventListener(v,st))}
+VT.forEach(([k,n,u,c,s,b])=>{const d=document.createElement('div');d.className='tl';d.innerHTML=`<small>${n} (${u})</small><b id=v_${k} style="color:${c}"></b><div class=bs><button data-d=${-b}>−${b}</button><button data-d=${-s}>−${s}</button><button data-d=${s}>+${s}</button><button data-d=${b}>+${b}</button></div>`;d.querySelectorAll('button').forEach(x=>rep(x,()=>chg(k,+x.dataset.d)));$('vt').append(d)});
+function mini(cv,r){const dp=devicePixelRatio||1;cv.width=cv.clientWidth*dp;cv.height=cv.clientHeight*dp;const x=cv.getContext('2d'),G=new Gen({...DP,...DR,rhythm:r,hr:RH[r][1],pulse:RH[r][2]});for(let i=0;i<100;i++)G.step(.01);
+x.strokeStyle='#3ddc84';x.lineWidth=1.6*dp;x.beginPath();const n=260;for(let i=0;i<n;i++){const e=G.step(.01).e,X=i/n*cv.width,Y=cv.height*.62-e*cv.height*.42;i?x.lineTo(X,Y):x.moveTo(X,Y)}x.stroke()}
+for(const k in RH){const b=document.createElement('button');b.className='rc';b.dataset.k=k;b.innerHTML=`<canvas></canvas><span>${RH[k][0]}</span>`;b.onclick=()=>{S.rhythm=k;S.hr=RH[k][1];S.pulse=RH[k][2];ui();sync()};$('rg').append(b);mini(b.firstChild,k);
+ ['s_oD','s_oC'].forEach(i=>$(i).append(new Option(RH[k][0],k)))}
+SC.forEach(([n,d,p])=>{const b=document.createElement('button');b.className='sc';b.innerHTML=`<b>${n}</b><small>${d}</small>`;b.onclick=()=>{Object.assign(S,DP,p);ui();sync();tabTo(0)};$('p1').append(b)});
+['eD','eC','thr'].forEach(k=>$('r_'+k).oninput=e=>{S[k]=+e.target.value;ui();sync()});['oD','oC'].forEach(k=>$('s_'+k).onchange=e=>{S[k]=e.target.value;sync()});
+$('cp').onclick=()=>{S.pulse=S.pulse?0:1;ui();sync()};$('ca').onclick=()=>{S.art=S.art?0:1;ui();sync()};
+function tabTo(i){tab=i;document.querySelectorAll('#tb button').forEach((b,j)=>b.classList.toggle('on',j===i));for(let j=0;j<4;j++)$('p'+j).classList.toggle('on',j===i);if(i===3){nlog=0;$('bd').style.display='none'}}
+document.querySelectorAll('#tb button').forEach((b,i)=>b.onclick=()=>tabTo(i));
+$('lc').onclick=()=>{$('lgl').innerHTML='<p class=mu>Registro vacío.</p>'};
+function ui(){VT.forEach(([k])=>$('v_'+k).textContent=k==='temp'?(+S[k]).toFixed(1):S[k]);$('cp').classList.toggle('on',!!S.pulse);$('ca').classList.toggle('on',!!S.art);
+document.querySelectorAll('.rc').forEach(b=>b.classList.toggle('on',b.dataset.k===S.rhythm));
+['eD','eC','thr'].forEach(k=>{$('r_'+k).value=S[k];$('o_'+k).textContent=S[k]+(k==='thr'?' mA':' J')});$('s_oD').value=S.oD;$('s_oC').value=S.oC;
+$('lvn').innerHTML=`FC ${S.hr} · SpO₂ ${S.spo2}<br>TA ${S.sbp}/${S.dbp}`}
+onmsg=o=>{if(o.t==='hb')lastHb=Date.now();if(o.t==='full'){Object.assign(S,o.s);ui()}
+if(o.t==='log'){const l=$('lgl');if(l.firstChild&&l.firstChild.tagName==='P')l.innerHTML='';const x=document.createElement('div');x.innerHTML=`<b>${hm()}</b> ${o.m}`;l.prepend(x);if(tab!==3){nlog++;$('bd').textContent=nlog;$('bd').style.display='block'}if(navigator.vibrate)navigator.vibrate(60)}};
+setInterval(()=>{const on=Date.now()-lastHb<7000;$('dt').classList.toggle('on',on);$('ls').textContent=on?'Conectado al monitor':'Buscando monitor…';if(on&&!was)send({t:'hello'});was=on},1000);
+/* tira de ECG en vivo */
+const lv=$('lv'),lx=lv.getContext('2d'),dp=devicePixelRatio||1,L=new Gen(S);let LX=0,LY=null,acc=0,lt=performance.now();
+function lsz(){lv.width=lv.clientWidth*dp;lv.height=lv.clientHeight*dp;lx.lineWidth=2*dp;lx.strokeStyle='#3ddc84';LX=0;LY=null}addEventListener('resize',lsz);lsz();
+(function f(n){acc=Math.min(.25,acc+(n-lt)/1000);lt=n;while(acc>=.01){acc-=.01;const o=L.step(.01),st=lv.width/600;LX+=st;if(LX>=lv.width){LX=0;LY=null}
+lx.clearRect(LX,0,14*dp,lv.height);const y=lv.height*.62-o.e*lv.height*.4;if(LY!==null){lx.beginPath();lx.moveTo(LX-st,LY);lx.lineTo(LX,y);lx.stroke()}LY=y}requestAnimationFrame(f)})(lt);
+netInit(code,'c');ls('cc',code);ui()}
+
+/* ---------- monitor del alumno ---------- */
+function monitor(code){
+history.replaceState(null,'','#monitor/'+code);
+document.body.className='mon';
+document.body.innerHTML=`<div id=top><b id=al></b><span id=ms>Toca la pantalla para activar el sonido</span><span id=cd>PANEL: ${code}</span><button id=mu>Silenciar alarma</button></div>
+<div id=mid><canvas id=cv></canvas><div id=nm><div class="n g"><i>FC (lpm)</i><b id=nh>--</b></div><div class="n c"><i>SpO₂ (%)</i><b id=ns>--</b></div><div class="n w"><i>PNI (mmHg)</i><b id=np>---/---</b><small id=nq></small></div><div class="n y"><i>EtCO₂ (mmHg)</i><b id=ne>--</b></div><div class="n w"><i>FR (rpm)</i><b id=nr>--</b></div><div class="n w"><i>Temp (°C)</i><b id=nt>--</b></div></div></div>
+<div id=bt><div class=gp><h4>DESFIBRILADOR</h4><div class=rw><button id=em>−</button><b id=ev></b><button id=ep>+</button><button id=sy>SYNC</button></div><div class=rw><button id=ch class=grn>Cargar</button><button id=sh class=red>Descargar</button><button id=ds>Desarmar</button></div><small id=dm></small></div>
+<div class=gp><h4>MARCAPASOS</h4><div class=rw><button id=pf>Activar</button><button id=rm>−</button><b id=rv></b><button id=rp>+</button></div><div class=rw><span>Intensidad</span><button id=am>−</button><b id=av></b><button id=ap>+</button></div></div>
+<div class=gp><h4>PRESIÓN ARTERIAL</h4><div class=rw><button id=pn>Medir PNI</button></div><small>El manguito tarda unos 8 s.</small></div></div>`;
+const FS=200,cv=$('cv'),cx=cv.getContext('2d'),dpr=devicePixelRatio||1,PC={on:0,rate:70,mA:0},D={i:5,sync:0,st:0,wait:0},G=new Gen(S,PC);
+let acc=0,lt=performance.now(),mutedUntil=0,X=0,PY=null,AL={c:0,w:0},AC,rdy=0,nextAl=0;
+const log=x=>send({t:'log',m:x}),full=()=>send({t:'full',s:S});
+/* audio */
+function au(){if(!AC)AC=new(window.AudioContext||window.webkitAudioContext)();if(AC.state==='suspended')AC.resume();if($('ms').textContent.startsWith('Toca'))$('ms').textContent=''}
+document.addEventListener('pointerdown',au);
+function bp(f,d=.08,v=.12,ty='sine',at=0){if(!AC)return;const o=AC.createOscillator(),k=AC.createGain(),s=AC.currentTime+at;o.type=ty;o.frequency.value=f;k.gain.setValueAtTime(0,s);k.gain.linearRampToValueAtTime(v,s+.006);k.gain.setValueAtTime(v,s+Math.max(.007,d-.02));k.gain.linearRampToValueAtTime(0,s+d);o.connect(k).connect(AC.destination);o.start(s);o.stop(s+d+.02)}
+function nz(d,fc,v,at=0,ft='lowpass'){if(!AC)return;const n=AC.sampleRate*d|0,bf=AC.createBuffer(1,n,AC.sampleRate),a=bf.getChannelData(0);for(let i=0;i<n;i++)a[i]=Math.random()*2-1;const s=AC.createBufferSource();s.buffer=bf;const f=AC.createBiquadFilter();f.type=ft;f.frequency.value=fc;const k=AC.createGain(),T=AC.currentTime+at;k.gain.setValueAtTime(v,T);k.gain.linearRampToValueAtTime(0,T+d);s.connect(f).connect(k).connect(AC.destination);s.start(T)}
+const alt=(f,at)=>{bp(f,.11,.1,'triangle',at);bp(f*2,.11,.04,'sine',at)};
+document.querySelectorAll('.mon button').forEach(b=>b.addEventListener('click',()=>bp(1200,.03,.04)));
+/* red */
+onmsg=o=>{if(o.t==='s'){const old=S.rhythm;Object.assign(S,o.s);if(old!==S.rhythm)G.nB=G.t}if(o.t==='hello')full()};
+netInit(code,'m');setInterval(()=>send({t:'hb'}),2500);
+/* dibujo */
+function size(){cv.width=cv.clientWidth*dpr;cv.height=cv.clientHeight*dpr;cx.lineWidth=2*dpr;cx.lineJoin='round';X=0;PY=null}addEventListener('resize',size);size();
+function plot(v,mk){const W=cv.width,H=cv.height,st=W/(6*FS);X+=st;if(X>=W){X=0;PY=null}cx.clearRect(X,0,16*dpr,H);
+const ys=[.3*H-v[0]*.2*H,.74*H-v[1]*.2*H,.99*H-v[2]/60*.2*H],cs=['#3ddc84','#4cc9f0','#ffd23f'];
+if(PY)for(let i=0;i<3;i++){cx.strokeStyle=cs[i];cx.beginPath();cx.moveTo(X-st,PY[i]);cx.lineTo(X,ys[i]);cx.stroke()}
+PY=ys;if(mk){cx.fillStyle='#fff';cx.fillRect(X-dpr,.02*H,2*dpr,.05*H)}}
+function frame(n){acc=Math.min(.25,acc+(n-lt)/1000);lt=n;while(acc>=1/FS){acc-=1/FS;const o=G.step(1/FS);let mk=0;
+if(o.sp)bp(1800,.012,.05,'square');if(o.cap)log(`Captura eléctrica y mecánica con ${PC.mA} mA a ${PC.rate} lpm`);if(o.lost)log('Pérdida de captura');
+for(const b of o.beats){bp(b.perf?Math.max(250,300+(S.spo2-70)*12):800,.09,.12);if(D.sync)mk=1;if(D.wait){D.wait=0;deliver(1)}}
+plot([o.e,o.p,o.c],mk)}requestAnimationFrame(frame)}requestAnimationFrame(frame);
+/* desfibrilador */
+function deliver(sy){const E=EN[D.i],r=S.rhythm,el=(sy?LC:LD).includes(r),th=sy?S.eC:S.eD,out=sy?S.oC:S.oD;D.st=0;rdy=0;
+nz(.18,250,.5);bp(90,.25,.3,'sine');document.body.classList.remove('fl');void document.body.offsetWidth;document.body.classList.add('fl');
+let x=`${sy?'Cardioversión sincronizada':'Descarga NO sincronizada'} de ${E} J sobre ${RH[r][0]}`;
+if(!sy&&S.pulse&&r!=='vf'&&r!=='torsades')x+=' (aviso: descarga asíncrona con pulso, riesgo de R sobre T)';
+G.blank=G.t+1.5;G.Pw=[];G.V=[];G.B=[];
+if(!el)x+=sy?' → ritmo no indicado para cardioversión, sin efecto':' → ritmo no desfibrilable, sin efecto';
+else if(E>=th){x+=` → efectiva, pasa a ${RH[out][0]}`;setTimeout(()=>{Object.assign(S,{rhythm:out,hr:RH[out][1],pulse:RH[out][2]});G.nB=G.t;full()},1500)}
+else x+=` → energía insuficiente (eficaz desde ${th} J), el ritmo no cambia`;
+log(x);$('ms').textContent='DESCARGA ADMINISTRADA: '+E+' J';setTimeout(()=>{if($('ms').textContent.startsWith('DESC'))$('ms').textContent=''},3000);ds()}
+function ds(){$('ev').textContent=EN[D.i]+' J';$('sy').classList.toggle('on',!!D.sync);$('dm').textContent=D.wait?'SYNC: esperando onda R…':D.st===1?'Cargando…':D.st===2?'CARGADO · listo para descargar':''}
+function disarm(q){if(D.st||D.wait){D.st=0;D.wait=0;rdy=0;if(q)log('Desfibrilador desarmado')}ds()}
+$('em').onclick=()=>{if(D.i>0)D.i--;disarm(0)};$('ep').onclick=()=>{if(D.i<EN.length-1)D.i++;disarm(0)};
+$('sy').onclick=()=>{D.sync=D.sync?0:1;log('Modo SYNC '+(D.sync?'activado':'desactivado'));ds()};
+$('ch').onclick=()=>{au();if(D.st)return;D.st=1;const E=EN[D.i],s=1+E/120;log(`Carga a ${E} J iniciada`);
+if(AC){const o=AC.createOscillator(),k=AC.createGain();o.type='sawtooth';o.frequency.setValueAtTime(200,AC.currentTime);o.frequency.exponentialRampToValueAtTime(1500,AC.currentTime+s);k.gain.value=.04;o.connect(k).connect(AC.destination);o.start();o.stop(AC.currentTime+s)}
+ds();const my=D.i;setTimeout(()=>{if(D.st===1&&D.i===my){D.st=2;rdy=1;ds()}},s*1000)};
+$('sh').onclick=()=>{au();if(D.st!==2)return;if(D.sync){const r=S.rhythm;if(r==='vf'||r==='torsades'||r==='asys'||G.t<G.blank){bp(300,.3,.15);$('ms').textContent='SYNC: no se detecta onda R, no se puede sincronizar';log('Intento de descarga sincronizada sin onda R detectable (FV/asistolia)');return}D.wait=1;ds()}else deliver(0)};
+$('ds').onclick=()=>disarm(1);
+setInterval(()=>{if(rdy&&D.st===2){bp(1100,.12,.1);bp(1100,.12,.1,'sine',.2)}},900);
+/* marcapasos */
+const pu=()=>{$('rv').textContent=PC.rate;$('av').textContent=PC.mA+' mA';$('pf').textContent=PC.on?'Pausar':'Activar';$('pf').classList.toggle('on',!!PC.on)};
+$('pf').onclick=()=>{PC.on=PC.on?0:1;G.nP=G.t;G.capped=0;log(PC.on?`Marcapasos activado: ${PC.rate} lpm, ${PC.mA} mA`:'Marcapasos pausado');pu()};
+$('rm').onclick=()=>{PC.rate=Math.max(30,PC.rate-5);G.capped=0;pu()};$('rp').onclick=()=>{PC.rate=Math.min(180,PC.rate+5);G.capped=0;pu()};
+$('am').onclick=()=>{PC.mA=Math.max(0,PC.mA-10);pu()};$('ap').onclick=()=>{PC.mA=Math.min(200,PC.mA+10);pu();if(PC.on)log(`Intensidad del marcapasos: ${PC.mA} mA`)};
+/* PNI con sonidos de bomba y válvula */
+let nb=0;$('pn').onclick=()=>{au();if(nb)return;nb=1;log('PNI iniciada');$('np').textContent='---/---';
+for(let i=0;i<8;i++)nz(.38,450,.22,i*.5);for(let i=0;i<10;i++)nz(.12,3500,.05,4+i*.4,'highpass');
+const t0=Date.now(),iv=setInterval(()=>{const s=(Date.now()-t0)/1000;$('nq').textContent='Manguito '+Math.round(s<4?s*40:160-(s-4)*25)+' mmHg'},250);
+setTimeout(()=>{clearInterval(iv);nb=0;if(!G.B.some(b=>b.perf&&G.t-b.t<5)){$('np').textContent='---/---';$('nq').textContent='ERROR: pulso no detectado';[0,.25,.5].forEach(a=>bp(300,.15,.12,'triangle',a));log('PNI: no se detecta pulso')}
+else{const sy=Math.round(S.sbp+Math.random()*6-3),di=Math.round(S.dbp+Math.random()*4-2);$('np').textContent=sy+'/'+di;$('nq').textContent='PAM '+Math.round((sy+2*di)/3)+' · '+hm();bp(784,.14,.12);bp(988,.2,.12,'sine',.16);log(`PNI medida: ${sy}/${di} mmHg`)}},8000)};
+/* cifras y alarmas */
+function ui(){const rc=G.B.slice(-6);let hr='--';if(rc.length>1&&G.t-rc[rc.length-1].t<4)hr=Math.round(60*(rc.length-1)/(rc[rc.length-1].t-rc[0].t));else if(S.rhythm==='asys'&&G.eff()==='asys')hr=0;
+const pf=G.B.some(b=>b.perf&&G.t-b.t<5),r=G.eff();$('nh').textContent=hr;$('ns').textContent=pf?S.spo2:'--';$('ne').textContent=S.rr>0?S.co2:'--';$('nr').textContent=S.rr||'--';$('nt').textContent=(+S.temp).toFixed(1);
+let c=0,w=0,tx='';if(r==='asys'){c=1;tx='ASISTOLIA'}else if(r==='vf'||r==='torsades'||r==='vt'){c=1;tx='FV/TV'}else if(pf&&S.spo2<90){w=1;tx='SpO₂ BAJA'}else if(hr>150){w=1;tx='FC ALTA'}else if(hr!=='--'&&hr<45){w=1;tx='FC BAJA'}
+AL={c,w};$('al').textContent=Date.now()<mutedUntil&&tx?tx+' 🔕':tx;$('al').style.color=c?'#ff5252':'#ffd23f'}
+setInterval(ui,300);
+setInterval(()=>{const n=Date.now();if(n<mutedUntil||n<nextAl||!AC)return;if(AL.c){[0,.14,.28,.56,.7].forEach(a=>alt(930,a));nextAl=n+2400}else if(AL.w){[0,.2,.4].forEach(a=>alt(660,a));nextAl=n+4500}},250);
+$('mu').onclick=()=>{au();mutedUntil=Date.now()+120000;log('Alarmas silenciadas 2 min')};
+ds();pu()}
+</script></body></html>

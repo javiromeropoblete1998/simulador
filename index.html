@@ -1,4 +1,5 @@
 <!DOCTYPE html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>Simulador monitor-desfibrilador</title>
+<script src="config.js"></script>
 <style>
 *{box-sizing:border-box}html,body{height:100%;margin:0}
 body{background:#0b1215;color:#e8eeee;font:16px/1.4 system-ui,"Segoe UI",sans-serif;-webkit-tap-highlight-color:transparent}
@@ -82,13 +83,15 @@ if(S.art){const a=Math.sin(2*Math.PI*1.85*t);e+=.6*a+.2*Math.sin(2*Math.PI*5.3*t
 let c=0;if(S.rr>0){const ph=(t*S.rr/60)%1,ss=x=>x*x*(3-2*x);c=ph<.08?ss(ph/.08):ph<.42?1+.07*(ph-.08)/.34:ph<.5?1.07*(1-ss((ph-.42)/.08)):0;c*=S.co2}
 o.e=e;o.p=p;o.c=c;return o}}
 
-/* ---------- red: BroadcastChannel (mismo navegador) + WebSocket al servidor propio ---------- */
-let WS=null,BC=null,onmsg=()=>{};const SEEN=new Set();
-function send(o){o.id=Math.random().toString(36).slice(2);if(BC)BC.postMessage(o);if(WS&&WS.readyState===1)WS.send(JSON.stringify(o))}
+/* ---------- red: Firebase Realtime Database (REST + EventSource) y BroadcastChannel en el mismo navegador ---------- */
+let BC=null,onmsg=()=>{},Q=Promise.resolve(),CODE='',MY='';const SEEN=new Set(),FB=(window.FB_URL||'').replace(/\/+$/,'');
+function send(o){o.id=Math.random().toString(36).slice(2);if(BC)BC.postMessage(o);
+if(FB&&MY)Q=Q.then(()=>fetch(FB+'/rooms/'+CODE+'/'+MY+'.json',{method:'PUT',body:JSON.stringify(o)})).catch(()=>{})}
 function recv(o){if(!o||SEEN.has(o.id))return;SEEN.add(o.id);if(SEEN.size>300)SEEN.delete(SEEN.values().next().value);onmsg(o)}
-function netInit(code,role){BC=new BroadcastChannel('simmon-'+code);BC.onmessage=e=>recv(e.data);if(!/^https?:$/.test(location.protocol))return;
-const go=()=>{WS=new WebSocket((location.protocol==='https:'?'wss://':'ws://')+location.host+'/ws?room='+code);WS.onopen=()=>{if(role==='c')send({t:'hello'})};
-WS.onmessage=e=>{try{recv(JSON.parse(e.data))}catch(_){}};WS.onclose=()=>setTimeout(go,2000);WS.onerror=()=>{try{WS.close()}catch(_){}}};go()}
+function listen(node){let first=1;const es=new EventSource(FB+'/rooms/'+CODE+'/'+node+'.json');
+es.addEventListener('put',e=>{if(first){first=0;return}try{const d=JSON.parse(e.data).data;if(d&&d.id)recv(d)}catch(_){}});
+es.onerror=()=>{if(es.readyState===2)setTimeout(()=>listen(node),3000)}}
+function netInit(code,role){CODE=code;MY=role;BC=new BroadcastChannel('simmon-'+code);BC.onmessage=e=>recv(e.data);if(FB)listen(role==='c'?'m':'c')}
 
 const [md,cdq]=location.hash.slice(1).split('/');
 const cl=c=>(c||'').toUpperCase().replace(/[^A-Z0-9]/g,'').slice(0,8);
@@ -97,6 +100,7 @@ else if(md==='control'&&cl(cdq))control(cl(cdq));else land();
 addEventListener('hashchange',()=>location.reload());
 
 function land(){document.body.innerHTML=`<div class=lp><h1>Simulador de monitor-desfibrilador</h1>
+${FB?'':'<p style="color:#e57373">Falta configurar la base de datos: edita el archivo config.js siguiendo la guía.</p>'}
 <p>Cada pareja de monitor y panel con el mismo código es una sesión independiente. Puedes tener varias a la vez.</p>
 <p><b>Alumnos (tablet, portátil o proyector):</b> pulsa el primer botón. Arriba a la derecha aparecerá el código de esa sesión. Si quieres elegirlo tú (por ejemplo GRUPO1), escríbelo antes en el campo.</p>
 <div class=fm><input id=cin maxlength=8 placeholder="CÓDIGO" value="${ls('cc')||''}"></div>

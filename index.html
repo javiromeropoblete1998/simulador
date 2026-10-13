@@ -1,4 +1,5 @@
 <!DOCTYPE html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>Simulador monitor-desfibrilador</title>
+<link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#0b1215"><link rel="icon" href="icon-192.png"><link rel="apple-touch-icon" href="apple-touch-icon.png"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes">
 <script src="config.js"></script>
 <style>
 *{box-sizing:border-box}html,body{height:100%;margin:0}
@@ -22,6 +23,7 @@ body.mon{background:#080c0e;display:grid;grid-template-rows:auto 1fr auto;height
 .mon button.on{background:#e0a800;color:#000}.mon button.red{background:#c62828;border-color:#e57373;font-weight:700}.mon button.grn{background:#2e7d32}
 .mon small{color:#8aa;font-size:12px}
 @media(max-width:760px){#mid{grid-template-columns:1fr;grid-template-rows:55% 45%}#nm{flex-direction:row;flex-wrap:wrap;border-left:0}.n{min-width:30%}.n b{font-size:30px}}
+.blink{animation:bk .7s steps(1) infinite;padding:2px 8px;border-radius:4px}@keyframes bk{0%{background:#c62828;color:#fff}50%{background:transparent;color:#ff5252}}#al.wn{color:#ffd23f}
 .fl{animation:fl .25s}@keyframes fl{from{background:#fff}to{background:#080c0e}}
 /* panel instructor */
 body.ctl{display:grid;grid-template-rows:auto auto 1fr auto;height:100dvh;overflow:hidden}
@@ -45,38 +47,64 @@ h3{font-size:14px;color:#9ab;margin:16px 0 8px;font-weight:600}
 .tl select{width:100%;padding:11px;border-radius:8px;border:1px solid #2f444b;background:#16252a;margin-top:4px}.tl+.tl{margin-top:10px}
 #lgl div{padding:8px 0;border-bottom:1px solid #1d2a2d;font-size:15px}#lgl b{color:#4cc9f0}
 .sm{padding:9px 14px;border-radius:8px;border:1px solid #2f444b;background:#16252a;margin-bottom:8px}
+.ov{position:fixed;inset:0;background:rgba(5,9,11,.97);z-index:50;overflow:auto;padding:16px;display:none;color:#e8eeee}.ov.on{display:block}
+.box{max-width:560px;margin:0 auto}.box h2{margin:.2em 0}.box p{color:#9ab}.box h3{margin:16px 0 8px}
+.qrw{background:#fff;display:inline-block;padding:6px;border-radius:8px;max-width:100%}.qrw canvas{display:block}
+.box textarea{width:100%;height:76px;background:#0f181b;color:#e8eeee;border:1px solid #2f444b;border-radius:8px;padding:8px;font:12px monospace;margin:8px 0}
+.pb{padding:11px 14px;border-radius:8px;border:1px solid #2f444b;background:#16252a;color:#e8eeee;margin:6px 6px 6px 0;font:inherit}
+video.pv{width:100%;max-width:420px;border-radius:8px;background:#000;display:block;margin:8px 0}
 </style></head><body><script>
 const $=i=>document.getElementById(i),g=(x,m,s)=>Math.exp(-((x-m)**2)/(2*s*s)),hm=()=>new Date().toLocaleTimeString('es-ES');
 const ls=(k,v)=>{try{if(v===undefined)return localStorage.getItem(k);localStorage.setItem(k,v)}catch(_){}};
-const RH={sinus:['Ritmo sinusal',80,1],svt:['TSV',170,1],af:['Fibrilación auricular',110,1],flutter:['Flutter auricular',75,1],junc:['Ritmo de la unión',50,1],bav3:['BAV de 3er grado',35,1],vt:['Taquicardia ventricular',180,0],vf:['Fibrilación ventricular',0,0],torsades:['Torsades de pointes',0,0],asys:['Asistolia',0,0]};
-const EN=[30,50,70,100,120,150,170,200,360],LD=['vf','torsades','vt'],LC=['vt','svt','af','flutter'];
+const RH={sinus:['Ritmo sinusal',80,1],sbrad:['Bradicardia sinusal',40,1],stach:['Taquicardia sinusal',130,1],stemi:['Sinusal con elevación del ST (IAMCEST)',85,1],stdep:['Sinusal con descenso del ST',90,1],hiperk:['Hiperpotasemia (T picudas)',55,1],bbb:['Bloqueo de rama (QRS ancho)',75,1],
+svt:['TSV',170,1],af:['Fibrilación auricular',110,1],flutter:['Flutter auricular',75,1],junc:['Ritmo de la unión',50,1],
+avb1:['BAV 1.er grado',70,1],wenck:['BAV 2.º Mobitz I (Wenckebach)',80,1],mob2:['BAV 2.º Mobitz II',80,1],avb21:['BAV 2.º 2:1',80,1],bav3:['BAV 3.er grado',35,1],
+pvc:['Sinusal con ESV',75,1],bigem:['Bigeminismo ventricular',75,1],trigem:['Trigeminismo ventricular',75,1],paced:['Ritmo de marcapasos',70,1],
+aivr:['Ritmo idioventricular acelerado',75,1],idiov:['Ritmo idioventricular',30,1],vt:['TV monomorfa',180,0],vtpol:['TV polimorfa',0,0],torsades:['Torsades de pointes',0,0],
+vf:['FV gruesa',0,0],vff:['FV fina',0,0],agon:['Ritmo agónico',20,0],asys:['Asistolia',0,0]};
+const EN=[30,50,70,100,120,150,170,200,360],LD=['vf','vff','torsades','vt','vtpol'],LC=['vt','svt','af','flutter'],CONT=['vf','vff','torsades','vtpol','asys'],CRIT=['asys','vf','vff','torsades','vtpol','vt','agon'];
 const DP={rhythm:'sinus',hr:80,spo2:97,sbp:120,dbp:80,rr:16,co2:38,temp:36.6,pulse:1,art:0},DR={thr:70,eD:150,eC:100,oD:'sinus',oC:'sinus'};
 const S={...DP,...DR};
 
 /* ---------- generador de señales (compartido) ---------- */
-function vw(a,w,rr){if(a<-.1||a>.7)return 0;if(w===3)return .9*g(a,0,.07)-.5*g(a,.13,.07);const tc=.14+.12*Math.sqrt(rr);
-if(w===2)return .8*g(a,0,.035)-.3*g(a,tc+.04,.06);return -.12*g(a,-.025,.01)+g(a,0,.011)-.22*g(a,.027,.011)+.28*g(a,tc,.045)}
+const RF={sinus:{P:1},sbrad:{P:1},stach:{P:1},avb1:{P:1,pr:.30},bbb:{P:1,w:2},stemi:{P:1,st:.45},stdep:{P:1,st:-.22},hiperk:{P:1,pr:.22,pa:.25,ta:3},
+svt:{},af:{irr:1},flutter:{},junc:{},paced:{pace:1,w:2},idiov:{w:2},aivr:{w:2},vt:{w:3},
+wenck:{P:1,blk:4,wen:1},mob2:{P:1,blk:3,pr:.2},avb21:{P:1,blk:2,pr:.2},pvc:{P:1},bigem:{P:1,pat:2},trigem:{P:1,pat:3},agon:{w:2,irr:2,sc:.5}};
+function vw(a,x){if(a<-.1||a>.7)return 0;const w=x.w,rr=x.rr;if(w===3)return .9*g(a,0,.07)-.5*g(a,.13,.07);
+const tc=.14+.12*Math.sqrt(rr);let v;
+if(w===2)v=(x.pvc?.95:.8)*g(a,0,.035)-.3*g(a,tc+.04,.06);
+else{v=-.12*g(a,-.025,.01)+g(a,0,.011)-.22*g(a,.027,.011)+.28*(x.ta||1)*g(a,tc,x.ta?.036:.045);
+if(x.st)v+=x.st/(1+Math.exp(-(a-.035)/.008))/(1+Math.exp((a-tc-.04)/.03))}
+return v*(x.sc||1)}
 class Gen{
-constructor(S,PC){this.S=S;this.PC=PC||null;this.t=0;this.Pw=[];this.V=[];this.B=[];this.SP=[];this.nB=0;this.nA=0;this.nP=0;this.cap=0;this.blank=0;this.capped=0}
+constructor(S,PC){this.S=S;this.PC=PC||null;this.t=0;this.Pw=[];this.V=[];this.B=[];this.SP=[];this.nB=0;this.nA=0;this.nP=0;this.cap=0;this.blank=0;this.capped=0;this.k=0;this.pv=0;this.f1=0;this.f2=0}
 eff(){return this.t<this.blank?'asys':this.S.rhythm}
-step(dt){const S=this.S,PC=this.PC;this.t+=dt;const t=this.t,r=this.eff(),o={beats:[]};
+reset(){this.nB=this.t;this.k=0;this.pv=0}
+step(dt){const S=this.S,PC=this.PC;this.t+=dt;const t=this.t,r=this.eff(),F=RF[r]||{},o={beats:[]};
 if(PC&&PC.on&&t>=this.nP){const rr=60/PC.rate;this.nP=t+rr;this.SP.push({t});o.sp=1;
  if(PC.mA>=S.thr){this.cap=t+rr*1.6;this.V.push({t:t+.02,w:2,rr});this.B.push({t:t+.02,perf:1});if(!this.capped){this.capped=1;o.cap=1}}else if(this.capped){this.capped=0;o.lost=1}}
-if(r==='bav3'&&t>=this.nA){this.Pw.push(t);this.nA=t+.8}
-if(t>=this.nB){if(r==='vf'||r==='torsades'||r==='asys'||!S.hr)this.nB=t+.25;else{
- const rr=(60/S.hr)*(r==='af'?.6+Math.random()*.8:1);this.nB=t+rr;
- if(t>=this.cap){const hasP=r==='sinus',pr=hasP?Math.min(.16,.35*rr):0;if(hasP)this.Pw.push(t);this.V.push({t:t+pr,w:r==='vt'?3:r==='bav3'?2:0,rr});this.B.push({t:t+pr,perf:S.pulse})}}}
+if(r==='bav3'&&t>=this.nA){this.Pw.push({t,a:1});this.nA=t+.8}
+if(t>=this.nB){if(CONT.includes(r)||!S.hr)this.nB=t+.25;else{
+ const r0=60/S.hr,rr=r0*(F.irr===1?(.6+Math.random()*.8):F.irr===2?(.5+Math.random()*1.5):1);this.nB=t+rr;
+ if(t>=this.cap){
+  if(this.pv){this.pv=0;this.k++;this.V.push({t,w:2,rr:r0,pvc:1});this.B.push({t,perf:S.pulse,amp:.55});this.nB=t+1.45*r0}
+  else if(F.blk){const k=this.k++%F.blk,pr=Math.min(F.wen?(.16+.07*k):F.pr,.6*r0);this.Pw.push({t,a:1});if(k!==F.blk-1){this.V.push({t:t+pr,w:0,rr:r0});this.B.push({t:t+pr,perf:S.pulse})}}
+  else{const pr=F.pace?0.02:F.P?Math.min(F.pr||.16,.35*rr):0;if(F.P)this.Pw.push({t,a:F.pa||1});if(F.pace)this.SP.push({t});
+   this.V.push({t:t+pr,w:F.w||0,rr,st:F.st,ta:F.ta,sc:F.sc});this.B.push({t:t+pr,perf:S.pulse});
+   if(F.pat||r==='pvc'){this.k++;if(F.pat?(this.k%F.pat===F.pat-1):Math.random()<.17){this.pv=1;this.nB=t+.55*r0}}}}}}
 let e=(Math.random()-.5)*.03+.025*Math.sin(1.4*t);
 if(r==='af')e+=.03*Math.sin(44*t)+.02*Math.sin(69*t+1);
 if(r==='flutter')e+=.18*(((t*5)%1)-.5);
-this.Pw=this.Pw.filter(x=>t-x<.6);this.V=this.V.filter(x=>t-x.t<1);this.SP=this.SP.filter(x=>t-x.t<1);this.B=this.B.slice(-10);
-for(const x of this.Pw)e+=.12*g(t-x,.08,.022);for(const x of this.V)e+=vw(t-x.t,x.w,x.rr);
+this.Pw=this.Pw.filter(x=>t-x.t<.6);this.V=this.V.filter(x=>t-x.t<1);this.SP=this.SP.filter(x=>t-x.t<1);this.B=this.B.slice(-10);
+for(const x of this.Pw)e+=.12*x.a*g(t-x.t,.08,.022);for(const x of this.V)e+=vw(t-x.t,x);
 for(const s of this.SP)if(!s.d&&t>=s.t){s.d=1;e+=1.7}
-if(r==='vf')e+=.55*(.6*Math.sin(2*Math.PI*(4.6+.9*Math.sin(.9*t))*t)+.4*Math.sin(2*Math.PI*6.7*t+1.3))*(.75+.25*Math.sin(1.9*t));
+if(r==='vf'||r==='vff'){const A=r==='vf'?.5:.11;this.f1+=2*Math.PI*(4.6+.9*Math.sin(.7*t)+.4*Math.sin(1.9*t))*dt;this.f2+=2*Math.PI*(6.4+.7*Math.sin(1.3*t+1))*dt;
+e+=A*(.62*Math.sin(this.f1)+.2*Math.sin(2*this.f1+.8)+.3*Math.sin(this.f2+.6*Math.sin(.8*t)))*(.7+.3*Math.sin(1.3*t)*Math.sin(.4*t+1))}
 if(r==='torsades')e+=.9*Math.abs(Math.sin(2.2*t))*Math.sin(26*t);
+if(r==='vtpol')e+=.85*(.6+.4*Math.sin(1.7*t))*Math.sin(2*Math.PI*5.2*t+2*Math.sin(.9*t));
 if(r==='asys')e+=.015*Math.sin(.8*t);
 let p=0;const am=Math.min(1.1,Math.max(.25,S.sbp/130));
-for(const b of this.B){if(b.perf){const a=t-b.t-.12;if(a>-.3&&a<1)p+=g(a,.1,a<.1?.045:.11)+.3*g(a,.38,.05)}
+for(const b of this.B){if(b.perf){const a=t-b.t-.12;if(a>-.3&&a<1)p+=(b.amp||1)*(g(a,.1,a<.1?.045:.11)+.3*g(a,.38,.05))}
  if(!b.d&&t>=b.t){b.d=1;o.beats.push(b)}}
 p=p*am+(Math.random()-.5)*.01;
 if(S.art){const a=Math.sin(2*Math.PI*1.85*t);e+=.6*a+.2*Math.sin(2*Math.PI*5.3*t);p+=.4*a}
@@ -84,35 +112,975 @@ let c=0;if(S.rr>0){const ph=(t*S.rr/60)%1,ss=x=>x*x*(3-2*x);c=ph<.08?ss(ph/.08):
 o.e=e;o.p=p;o.c=c;return o}}
 
 /* ---------- red: Firebase Realtime Database (REST + EventSource) y BroadcastChannel en el mismo navegador ---------- */
-let BC=null,onmsg=()=>{},Q=Promise.resolve(),CODE='',MY='';const SEEN=new Set(),FB=(window.FB_URL||'').replace(/\/+$/,'');
+let DC=null,BC=null,onmsg=()=>{},Q=Promise.resolve(),CODE='',MY='';const SEEN=new Set(),FB=(window.FB_URL||'').replace(/\/+$/,'');
 function send(o){o.id=Math.random().toString(36).slice(2);if(BC)BC.postMessage(o);
-if(FB&&MY)Q=Q.then(()=>fetch(FB+'/rooms/'+CODE+'/'+MY+'.json',{method:'PUT',body:JSON.stringify(o)})).catch(()=>{})}
+if(DC&&DC.readyState==='open')try{DC.send(JSON.stringify(o))}catch(_){}
+if(FB&&MY&&CODE!=='LOCAL')Q=Q.then(()=>fetch(FB+'/rooms/'+CODE+'/'+MY+'.json',{method:'PUT',body:JSON.stringify(o)})).catch(()=>{})}
 function recv(o){if(!o||SEEN.has(o.id))return;SEEN.add(o.id);if(SEEN.size>300)SEEN.delete(SEEN.values().next().value);onmsg(o)}
 function listen(node){let first=1;const es=new EventSource(FB+'/rooms/'+CODE+'/'+node+'.json');
 es.addEventListener('put',e=>{if(first){first=0;return}try{const d=JSON.parse(e.data).data;if(d&&d.id)recv(d)}catch(_){}});
 es.onerror=()=>{if(es.readyState===2)setTimeout(()=>listen(node),3000)}}
-function netInit(code,role){CODE=code;MY=role;BC=new BroadcastChannel('simmon-'+code);BC.onmessage=e=>recv(e.data);if(FB)listen(role==='c'?'m':'c')}
+function netInit(code,role){CODE=code;MY=role;BC=new BroadcastChannel('simmon-'+code);BC.onmessage=e=>recv(e.data);if(FB&&code!=='LOCAL')listen(role==='c'?'m':'c')}
 
+/* QRCode for JavaScript, Copyright (c) 2009 Kazuhiko Arase, licencia MIT. QR Code es marca registrada de DENSO WAVE. */
+const QRLib=(()=>{const M={},R=n=>M[n.replace('./','')],D=(n,f)=>{const m={exports:{}};f(m,m.exports,R);M[n]=m.exports};
+D('QRMode',function(module,exports,require){module.exports = {
+    MODE_NUMBER :       1 << 0,
+    MODE_ALPHA_NUM :    1 << 1,
+    MODE_8BIT_BYTE :    1 << 2,
+    MODE_KANJI :        1 << 3
+};
+});
+D('QRMaskPattern',function(module,exports,require){module.exports = {
+	PATTERN000 : 0,
+	PATTERN001 : 1,
+	PATTERN010 : 2,
+	PATTERN011 : 3,
+	PATTERN100 : 4,
+	PATTERN101 : 5,
+	PATTERN110 : 6,
+	PATTERN111 : 7
+};
+});
+D('QRMath',function(module,exports,require){var QRMath = {
+	glog : function(n) {
+		if (n < 1) {
+			throw new Error("glog(" + n + ")");
+		}
+		return QRMath.LOG_TABLE[n];
+	},
+	gexp : function(n) {
+		while (n < 0) {
+			n += 255;
+		}
+		while (n >= 256) {
+			n -= 255;
+		}
+		return QRMath.EXP_TABLE[n];
+	},
+	EXP_TABLE : new Array(256),
+	LOG_TABLE : new Array(256)
+};
+for (var i = 0; i < 8; i++) {
+	QRMath.EXP_TABLE[i] = 1 << i;
+}
+for (var i = 8; i < 256; i++) {
+	QRMath.EXP_TABLE[i] = QRMath.EXP_TABLE[i - 4]
+		^ QRMath.EXP_TABLE[i - 5]
+		^ QRMath.EXP_TABLE[i - 6]
+		^ QRMath.EXP_TABLE[i - 8];
+}
+for (var i = 0; i < 255; i++) {
+	QRMath.LOG_TABLE[QRMath.EXP_TABLE[i] ] = i;
+}
+module.exports = QRMath;
+});
+D('QRErrorCorrectLevel',function(module,exports,require){module.exports = {
+	L : 1,
+	M : 0,
+	Q : 3,
+	H : 2
+};
+});
+D('QRPolynomial',function(module,exports,require){var QRMath = require('./QRMath');
+function QRPolynomial(num, shift) {
+	if (num.length === undefined) {
+		throw new Error(num.length + "/" + shift);
+	}
+	var offset = 0;
+	while (offset < num.length && num[offset] === 0) {
+		offset++;
+	}
+	this.num = new Array(num.length - offset + shift);
+	for (var i = 0; i < num.length - offset; i++) {
+		this.num[i] = num[i + offset];
+	}
+}
+QRPolynomial.prototype = {
+	get : function(index) {
+		return this.num[index];
+	},
+	getLength : function() {
+		return this.num.length;
+	},
+	multiply : function(e) {
+		var num = new Array(this.getLength() + e.getLength() - 1);
+		for (var i = 0; i < this.getLength(); i++) {
+			for (var j = 0; j < e.getLength(); j++) {
+				num[i + j] ^= QRMath.gexp(QRMath.glog(this.get(i) ) + QRMath.glog(e.get(j) ) );
+			}
+		}
+		return new QRPolynomial(num, 0);
+	},
+	mod : function(e) {
+		if (this.getLength() - e.getLength() < 0) {
+			return this;
+		}
+		var ratio = QRMath.glog(this.get(0) ) - QRMath.glog(e.get(0) );
+		var num = new Array(this.getLength() );
+		for (var i = 0; i < this.getLength(); i++) {
+			num[i] = this.get(i);
+		}
+		for (var x = 0; x < e.getLength(); x++) {
+			num[x] ^= QRMath.gexp(QRMath.glog(e.get(x) ) + ratio);
+		}
+		return new QRPolynomial(num, 0).mod(e);
+	}
+};
+module.exports = QRPolynomial;
+});
+D('QRUtil',function(module,exports,require){var QRMode = require('./QRMode');
+var QRPolynomial = require('./QRPolynomial');
+var QRMath = require('./QRMath');
+var QRMaskPattern = require('./QRMaskPattern');
+var QRUtil = {
+    PATTERN_POSITION_TABLE : [
+        [],
+        [6, 18],
+        [6, 22],
+        [6, 26],
+        [6, 30],
+        [6, 34],
+        [6, 22, 38],
+        [6, 24, 42],
+        [6, 26, 46],
+        [6, 28, 50],
+        [6, 30, 54],        
+        [6, 32, 58],
+        [6, 34, 62],
+        [6, 26, 46, 66],
+        [6, 26, 48, 70],
+        [6, 26, 50, 74],
+        [6, 30, 54, 78],
+        [6, 30, 56, 82],
+        [6, 30, 58, 86],
+        [6, 34, 62, 90],
+        [6, 28, 50, 72, 94],
+        [6, 26, 50, 74, 98],
+        [6, 30, 54, 78, 102],
+        [6, 28, 54, 80, 106],
+        [6, 32, 58, 84, 110],
+        [6, 30, 58, 86, 114],
+        [6, 34, 62, 90, 118],
+        [6, 26, 50, 74, 98, 122],
+        [6, 30, 54, 78, 102, 126],
+        [6, 26, 52, 78, 104, 130],
+        [6, 30, 56, 82, 108, 134],
+        [6, 34, 60, 86, 112, 138],
+        [6, 30, 58, 86, 114, 142],
+        [6, 34, 62, 90, 118, 146],
+        [6, 30, 54, 78, 102, 126, 150],
+        [6, 24, 50, 76, 102, 128, 154],
+        [6, 28, 54, 80, 106, 132, 158],
+        [6, 32, 58, 84, 110, 136, 162],
+        [6, 26, 54, 82, 110, 138, 166],
+        [6, 30, 58, 86, 114, 142, 170]
+    ],
+    G15 : (1 << 10) | (1 << 8) | (1 << 5) | (1 << 4) | (1 << 2) | (1 << 1) | (1 << 0),
+    G18 : (1 << 12) | (1 << 11) | (1 << 10) | (1 << 9) | (1 << 8) | (1 << 5) | (1 << 2) | (1 << 0),
+    G15_MASK : (1 << 14) | (1 << 12) | (1 << 10)    | (1 << 4) | (1 << 1),
+    getBCHTypeInfo : function(data) {
+        var d = data << 10;
+        while (QRUtil.getBCHDigit(d) - QRUtil.getBCHDigit(QRUtil.G15) >= 0) {
+            d ^= (QRUtil.G15 << (QRUtil.getBCHDigit(d) - QRUtil.getBCHDigit(QRUtil.G15) ) );    
+        }
+        return ( (data << 10) | d) ^ QRUtil.G15_MASK;
+    },
+    getBCHTypeNumber : function(data) {
+        var d = data << 12;
+        while (QRUtil.getBCHDigit(d) - QRUtil.getBCHDigit(QRUtil.G18) >= 0) {
+            d ^= (QRUtil.G18 << (QRUtil.getBCHDigit(d) - QRUtil.getBCHDigit(QRUtil.G18) ) );    
+        }
+        return (data << 12) | d;
+    },
+    getBCHDigit : function(data) {
+        var digit = 0;
+        while (data !== 0) {
+            digit++;
+            data >>>= 1;
+        }
+        return digit;
+    },
+    getPatternPosition : function(typeNumber) {
+        return QRUtil.PATTERN_POSITION_TABLE[typeNumber - 1];
+    },
+    getMask : function(maskPattern, i, j) {
+        switch (maskPattern) {
+        case QRMaskPattern.PATTERN000 : return (i + j) % 2 === 0;
+        case QRMaskPattern.PATTERN001 : return i % 2 === 0;
+        case QRMaskPattern.PATTERN010 : return j % 3 === 0;
+        case QRMaskPattern.PATTERN011 : return (i + j) % 3 === 0;
+        case QRMaskPattern.PATTERN100 : return (Math.floor(i / 2) + Math.floor(j / 3) ) % 2 === 0;
+        case QRMaskPattern.PATTERN101 : return (i * j) % 2 + (i * j) % 3 === 0;
+        case QRMaskPattern.PATTERN110 : return ( (i * j) % 2 + (i * j) % 3) % 2 === 0;
+        case QRMaskPattern.PATTERN111 : return ( (i * j) % 3 + (i + j) % 2) % 2 === 0;
+        default :
+            throw new Error("bad maskPattern:" + maskPattern);
+        }
+    },
+    getErrorCorrectPolynomial : function(errorCorrectLength) {
+        var a = new QRPolynomial([1], 0);
+        for (var i = 0; i < errorCorrectLength; i++) {
+            a = a.multiply(new QRPolynomial([1, QRMath.gexp(i)], 0) );
+        }
+        return a;
+    },
+    getLengthInBits : function(mode, type) {
+        if (1 <= type && type < 10) {
+            switch(mode) {
+            case QRMode.MODE_NUMBER     : return 10;
+            case QRMode.MODE_ALPHA_NUM  : return 9;
+            case QRMode.MODE_8BIT_BYTE  : return 8;
+            case QRMode.MODE_KANJI      : return 8;
+            default :
+                throw new Error("mode:" + mode);
+            }
+        } else if (type < 27) {
+            switch(mode) {
+            case QRMode.MODE_NUMBER     : return 12;
+            case QRMode.MODE_ALPHA_NUM  : return 11;
+            case QRMode.MODE_8BIT_BYTE  : return 16;
+            case QRMode.MODE_KANJI      : return 10;
+            default :
+                throw new Error("mode:" + mode);
+            }
+        } else if (type < 41) {
+            switch(mode) {
+            case QRMode.MODE_NUMBER     : return 14;
+            case QRMode.MODE_ALPHA_NUM  : return 13;
+            case QRMode.MODE_8BIT_BYTE  : return 16;
+            case QRMode.MODE_KANJI      : return 12;
+            default :
+                throw new Error("mode:" + mode);
+            }
+        } else {
+            throw new Error("type:" + type);
+        }
+    },
+    getLostPoint : function(qrCode) {
+        var moduleCount = qrCode.getModuleCount();
+        var lostPoint = 0;
+        var row = 0; 
+        var col = 0;
+        for (row = 0; row < moduleCount; row++) {
+            for (col = 0; col < moduleCount; col++) {
+                var sameCount = 0;
+                var dark = qrCode.isDark(row, col);
+                for (var r = -1; r <= 1; r++) {
+                    if (row + r < 0 || moduleCount <= row + r) {
+                        continue;
+                    }
+                    for (var c = -1; c <= 1; c++) {
+                        if (col + c < 0 || moduleCount <= col + c) {
+                            continue;
+                        }
+                        if (r === 0 && c === 0) {
+                            continue;
+                        }
+                        if (dark === qrCode.isDark(row + r, col + c) ) {
+                            sameCount++;
+                        }
+                    }
+                }
+                if (sameCount > 5) {
+                    lostPoint += (3 + sameCount - 5);
+                }
+            }
+        }
+        for (row = 0; row < moduleCount - 1; row++) {
+            for (col = 0; col < moduleCount - 1; col++) {
+                var count = 0;
+                if (qrCode.isDark(row,     col    ) ) count++;
+                if (qrCode.isDark(row + 1, col    ) ) count++;
+                if (qrCode.isDark(row,     col + 1) ) count++;
+                if (qrCode.isDark(row + 1, col + 1) ) count++;
+                if (count === 0 || count === 4) {
+                    lostPoint += 3;
+                }
+            }
+        }
+        for (row = 0; row < moduleCount; row++) {
+            for (col = 0; col < moduleCount - 6; col++) {
+                if (qrCode.isDark(row, col) && 
+                        !qrCode.isDark(row, col + 1) && 
+                         qrCode.isDark(row, col + 2) && 
+                         qrCode.isDark(row, col + 3) && 
+                         qrCode.isDark(row, col + 4) && 
+                        !qrCode.isDark(row, col + 5) && 
+                         qrCode.isDark(row, col + 6) ) {
+                    lostPoint += 40;
+                }
+            }
+        }
+        for (col = 0; col < moduleCount; col++) {
+            for (row = 0; row < moduleCount - 6; row++) {
+                if (qrCode.isDark(row, col) &&
+                        !qrCode.isDark(row + 1, col) &&
+                         qrCode.isDark(row + 2, col) &&
+                         qrCode.isDark(row + 3, col) &&
+                         qrCode.isDark(row + 4, col) &&
+                        !qrCode.isDark(row + 5, col) &&
+                         qrCode.isDark(row + 6, col) ) {
+                    lostPoint += 40;
+                }
+            }
+        }
+        var darkCount = 0;
+        for (col = 0; col < moduleCount; col++) {
+            for (row = 0; row < moduleCount; row++) {
+                if (qrCode.isDark(row, col) ) {
+                    darkCount++;
+                }
+            }
+        }
+        var ratio = Math.abs(100 * darkCount / moduleCount / moduleCount - 50) / 5;
+        lostPoint += ratio * 10;
+        return lostPoint;       
+    }
+};
+module.exports = QRUtil;
+});
+D('QRRSBlock',function(module,exports,require){var QRErrorCorrectLevel = require('./QRErrorCorrectLevel');
+function QRRSBlock(totalCount, dataCount) {
+	this.totalCount = totalCount;
+	this.dataCount  = dataCount;
+}
+QRRSBlock.RS_BLOCK_TABLE = [
+	[1, 26, 19],
+	[1, 26, 16],
+	[1, 26, 13],
+	[1, 26, 9],
+	[1, 44, 34],
+	[1, 44, 28],
+	[1, 44, 22],
+	[1, 44, 16],
+	[1, 70, 55],
+	[1, 70, 44],
+	[2, 35, 17],
+	[2, 35, 13],
+	[1, 100, 80],
+	[2, 50, 32],
+	[2, 50, 24],
+	[4, 25, 9],
+	[1, 134, 108],
+	[2, 67, 43],
+	[2, 33, 15, 2, 34, 16],
+	[2, 33, 11, 2, 34, 12],
+	[2, 86, 68],
+	[4, 43, 27],
+	[4, 43, 19],
+	[4, 43, 15],
+	[2, 98, 78],
+	[4, 49, 31],
+	[2, 32, 14, 4, 33, 15],
+	[4, 39, 13, 1, 40, 14],
+	[2, 121, 97],
+	[2, 60, 38, 2, 61, 39],
+	[4, 40, 18, 2, 41, 19],
+	[4, 40, 14, 2, 41, 15],
+	[2, 146, 116],
+	[3, 58, 36, 2, 59, 37],
+	[4, 36, 16, 4, 37, 17],
+	[4, 36, 12, 4, 37, 13],
+	[2, 86, 68, 2, 87, 69],
+	[4, 69, 43, 1, 70, 44],
+	[6, 43, 19, 2, 44, 20],
+	[6, 43, 15, 2, 44, 16],
+	[4, 101, 81],
+	[1, 80, 50, 4, 81, 51],
+	[4, 50, 22, 4, 51, 23],
+	[3, 36, 12, 8, 37, 13],
+	[2, 116, 92, 2, 117, 93],
+	[6, 58, 36, 2, 59, 37],
+	[4, 46, 20, 6, 47, 21],
+	[7, 42, 14, 4, 43, 15],
+	[4, 133, 107],
+	[8, 59, 37, 1, 60, 38],
+	[8, 44, 20, 4, 45, 21],
+	[12, 33, 11, 4, 34, 12],
+	[3, 145, 115, 1, 146, 116],
+	[4, 64, 40, 5, 65, 41],
+	[11, 36, 16, 5, 37, 17],
+	[11, 36, 12, 5, 37, 13],
+	[5, 109, 87, 1, 110, 88],
+	[5, 65, 41, 5, 66, 42],
+	[5, 54, 24, 7, 55, 25],
+	[11, 36, 12],
+	[5, 122, 98, 1, 123, 99],
+	[7, 73, 45, 3, 74, 46],
+	[15, 43, 19, 2, 44, 20],
+	[3, 45, 15, 13, 46, 16],
+	[1, 135, 107, 5, 136, 108],
+	[10, 74, 46, 1, 75, 47],
+	[1, 50, 22, 15, 51, 23],
+	[2, 42, 14, 17, 43, 15],
+	[5, 150, 120, 1, 151, 121],
+	[9, 69, 43, 4, 70, 44],
+	[17, 50, 22, 1, 51, 23],
+	[2, 42, 14, 19, 43, 15],
+	[3, 141, 113, 4, 142, 114],
+	[3, 70, 44, 11, 71, 45],
+	[17, 47, 21, 4, 48, 22],
+	[9, 39, 13, 16, 40, 14],
+	[3, 135, 107, 5, 136, 108],
+	[3, 67, 41, 13, 68, 42],
+	[15, 54, 24, 5, 55, 25],
+	[15, 43, 15, 10, 44, 16],
+	[4, 144, 116, 4, 145, 117],
+	[17, 68, 42],
+	[17, 50, 22, 6, 51, 23],
+	[19, 46, 16, 6, 47, 17],
+	[2, 139, 111, 7, 140, 112],
+	[17, 74, 46],
+	[7, 54, 24, 16, 55, 25],
+	[34, 37, 13],
+	[4, 151, 121, 5, 152, 122],
+	[4, 75, 47, 14, 76, 48],
+	[11, 54, 24, 14, 55, 25],
+	[16, 45, 15, 14, 46, 16],
+	[6, 147, 117, 4, 148, 118],
+	[6, 73, 45, 14, 74, 46],
+	[11, 54, 24, 16, 55, 25],
+	[30, 46, 16, 2, 47, 17],
+	[8, 132, 106, 4, 133, 107],
+	[8, 75, 47, 13, 76, 48],
+	[7, 54, 24, 22, 55, 25],
+	[22, 45, 15, 13, 46, 16],
+	[10, 142, 114, 2, 143, 115],
+	[19, 74, 46, 4, 75, 47],
+	[28, 50, 22, 6, 51, 23],
+	[33, 46, 16, 4, 47, 17],
+	[8, 152, 122, 4, 153, 123],
+	[22, 73, 45, 3, 74, 46],
+	[8, 53, 23, 26, 54, 24],
+	[12, 45, 15, 28, 46, 16],
+	[3, 147, 117, 10, 148, 118],
+	[3, 73, 45, 23, 74, 46],
+	[4, 54, 24, 31, 55, 25],
+	[11, 45, 15, 31, 46, 16],
+	[7, 146, 116, 7, 147, 117],
+	[21, 73, 45, 7, 74, 46],
+	[1, 53, 23, 37, 54, 24],
+	[19, 45, 15, 26, 46, 16],
+	[5, 145, 115, 10, 146, 116],
+	[19, 75, 47, 10, 76, 48],
+	[15, 54, 24, 25, 55, 25],
+	[23, 45, 15, 25, 46, 16],
+	[13, 145, 115, 3, 146, 116],
+	[2, 74, 46, 29, 75, 47],
+	[42, 54, 24, 1, 55, 25],
+	[23, 45, 15, 28, 46, 16],
+	[17, 145, 115],
+	[10, 74, 46, 23, 75, 47],
+	[10, 54, 24, 35, 55, 25],
+	[19, 45, 15, 35, 46, 16],
+	[17, 145, 115, 1, 146, 116],
+	[14, 74, 46, 21, 75, 47],
+	[29, 54, 24, 19, 55, 25],
+	[11, 45, 15, 46, 46, 16],
+	[13, 145, 115, 6, 146, 116],
+	[14, 74, 46, 23, 75, 47],
+	[44, 54, 24, 7, 55, 25],
+	[59, 46, 16, 1, 47, 17],
+	[12, 151, 121, 7, 152, 122],
+	[12, 75, 47, 26, 76, 48],
+	[39, 54, 24, 14, 55, 25],
+	[22, 45, 15, 41, 46, 16],
+	[6, 151, 121, 14, 152, 122],
+	[6, 75, 47, 34, 76, 48],
+	[46, 54, 24, 10, 55, 25],
+	[2, 45, 15, 64, 46, 16],
+	[17, 152, 122, 4, 153, 123],
+	[29, 74, 46, 14, 75, 47],
+	[49, 54, 24, 10, 55, 25],
+	[24, 45, 15, 46, 46, 16],
+	[4, 152, 122, 18, 153, 123],
+	[13, 74, 46, 32, 75, 47],
+	[48, 54, 24, 14, 55, 25],
+	[42, 45, 15, 32, 46, 16],
+	[20, 147, 117, 4, 148, 118],
+	[40, 75, 47, 7, 76, 48],
+	[43, 54, 24, 22, 55, 25],
+	[10, 45, 15, 67, 46, 16],
+	[19, 148, 118, 6, 149, 119],
+	[18, 75, 47, 31, 76, 48],
+	[34, 54, 24, 34, 55, 25],
+	[20, 45, 15, 61, 46, 16]
+];
+QRRSBlock.getRSBlocks = function(typeNumber, errorCorrectLevel) {
+	var rsBlock = QRRSBlock.getRsBlockTable(typeNumber, errorCorrectLevel);
+	if (rsBlock === undefined) {
+		throw new Error("bad rs block @ typeNumber:" + typeNumber + "/errorCorrectLevel:" + errorCorrectLevel);
+	}
+	var length = rsBlock.length / 3;
+	var list = [];
+	for (var i = 0; i < length; i++) {
+		var count = rsBlock[i * 3 + 0];
+		var totalCount = rsBlock[i * 3 + 1];
+		var dataCount  = rsBlock[i * 3 + 2];
+		for (var j = 0; j < count; j++) {
+			list.push(new QRRSBlock(totalCount, dataCount) );	
+		}
+	}
+	return list;
+};
+QRRSBlock.getRsBlockTable = function(typeNumber, errorCorrectLevel) {
+	switch(errorCorrectLevel) {
+	case QRErrorCorrectLevel.L :
+		return QRRSBlock.RS_BLOCK_TABLE[(typeNumber - 1) * 4 + 0];
+	case QRErrorCorrectLevel.M :
+		return QRRSBlock.RS_BLOCK_TABLE[(typeNumber - 1) * 4 + 1];
+	case QRErrorCorrectLevel.Q :
+		return QRRSBlock.RS_BLOCK_TABLE[(typeNumber - 1) * 4 + 2];
+	case QRErrorCorrectLevel.H :
+		return QRRSBlock.RS_BLOCK_TABLE[(typeNumber - 1) * 4 + 3];
+	default :
+		return undefined;
+	}
+};
+module.exports = QRRSBlock;
+});
+D('QR8bitByte',function(module,exports,require){var QRMode = require('./QRMode');
+function QR8bitByte(data) {
+	this.mode = QRMode.MODE_8BIT_BYTE;
+	this.data = data;
+}
+QR8bitByte.prototype = {
+	getLength : function() {
+		return this.data.length;
+	},
+	write : function(buffer) {
+		for (var i = 0; i < this.data.length; i++) {
+			buffer.put(this.data.charCodeAt(i), 8);
+		}
+	}
+};
+module.exports = QR8bitByte;
+});
+D('QRBitBuffer',function(module,exports,require){function QRBitBuffer() {
+	this.buffer = [];
+	this.length = 0;
+}
+QRBitBuffer.prototype = {
+	get : function(index) {
+		var bufIndex = Math.floor(index / 8);
+		return ( (this.buffer[bufIndex] >>> (7 - index % 8) ) & 1) == 1;
+	},
+	put : function(num, length) {
+		for (var i = 0; i < length; i++) {
+			this.putBit( ( (num >>> (length - i - 1) ) & 1) == 1);
+		}
+	},
+	getLengthInBits : function() {
+		return this.length;
+	},
+	putBit : function(bit) {
+		var bufIndex = Math.floor(this.length / 8);
+		if (this.buffer.length <= bufIndex) {
+			this.buffer.push(0);
+		}
+		if (bit) {
+			this.buffer[bufIndex] |= (0x80 >>> (this.length % 8) );
+		}
+		this.length++;
+	}
+};
+module.exports = QRBitBuffer;
+});
+D('index',function(module,exports,require){var QR8bitByte = require('./QR8bitByte');
+var QRUtil = require('./QRUtil');
+var QRPolynomial = require('./QRPolynomial');
+var QRRSBlock = require('./QRRSBlock');
+var QRBitBuffer = require('./QRBitBuffer');
+function QRCode(typeNumber, errorCorrectLevel) {
+	this.typeNumber = typeNumber;
+	this.errorCorrectLevel = errorCorrectLevel;
+	this.modules = null;
+	this.moduleCount = 0;
+	this.dataCache = null;
+	this.dataList = [];
+}
+QRCode.prototype = {
+	addData : function(data) {
+		var newData = new QR8bitByte(data);
+		this.dataList.push(newData);
+		this.dataCache = null;
+	},
+	isDark : function(row, col) {
+		if (row < 0 || this.moduleCount <= row || col < 0 || this.moduleCount <= col) {
+			throw new Error(row + "," + col);
+		}
+		return this.modules[row][col];
+	},
+	getModuleCount : function() {
+		return this.moduleCount;
+	},
+	make : function() {
+		if (this.typeNumber < 1 ){
+			var typeNumber = 1;
+			for (typeNumber = 1; typeNumber < 40; typeNumber++) {
+				var rsBlocks = QRRSBlock.getRSBlocks(typeNumber, this.errorCorrectLevel);
+				var buffer = new QRBitBuffer();
+				var totalDataCount = 0;
+				for (var i = 0; i < rsBlocks.length; i++) {
+					totalDataCount += rsBlocks[i].dataCount;
+				}
+				for (var x = 0; x < this.dataList.length; x++) {
+					var data = this.dataList[x];
+					buffer.put(data.mode, 4);
+					buffer.put(data.getLength(), QRUtil.getLengthInBits(data.mode, typeNumber) );
+					data.write(buffer);
+				}
+				if (buffer.getLengthInBits() <= totalDataCount * 8)
+					break;
+			}
+			this.typeNumber = typeNumber;
+		}
+		this.makeImpl(false, this.getBestMaskPattern() );
+	},
+	makeImpl : function(test, maskPattern) {
+		this.moduleCount = this.typeNumber * 4 + 17;
+		this.modules = new Array(this.moduleCount);
+		for (var row = 0; row < this.moduleCount; row++) {
+			this.modules[row] = new Array(this.moduleCount);
+			for (var col = 0; col < this.moduleCount; col++) {
+				this.modules[row][col] = null;//(col + row) % 3;
+			}
+		}
+		this.setupPositionProbePattern(0, 0);
+		this.setupPositionProbePattern(this.moduleCount - 7, 0);
+		this.setupPositionProbePattern(0, this.moduleCount - 7);
+		this.setupPositionAdjustPattern();
+		this.setupTimingPattern();
+		this.setupTypeInfo(test, maskPattern);
+		if (this.typeNumber >= 7) {
+			this.setupTypeNumber(test);
+		}
+		if (this.dataCache === null) {
+			this.dataCache = QRCode.createData(this.typeNumber, this.errorCorrectLevel, this.dataList);
+		}
+		this.mapData(this.dataCache, maskPattern);
+	},
+	setupPositionProbePattern : function(row, col)  {
+		for (var r = -1; r <= 7; r++) {
+			if (row + r <= -1 || this.moduleCount <= row + r) continue;
+			for (var c = -1; c <= 7; c++) {
+				if (col + c <= -1 || this.moduleCount <= col + c) continue;
+				if ( (0 <= r && r <= 6 && (c === 0 || c === 6) ) || 
+                     (0 <= c && c <= 6 && (r === 0 || r === 6) ) || 
+                     (2 <= r && r <= 4 && 2 <= c && c <= 4) ) {
+					this.modules[row + r][col + c] = true;
+				} else {
+					this.modules[row + r][col + c] = false;
+				}
+			}		
+		}		
+	},
+	getBestMaskPattern : function() {
+		var minLostPoint = 0;
+		var pattern = 0;
+		for (var i = 0; i < 8; i++) {
+			this.makeImpl(true, i);
+			var lostPoint = QRUtil.getLostPoint(this);
+			if (i === 0 || minLostPoint >  lostPoint) {
+				minLostPoint = lostPoint;
+				pattern = i;
+			}
+		}
+		return pattern;
+	},
+	createMovieClip : function(target_mc, instance_name, depth) {
+		var qr_mc = target_mc.createEmptyMovieClip(instance_name, depth);
+		var cs = 1;
+		this.make();
+		for (var row = 0; row < this.modules.length; row++) {
+			var y = row * cs;
+			for (var col = 0; col < this.modules[row].length; col++) {
+				var x = col * cs;
+				var dark = this.modules[row][col];
+				if (dark) {
+					qr_mc.beginFill(0, 100);
+					qr_mc.moveTo(x, y);
+					qr_mc.lineTo(x + cs, y);
+					qr_mc.lineTo(x + cs, y + cs);
+					qr_mc.lineTo(x, y + cs);
+					qr_mc.endFill();
+				}
+			}
+		}
+		return qr_mc;
+	},
+	setupTimingPattern : function() {
+		for (var r = 8; r < this.moduleCount - 8; r++) {
+			if (this.modules[r][6] !== null) {
+				continue;
+			}
+			this.modules[r][6] = (r % 2 === 0);
+		}
+		for (var c = 8; c < this.moduleCount - 8; c++) {
+			if (this.modules[6][c] !== null) {
+				continue;
+			}
+			this.modules[6][c] = (c % 2 === 0);
+		}
+	},
+	setupPositionAdjustPattern : function() {
+		var pos = QRUtil.getPatternPosition(this.typeNumber);
+		for (var i = 0; i < pos.length; i++) {
+			for (var j = 0; j < pos.length; j++) {
+				var row = pos[i];
+				var col = pos[j];
+				if (this.modules[row][col] !== null) {
+					continue;
+				}
+				for (var r = -2; r <= 2; r++) {
+					for (var c = -2; c <= 2; c++) {
+						if (Math.abs(r) === 2 || 
+                            Math.abs(c) === 2 ||
+                            (r === 0 && c === 0) ) {
+							this.modules[row + r][col + c] = true;
+						} else {
+							this.modules[row + r][col + c] = false;
+						}
+					}
+				}
+			}
+		}
+	},
+	setupTypeNumber : function(test) {
+		var bits = QRUtil.getBCHTypeNumber(this.typeNumber);
+        var mod;
+		for (var i = 0; i < 18; i++) {
+			mod = (!test && ( (bits >> i) & 1) === 1);
+			this.modules[Math.floor(i / 3)][i % 3 + this.moduleCount - 8 - 3] = mod;
+		}
+		for (var x = 0; x < 18; x++) {
+			mod = (!test && ( (bits >> x) & 1) === 1);
+			this.modules[x % 3 + this.moduleCount - 8 - 3][Math.floor(x / 3)] = mod;
+		}
+	},
+	setupTypeInfo : function(test, maskPattern) {
+		var data = (this.errorCorrectLevel << 3) | maskPattern;
+		var bits = QRUtil.getBCHTypeInfo(data);
+        var mod;
+		for (var v = 0; v < 15; v++) {
+			mod = (!test && ( (bits >> v) & 1) === 1);
+			if (v < 6) {
+				this.modules[v][8] = mod;
+			} else if (v < 8) {
+				this.modules[v + 1][8] = mod;
+			} else {
+				this.modules[this.moduleCount - 15 + v][8] = mod;
+			}
+		}
+		for (var h = 0; h < 15; h++) {
+			mod = (!test && ( (bits >> h) & 1) === 1);
+			if (h < 8) {
+				this.modules[8][this.moduleCount - h - 1] = mod;
+			} else if (h < 9) {
+				this.modules[8][15 - h - 1 + 1] = mod;
+			} else {
+				this.modules[8][15 - h - 1] = mod;
+			}
+		}
+		this.modules[this.moduleCount - 8][8] = (!test);
+	},
+	mapData : function(data, maskPattern) {
+		var inc = -1;
+		var row = this.moduleCount - 1;
+		var bitIndex = 7;
+		var byteIndex = 0;
+		for (var col = this.moduleCount - 1; col > 0; col -= 2) {
+			if (col === 6) col--;
+			while (true) {
+				for (var c = 0; c < 2; c++) {
+					if (this.modules[row][col - c] === null) {
+						var dark = false;
+						if (byteIndex < data.length) {
+							dark = ( ( (data[byteIndex] >>> bitIndex) & 1) === 1);
+						}
+						var mask = QRUtil.getMask(maskPattern, row, col - c);
+						if (mask) {
+							dark = !dark;
+						}
+						this.modules[row][col - c] = dark;
+						bitIndex--;
+						if (bitIndex === -1) {
+							byteIndex++;
+							bitIndex = 7;
+						}
+					}
+				}
+				row += inc;
+				if (row < 0 || this.moduleCount <= row) {
+					row -= inc;
+					inc = -inc;
+					break;
+				}
+			}
+		}
+	}
+};
+QRCode.PAD0 = 0xEC;
+QRCode.PAD1 = 0x11;
+QRCode.createData = function(typeNumber, errorCorrectLevel, dataList) {
+	var rsBlocks = QRRSBlock.getRSBlocks(typeNumber, errorCorrectLevel);
+	var buffer = new QRBitBuffer();
+	for (var i = 0; i < dataList.length; i++) {
+		var data = dataList[i];
+		buffer.put(data.mode, 4);
+		buffer.put(data.getLength(), QRUtil.getLengthInBits(data.mode, typeNumber) );
+		data.write(buffer);
+	}
+	var totalDataCount = 0;
+	for (var x = 0; x < rsBlocks.length; x++) {
+		totalDataCount += rsBlocks[x].dataCount;
+	}
+	if (buffer.getLengthInBits() > totalDataCount * 8) {
+		throw new Error("code length overflow. (" + 
+            buffer.getLengthInBits() + 
+            ">" +  
+            totalDataCount * 8 + 
+            ")");
+	}
+	if (buffer.getLengthInBits() + 4 <= totalDataCount * 8) {
+		buffer.put(0, 4);
+	}
+	while (buffer.getLengthInBits() % 8 !== 0) {
+		buffer.putBit(false);
+	}
+	while (true) {
+		if (buffer.getLengthInBits() >= totalDataCount * 8) {
+			break;
+		}
+		buffer.put(QRCode.PAD0, 8);
+		if (buffer.getLengthInBits() >= totalDataCount * 8) {
+			break;
+		}
+		buffer.put(QRCode.PAD1, 8);
+	}
+	return QRCode.createBytes(buffer, rsBlocks);
+};
+QRCode.createBytes = function(buffer, rsBlocks) {
+	var offset = 0;
+	var maxDcCount = 0;
+	var maxEcCount = 0;
+	var dcdata = new Array(rsBlocks.length);
+	var ecdata = new Array(rsBlocks.length);
+	for (var r = 0; r < rsBlocks.length; r++) {
+		var dcCount = rsBlocks[r].dataCount;
+		var ecCount = rsBlocks[r].totalCount - dcCount;
+		maxDcCount = Math.max(maxDcCount, dcCount);
+		maxEcCount = Math.max(maxEcCount, ecCount);
+		dcdata[r] = new Array(dcCount);
+		for (var i = 0; i < dcdata[r].length; i++) {
+			dcdata[r][i] = 0xff & buffer.buffer[i + offset];
+		}
+		offset += dcCount;
+		var rsPoly = QRUtil.getErrorCorrectPolynomial(ecCount);
+		var rawPoly = new QRPolynomial(dcdata[r], rsPoly.getLength() - 1);
+		var modPoly = rawPoly.mod(rsPoly);
+		ecdata[r] = new Array(rsPoly.getLength() - 1);
+		for (var x = 0; x < ecdata[r].length; x++) {
+            var modIndex = x + modPoly.getLength() - ecdata[r].length;
+			ecdata[r][x] = (modIndex >= 0)? modPoly.get(modIndex) : 0;
+		}
+	}
+	var totalCodeCount = 0;
+	for (var y = 0; y < rsBlocks.length; y++) {
+		totalCodeCount += rsBlocks[y].totalCount;
+	}
+	var data = new Array(totalCodeCount);
+	var index = 0;
+	for (var z = 0; z < maxDcCount; z++) {
+		for (var s = 0; s < rsBlocks.length; s++) {
+			if (z < dcdata[s].length) {
+				data[index++] = dcdata[s][z];
+			}
+		}
+	}
+	for (var xx = 0; xx < maxEcCount; xx++) {
+		for (var t = 0; t < rsBlocks.length; t++) {
+			if (xx < ecdata[t].length) {
+				data[index++] = ecdata[t][xx];
+			}
+		}
+	}
+	return data;
+};
+module.exports = QRCode;
+});
+return M.index})();
+
+/* ---------- emparejamiento sin internet (WebRTC directo + códigos QR) ---------- */
+const ICE={iceServers:[]};let PCx=null,SCAN=null;
+const b64=u=>btoa(String.fromCharCode(...u)).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,''),ub64=t=>Uint8Array.from(atob(t.replace(/-/g,'+').replace(/_/g,'/')),c=>c.charCodeAt(0));
+async function pack(sdp){const cs=new CompressionStream('deflate-raw'),w=cs.writable.getWriter();w.write(new TextEncoder().encode(sdp));w.close();return b64(new Uint8Array(await new Response(cs.readable).arrayBuffer()))}
+async function unpack(c){const ds=new DecompressionStream('deflate-raw'),w=ds.writable.getWriter();w.write(ub64(c));w.close();return new TextDecoder().decode(await new Response(ds.readable).arrayBuffer())}
+function slim(sdp){const L=sdp.split(/\r?\n/).filter(l=>l&&!/^a=(extmap-allow-mixed|msid-semantic|ice-options)/.test(l));
+const k=L.filter(l=>{if(!l.startsWith('a=candidate'))return true;const p=l.split(' ');return p[2].toLowerCase()==='udp'&&!p[4].includes(':')});
+return (k.some(l=>l.startsWith('a=candidate'))?k:L).join('\r\n')+'\r\n'}
+const waitIce=pc=>new Promise(r=>{if(pc.iceGatheringState==='complete')return r();const f=()=>{if(pc.iceGatheringState==='complete'){pc.removeEventListener('icegatheringstatechange',f);r()}};pc.addEventListener('icegatheringstatechange',f);setTimeout(r,3500)});
+const pmsg=t=>{const e=document.getElementById('p_st');if(e)e.textContent=t};
+function dcSet(d){DC=d;d.onmessage=e=>{try{recv(JSON.parse(e.data))}catch(_){}};d.onclose=()=>{if(DC===d)DC=null;pmsg('Conexión perdida. Vuelve a emparejar.')};
+const ok=()=>{pmsg('✓ Conectado sin internet. Puedes cerrar esta ventana.');setTimeout(()=>{const o=document.getElementById('pov');if(o)o.classList.remove('on')},2500)};if(d.readyState==='open')ok();else d.onopen=ok}
+async function mkOffer(){if(PCx)try{PCx.close()}catch(_){}const pc=PCx=new RTCPeerConnection(ICE);dcSet(pc.createDataChannel('sim'));await pc.setLocalDescription(await pc.createOffer());await waitIce(pc);return 'O'+await pack(slim(pc.localDescription.sdp))}
+async function useAnswer(c){await PCx.setRemoteDescription({type:'answer',sdp:await unpack(c.slice(1))})}
+async function mkAnswer(c){if(PCx)try{PCx.close()}catch(_){}const pc=PCx=new RTCPeerConnection(ICE);pc.ondatachannel=e=>dcSet(e.channel);await pc.setRemoteDescription({type:'offer',sdp:await unpack(c.slice(1))});await pc.setLocalDescription(await pc.createAnswer());await waitIce(pc);return 'A'+await pack(slim(pc.localDescription.sdp))}
+const pbase=()=>/^https?:$/.test(location.protocol)?location.origin+location.pathname+'#p/':'';
+const norm=r=>{let t=(r||'').trim();const i=t.indexOf('#p/');if(i>=0)t=t.slice(i+3);return t.replace(/\s+/g,'')};
+function drawQR(cv,text){const q=new QRLib(0,1);q.addData(text);q.make();const n=q.getModuleCount(),c=Math.max(3,Math.floor(Math.min(innerWidth-56,440)/(n+8))),z=(n+8)*c;cv.width=cv.height=z;const x=cv.getContext('2d');x.fillStyle='#fff';x.fillRect(0,0,z,z);x.fillStyle='#000';for(let r=0;r<n;r++)for(let k=0;k<n;k++)if(q.isDark(r,k))x.fillRect((k+4)*c,(r+4)*c,c,c)}
+function showQR(code){const u=pbase()+code;document.getElementById('p_out').value=u;drawQR(document.getElementById('p_qr'),u)}
+function stopScan(){if(SCAN){clearInterval(SCAN.iv);SCAN.st.getTracks().forEach(t=>t.stop());SCAN=null}const v=document.getElementById('p_vid');if(v)v.innerHTML=''}
+async function scanQR(cb){if(!('BarcodeDetector' in window)){pmsg('Este navegador no puede leer QR desde la página. Abre la cámara del móvil y apunta al QR: se abrirá el enlace solo. O pega el código.');return}
+try{const st=await navigator.mediaDevices.getUserMedia({video:{facingMode:'environment'}});const v=document.createElement('video');v.className='pv';v.playsInline=true;v.muted=true;v.srcObject=st;await v.play();const el=document.getElementById('p_vid');el.innerHTML='';el.append(v);const bd=new BarcodeDetector({formats:['qr_code']});
+const iv=setInterval(async()=>{try{const r=await bd.detect(v);if(r.length){const raw=r[0].rawValue;stopScan();cb(raw)}}catch(_){}},300);SCAN={st,iv}}catch(e){pmsg('No se pudo abrir la cámara: '+e.message)}}
+async function doAnswer(c){if(!c||c[0]!=='A'){pmsg('Ese código no es la respuesta del panel (debe empezar por A).');return}try{pmsg('Conectando…');await useAnswer(c)}catch(e){pmsg('Código no válido: '+e.message)}}
+async function doOffer(c){if(!c||c[0]!=='O'){pmsg('Ese código no es del monitor (debe empezar por O).');return}try{pmsg('Preparando respuesta…');const a=await mkAnswer(c);document.getElementById('p_ans').style.display='block';showQR(a);pmsg('Ahora enseña el QR de abajo al monitor.')}catch(e){pmsg('Código no válido: '+e.message)}}
+function openPair(role,auto){let ov=document.getElementById('pov');if(!ov){ov=document.createElement('div');ov.id='pov';ov.className='ov';document.body.append(ov)}ov.classList.add('on');
+const qrblock='<div class=qrw><canvas id=p_qr></canvas></div><textarea id=p_out readonly></textarea><button class=pb id=p_cp>Copiar código</button>';
+ov.innerHTML=`<div class=box><h2>Emparejar sin internet</h2><p>Los dos dispositivos deben estar en la misma wifi o en el punto de acceso del móvil. No hace falta internet.</p><p id=p_st style="color:#ffd23f"></p>
+${role==='m'?'<h3>1. Enseña este QR al panel</h3>'+qrblock+'<h3>2. Lee el QR de respuesta del panel</h3>':'<h3>1. Lee el QR del monitor</h3>'}
+<button class=pb id=p_sc>Escanear con la cámara</button><div id=p_vid></div><textarea id=p_in placeholder="O pega aquí el código"></textarea><button class=pb id=p_go>${role==='m'?'Conectar':'Continuar'}</button>
+${role==='c'?'<div id=p_ans style="display:none"><h3>2. Enseña este QR al monitor</h3>'+qrblock+'</div>':''}
+<div><button class=pb id=p_x>Cerrar</button></div></div>`;
+const $$=i=>document.getElementById(i);
+$$('p_x').onclick=()=>{stopScan();ov.classList.remove('on')};
+ov.querySelectorAll('#p_cp').forEach(b=>b.onclick=()=>{const t=$$('p_out');t.select();try{navigator.clipboard.writeText(t.value)}catch(_){document.execCommand('copy')}});
+$$('p_sc').onclick=()=>scanQR(raw=>{$$('p_in').value=norm(raw);$$('p_go').click()});
+$$('p_go').onclick=()=>{const c=norm($$('p_in').value);role==='m'?doAnswer(c):doOffer(c)};
+if(role==='m'){pmsg('Generando código…');mkOffer().then(c=>{showQR(c);pmsg('')}).catch(e=>pmsg('Este navegador no permite emparejar sin internet: '+e.message))}
+else if(auto){$$('p_in').value=auto;doOffer(norm(auto))}}
+function ansTab(code){document.body.className='';document.body.innerHTML='<div class=lp><h1>Enviando respuesta al monitor…</h1><p id=am class=mu></p><textarea id=ac readonly style="width:100%;height:90px"></textarea></div>';
+document.getElementById('ac').value=code;const am=document.getElementById('am'),b=new BroadcastChannel('simpair');b.onmessage=e=>{if(e.data.t==='ack')am.textContent='✓ El monitor ha recibido la respuesta. Ya puedes cerrar esta pestaña.'};b.postMessage({t:'ans',code});
+setTimeout(()=>{if(!am.textContent)am.textContent='No encuentro el monitor en este navegador. En el monitor pulsa «Sin internet», pega este código en el paso 2 y pulsa Conectar.'},2500)}
+
+if('serviceWorker' in navigator&&/^https?:$/.test(location.protocol))navigator.serviceWorker.register('sw.js').catch(()=>{});
 const [md,cdq]=location.hash.slice(1).split('/');
 const cl=c=>(c||'').toUpperCase().replace(/[^A-Z0-9]/g,'').slice(0,8);
 if(md==='monitor')monitor(cl(cdq)||Array.from({length:4},()=>'ABCDEFGHJKMNPQRSTUVWXYZ23456789'[Math.random()*31|0]).join(''));
-else if(md==='control'&&cl(cdq))control(cl(cdq));else land();
+else if(md==='control'&&cl(cdq))control(cl(cdq));
+else if(md==='panel')control('LOCAL',{pair:1});
+else if(md==='p'&&cdq&&cdq[0]==='O')control('LOCAL',{auto:cdq});
+else if(md==='p'&&cdq&&cdq[0]==='A')ansTab(cdq);else land();
 addEventListener('hashchange',()=>location.reload());
 
-function land(){document.body.innerHTML=`<div class=lp><h1>Simulador de monitor-desfibrilador</h1>
+function land(){document.body.innerHTML=`<div class=lp><h1>Simulador de monitor-desfibrilador</h1><p class=mu>Versión 5</p>
 ${FB?'':'<p style="color:#e57373">Falta configurar la base de datos: edita el archivo config.js siguiendo la guía.</p>'}
 <p>Cada pareja de monitor y panel con el mismo código es una sesión independiente. Puedes tener varias a la vez.</p>
 <p><b>Alumnos (tablet, portátil o proyector):</b> pulsa el primer botón. Arriba a la derecha aparecerá el código de esa sesión. Si quieres elegirlo tú (por ejemplo GRUPO1), escríbelo antes en el campo.</p>
 <div class=fm><input id=cin maxlength=8 placeholder="CÓDIGO" value="${ls('cc')||''}"></div>
 <button class=big id=bm><b>Abrir el monitor del alumno</b>Ondas, constantes, desfibrilador, cardioversión, marcapasos y PNI.</button>
 <p><b>Instructor (móvil):</b> escribe el código que ves en el monitor y pulsa el segundo botón.</p>
+<button class=big id=cof><b>Panel sin internet</b>Para controlar un monitor emparejado con QR, sin wifi con internet.</button>
 <button class=big id=cgo><b>Abrir el panel del instructor</b>Controla el ritmo y las constantes de esa sesión.</button>
 <p class=mu>Usa un código distinto en cada monitor. Si dos monitores comparten código, recibirán las mismas órdenes.</p></div>`;
 $('bm').onclick=()=>{const c=cl($('cin').value);location.hash='#monitor'+(c?'/'+c:'')};
+$('cof').onclick=()=>{location.hash='#panel'};
 $('cgo').onclick=()=>{const c=cl($('cin').value);if(c){ls('cc',c);location.hash='#control/'+c}else $('cin').focus()}}
 
 /* ---------- panel del instructor ---------- */
-function control(code){
+function control(code,opts){
 const VT=[['hr','FC','lpm','#3ddc84',1,5,20,250],['spo2','SpO₂','%','#4cc9f0',1,5,50,100],['sbp','TA sistólica','mmHg','#f2f2f2',1,10,0,260],['dbp','TA diastólica','mmHg','#f2f2f2',1,10,0,160],['rr','FR','rpm','#f2f2f2',1,5,0,40],['co2','EtCO₂','mmHg','#ffd23f',1,5,0,60],['temp','Temperatura','°C','#f2f2f2',.1,.5,30,42]];
 const SC=[['Parada en FV','Sin pulso, SpO₂ no medible. Una descarga eficaz lo revierte.',{rhythm:'vf',hr:0,pulse:0,spo2:70,sbp:0,dbp:0,co2:10}],
 ['AESP','Ritmo organizado sin pulso. No es descargable.',{rhythm:'sinus',hr:50,pulse:0,spo2:70,sbp:0,dbp:0,co2:10}],
@@ -120,14 +1088,20 @@ const SC=[['Parada en FV','Sin pulso, SpO₂ no medible. Una descarga eficaz lo 
 ['BAV de 3er grado','FC 34, ondas P disociadas, hipotensión.',{rhythm:'bav3',hr:34,spo2:93,sbp:80,dbp:50,co2:34}],
 ['TV con pulso inestable','FC 190 con hipotensión. Cardioversión sincronizada.',{rhythm:'vt',hr:190,pulse:1,spo2:90,sbp:75,dbp:45,co2:30}],
 ['FA rápida','FC 150 con TA límite. Cardioversión sincronizada.',{rhythm:'af',hr:150,spo2:95,sbp:100,dbp:65,co2:36}],
-['TSV','FC 190, QRS estrecho regular.',{rhythm:'svt',hr:190,spo2:96,sbp:95,dbp:60,co2:35}],['Paciente normal','Ritmo sinusal con constantes normales.',{}]];
+['TSV','FC 190, QRS estrecho regular.',{rhythm:'svt',hr:190,spo2:96,sbp:95,dbp:60,co2:35}],['TV sin pulso','TV monomorfa sin pulso. Requiere desfibrilación.',{rhythm:'vt',hr:200,pulse:0,spo2:70,sbp:0,dbp:0,co2:10}],
+['Torsades de pointes','Sin pulso, con QT largo previo.',{rhythm:'torsades',hr:0,pulse:0,spo2:70,sbp:0,dbp:0,co2:10}],
+['IAMCEST','Elevación del ST con dolor torácico.',{rhythm:'stemi',hr:90,spo2:95,sbp:150,dbp:90,co2:36}],
+['Hiperpotasemia','T picudas, bradicardia e hipotensión.',{rhythm:'hiperk',hr:50,spo2:96,sbp:85,dbp:50,co2:34}],
+['BAV 2.º Mobitz II','Bloqueos intermitentes con riesgo de BAV completo.',{rhythm:'mob2',hr:80,spo2:94,sbp:90,dbp:55,co2:34}],
+['Ritmo agónico','Complejos anchos y lentos sin pulso.',{rhythm:'agon',hr:20,pulse:0,spo2:60,sbp:0,dbp:0,co2:8}],
+['Paciente normal','Ritmo sinusal con constantes normales.',{}]];
 document.body.className='ctl';
-document.body.innerHTML=`<div id=hd><i class=dot id=dt></i><b id=ls>Buscando monitor…</b><span id=cd>${code}</span></div>
+document.body.innerHTML=`<div id=hd><i class=dot id=dt></i><b id=ls>Buscando monitor…</b><span id=cd>${code==='LOCAL'?'SIN INTERNET':code}</span><button class=pb id=pq style="margin:0 0 0 8px">Sin internet</button></div>
 <div id=lvw><canvas id=lv></canvas><div id=lvn></div></div>
 <div id=pgs><div class="pg on" id=p0><div class=chips><button class=chip id=cp>Pulso presente</button><button class=chip id=ca>Artefacto RCP</button></div>
-<h3>Ritmo</h3><div class=rg id=rg></div><h3>Constantes</h3><div class=rg id=vt></div></div>
+<div id=rgw></div><h3>Constantes</h3><div class=rg id=vt></div></div>
 <div class=pg id=p1></div>
-<div class=pg id=p2><div class=tl><h4>Desfibrilación (sin SYNC)</h4><small>Sobre FV, torsades y TV. Energía mínima para que sea eficaz:</small><div class=sr><input type=range id=r_eD min=30 max=360 step=10><output id=o_eD></output></div><small>Ritmo tras descarga eficaz</small><select id=s_oD></select></div>
+<div class=pg id=p2><div class=tl><h4>Desfibrilación (sin SYNC)</h4><small>Sobre FV (gruesa y fina), TV monomorfa, TV polimorfa y torsades. Energía mínima para que sea eficaz:</small><div class=sr><input type=range id=r_eD min=30 max=360 step=10><output id=o_eD></output></div><small>Ritmo tras descarga eficaz</small><select id=s_oD></select></div>
 <div class=tl><h4>Cardioversión (con SYNC)</h4><small>Sobre TV con pulso, TSV, FA y flutter. Energía mínima para que sea eficaz:</small><div class=sr><input type=range id=r_eC min=30 max=360 step=10><output id=o_eC></output></div><small>Ritmo tras cardioversión eficaz</small><select id=s_oC></select></div>
 <div class=tl><h4>Marcapasos transcutáneo</h4><small>Intensidad mínima para conseguir captura:</small><div class=sr><input type=range id=r_thr min=20 max=200 step=5><output id=o_thr></output></div></div></div>
 <div class=pg id=p3><button class=sm id=lc>Borrar registro</button><div id=lgl><p class=mu>Aquí aparecerán las acciones del alumno.</p></div></div></div>
@@ -138,9 +1112,11 @@ function chg(k,d){const v=VT.find(x=>x[0]===k);S[k]=Math.min(v[7],Math.max(v[6],
 function rep(b,f){let to,iv;const st=()=>{clearTimeout(to);clearInterval(iv)};b.onpointerdown=e=>{e.preventDefault();f();to=setTimeout(()=>{iv=setInterval(f,90)},420)};['pointerup','pointerleave','pointercancel'].forEach(v=>b.addEventListener(v,st))}
 VT.forEach(([k,n,u,c,s,b])=>{const d=document.createElement('div');d.className='tl';d.innerHTML=`<small>${n} (${u})</small><b id=v_${k} style="color:${c}"></b><div class=bs><button data-d=${-b}>−${b}</button><button data-d=${-s}>−${s}</button><button data-d=${s}>+${s}</button><button data-d=${b}>+${b}</button></div>`;d.querySelectorAll('button').forEach(x=>rep(x,()=>chg(k,+x.dataset.d)));$('vt').append(d)});
 function mini(cv,r){const dp=devicePixelRatio||1;cv.width=cv.clientWidth*dp;cv.height=cv.clientHeight*dp;const x=cv.getContext('2d'),G=new Gen({...DP,...DR,rhythm:r,hr:RH[r][1],pulse:RH[r][2]});for(let i=0;i<100;i++)G.step(.01);
-x.strokeStyle='#3ddc84';x.lineWidth=1.6*dp;x.beginPath();const n=260;for(let i=0;i<n;i++){const e=G.step(.01).e,X=i/n*cv.width,Y=cv.height*.62-e*cv.height*.42;i?x.lineTo(X,Y):x.moveTo(X,Y)}x.stroke()}
-for(const k in RH){const b=document.createElement('button');b.className='rc';b.dataset.k=k;b.innerHTML=`<canvas></canvas><span>${RH[k][0]}</span>`;b.onclick=()=>{S.rhythm=k;S.hr=RH[k][1];S.pulse=RH[k][2];ui();sync()};$('rg').append(b);mini(b.firstChild,k);
- ['s_oD','s_oC'].forEach(i=>$(i).append(new Option(RH[k][0],k)))}
+x.strokeStyle='#3ddc84';x.lineWidth=1.6*dp;x.beginPath();const n=400;for(let i=0;i<n;i++){const e=G.step(.01).e,X=i/n*cv.width,Y=cv.height*.62-e*cv.height*.42;i?x.lineTo(X,Y):x.moveTo(X,Y)}x.stroke()}
+const GR=[['Sinusales y morfología',['sinus','sbrad','stach','stemi','stdep','hiperk','bbb']],['Supraventriculares',['svt','af','flutter','junc']],['Bloqueos AV',['avb1','wenck','mob2','avb21','bav3']],['Ectopia y marcapasos',['pvc','bigem','trigem','paced']],['Ventriculares',['aivr','idiov','vt','vtpol','torsades']],['Parada',['vf','vff','agon','asys']]];
+GR.forEach(([n,ks])=>{const h=document.createElement('h3');h.textContent=n;const gd=document.createElement('div');gd.className='rg';$('rgw').append(h,gd);
+ks.forEach(k=>{const b=document.createElement('button');b.className='rc';b.dataset.k=k;b.innerHTML=`<canvas></canvas><span>${RH[k][0]}</span>`;b.onclick=()=>{S.rhythm=k;S.hr=RH[k][1];S.pulse=RH[k][2];ui();sync()};gd.append(b);mini(b.firstChild,k)})});
+for(const k in RH)['s_oD','s_oC'].forEach(i=>$(i).append(new Option(RH[k][0],k)));
 SC.forEach(([n,d,p])=>{const b=document.createElement('button');b.className='sc';b.innerHTML=`<b>${n}</b><small>${d}</small>`;b.onclick=()=>{Object.assign(S,DP,p);ui();sync();tabTo(0)};$('p1').append(b)});
 ['eD','eC','thr'].forEach(k=>$('r_'+k).oninput=e=>{S[k]=+e.target.value;ui();sync()});['oD','oC'].forEach(k=>$('s_'+k).onchange=e=>{S[k]=e.target.value;sync()});
 $('cp').onclick=()=>{S.pulse=S.pulse?0:1;ui();sync()};$('ca').onclick=()=>{S.art=S.art?0:1;ui();sync()};
@@ -159,17 +1135,17 @@ const lv=$('lv'),lx=lv.getContext('2d'),dp=devicePixelRatio||1,L=new Gen(S);let 
 function lsz(){lv.width=lv.clientWidth*dp;lv.height=lv.clientHeight*dp;lx.lineWidth=2*dp;lx.strokeStyle='#3ddc84';LX=0;LY=null}addEventListener('resize',lsz);lsz();
 (function f(n){acc=Math.min(.25,acc+(n-lt)/1000);lt=n;while(acc>=.01){acc-=.01;const o=L.step(.01),st=lv.width/600;LX+=st;if(LX>=lv.width){LX=0;LY=null}
 lx.clearRect(LX,0,14*dp,lv.height);const y=lv.height*.62-o.e*lv.height*.4;if(LY!==null){lx.beginPath();lx.moveTo(LX-st,LY);lx.lineTo(LX,y);lx.stroke()}LY=y}requestAnimationFrame(f)})(lt);
-netInit(code,'c');ls('cc',code);ui()}
+netInit(code,'c');if(code!=='LOCAL')ls('cc',code);ui();$('pq').onclick=()=>openPair('c');if(opts&&opts.pair)openPair('c');if(opts&&opts.auto)openPair('c',opts.auto)}
 
 /* ---------- monitor del alumno ---------- */
 function monitor(code){
 history.replaceState(null,'','#monitor/'+code);
 document.body.className='mon';
-document.body.innerHTML=`<div id=top><b id=al></b><span id=ms>Toca la pantalla para activar el sonido</span><span id=cd>PANEL: ${code}</span><button id=mu>Silenciar alarma</button></div>
+document.body.innerHTML=`<div id=top><b id=al></b><span id=ms>Toca la pantalla para activar el sonido</span><span id=cd>PANEL: ${code}</span><button id=pq>Sin internet</button><button id=mu>Silenciar alarma</button></div>
 <div id=mid><canvas id=cv></canvas><div id=nm><div class="n g"><i>FC (lpm)</i><b id=nh>--</b></div><div class="n c"><i>SpO₂ (%)</i><b id=ns>--</b></div><div class="n w"><i>PNI (mmHg)</i><b id=np>---/---</b><small id=nq></small></div><div class="n y"><i>EtCO₂ (mmHg)</i><b id=ne>--</b></div><div class="n w"><i>FR (rpm)</i><b id=nr>--</b></div><div class="n w"><i>Temp (°C)</i><b id=nt>--</b></div></div></div>
 <div id=bt><div class=gp><h4>DESFIBRILADOR</h4><div class=rw><button id=em>−</button><b id=ev></b><button id=ep>+</button><button id=sy>SYNC</button></div><div class=rw><button id=ch class=grn>Cargar</button><button id=sh class=red>Descargar</button><button id=ds>Desarmar</button></div><small id=dm></small></div>
 <div class=gp><h4>MARCAPASOS</h4><div class=rw><button id=pf>Activar</button><button id=rm>−</button><b id=rv></b><button id=rp>+</button></div><div class=rw><span>Intensidad</span><button id=am>−</button><b id=av></b><button id=ap>+</button></div></div>
-<div class=gp><h4>PRESIÓN ARTERIAL</h4><div class=rw><button id=pn>Medir PNI</button></div><small>El manguito tarda unos 8 s.</small></div></div>`;
+<div class=gp><h4>PRESIÓN ARTERIAL</h4><div class=rw><button id=pn>Medir PNI</button></div><small>Se infla y desinfla como uno manual (unos 12 s).</small></div></div>`;
 const FS=200,cv=$('cv'),cx=cv.getContext('2d'),dpr=devicePixelRatio||1,PC={on:0,rate:70,mA:0},D={i:5,sync:0,st:0,wait:0},G=new Gen(S,PC);
 let acc=0,lt=performance.now(),mutedUntil=0,X=0,PY=null,AL={c:0,w:0},AC,rdy=0,nextAl=0;
 const log=x=>send({t:'log',m:x}),full=()=>send({t:'full',s:S});
@@ -178,10 +1154,10 @@ function au(){if(!AC)AC=new(window.AudioContext||window.webkitAudioContext)();if
 document.addEventListener('pointerdown',au);
 function bp(f,d=.08,v=.12,ty='sine',at=0){if(!AC)return;const o=AC.createOscillator(),k=AC.createGain(),s=AC.currentTime+at;o.type=ty;o.frequency.value=f;k.gain.setValueAtTime(0,s);k.gain.linearRampToValueAtTime(v,s+.006);k.gain.setValueAtTime(v,s+Math.max(.007,d-.02));k.gain.linearRampToValueAtTime(0,s+d);o.connect(k).connect(AC.destination);o.start(s);o.stop(s+d+.02)}
 function nz(d,fc,v,at=0,ft='lowpass'){if(!AC)return;const n=AC.sampleRate*d|0,bf=AC.createBuffer(1,n,AC.sampleRate),a=bf.getChannelData(0);for(let i=0;i<n;i++)a[i]=Math.random()*2-1;const s=AC.createBufferSource();s.buffer=bf;const f=AC.createBiquadFilter();f.type=ft;f.frequency.value=fc;const k=AC.createGain(),T=AC.currentTime+at;k.gain.setValueAtTime(v,T);k.gain.linearRampToValueAtTime(0,T+d);s.connect(f).connect(k).connect(AC.destination);s.start(T)}
-const alt=(f,at)=>{bp(f,.11,.1,'triangle',at);bp(f*2,.11,.04,'sine',at)};
+const HARM=[[1,1],[2,.5],[3,.33],[4,.25],[5,.2]];function pulse(f,at,d=.15,v=.09){HARM.forEach(([m,a])=>bp(f*m,d,v*a,'sine',at))}
 document.querySelectorAll('.mon button').forEach(b=>b.addEventListener('click',()=>bp(1200,.03,.04)));
 /* red */
-onmsg=o=>{if(o.t==='s'){const old=S.rhythm;Object.assign(S,o.s);if(old!==S.rhythm)G.nB=G.t}if(o.t==='hello')full()};
+onmsg=o=>{if(o.t==='s'){const old=S.rhythm;Object.assign(S,o.s);if(old!==S.rhythm)G.reset()}if(o.t==='hello')full()};
 netInit(code,'m');setInterval(()=>send({t:'hb'}),2500);
 /* dibujo */
 function size(){cv.width=cv.clientWidth*dpr;cv.height=cv.clientHeight*dpr;cx.lineWidth=2*dpr;cx.lineJoin='round';X=0;PY=null}addEventListener('resize',size);size();
@@ -197,10 +1173,10 @@ plot([o.e,o.p,o.c],mk)}requestAnimationFrame(frame)}requestAnimationFrame(frame)
 function deliver(sy){const E=EN[D.i],r=S.rhythm,el=(sy?LC:LD).includes(r),th=sy?S.eC:S.eD,out=sy?S.oC:S.oD;D.st=0;rdy=0;
 nz(.18,250,.5);bp(90,.25,.3,'sine');document.body.classList.remove('fl');void document.body.offsetWidth;document.body.classList.add('fl');
 let x=`${sy?'Cardioversión sincronizada':'Descarga NO sincronizada'} de ${E} J sobre ${RH[r][0]}`;
-if(!sy&&S.pulse&&r!=='vf'&&r!=='torsades')x+=' (aviso: descarga asíncrona con pulso, riesgo de R sobre T)';
+if(!sy&&S.pulse&&!CONT.includes(r))x+=' (aviso: descarga asíncrona con pulso, riesgo de R sobre T)';
 G.blank=G.t+1.5;G.Pw=[];G.V=[];G.B=[];
 if(!el)x+=sy?' → ritmo no indicado para cardioversión, sin efecto':' → ritmo no desfibrilable, sin efecto';
-else if(E>=th){x+=` → efectiva, pasa a ${RH[out][0]}`;setTimeout(()=>{Object.assign(S,{rhythm:out,hr:RH[out][1],pulse:RH[out][2]});G.nB=G.t;full()},1500)}
+else if(E>=th){x+=` → efectiva, pasa a ${RH[out][0]}`;setTimeout(()=>{Object.assign(S,{rhythm:out,hr:RH[out][1],pulse:RH[out][2]});G.reset();full()},1500)}
 else x+=` → energía insuficiente (eficaz desde ${th} J), el ritmo no cambia`;
 log(x);$('ms').textContent='DESCARGA ADMINISTRADA: '+E+' J';setTimeout(()=>{if($('ms').textContent.startsWith('DESC'))$('ms').textContent=''},3000);ds()}
 function ds(){$('ev').textContent=EN[D.i]+' J';$('sy').classList.toggle('on',!!D.sync);$('dm').textContent=D.wait?'SYNC: esperando onda R…':D.st===1?'Cargando…':D.st===2?'CARGADO · listo para descargar':''}
@@ -210,7 +1186,7 @@ $('sy').onclick=()=>{D.sync=D.sync?0:1;log('Modo SYNC '+(D.sync?'activado':'desa
 $('ch').onclick=()=>{au();if(D.st)return;D.st=1;const E=EN[D.i],s=1+E/120;log(`Carga a ${E} J iniciada`);
 if(AC){const o=AC.createOscillator(),k=AC.createGain();o.type='sawtooth';o.frequency.setValueAtTime(200,AC.currentTime);o.frequency.exponentialRampToValueAtTime(1500,AC.currentTime+s);k.gain.value=.04;o.connect(k).connect(AC.destination);o.start();o.stop(AC.currentTime+s)}
 ds();const my=D.i;setTimeout(()=>{if(D.st===1&&D.i===my){D.st=2;rdy=1;ds()}},s*1000)};
-$('sh').onclick=()=>{au();if(D.st!==2)return;if(D.sync){const r=S.rhythm;if(r==='vf'||r==='torsades'||r==='asys'||G.t<G.blank){bp(300,.3,.15);$('ms').textContent='SYNC: no se detecta onda R, no se puede sincronizar';log('Intento de descarga sincronizada sin onda R detectable (FV/asistolia)');return}D.wait=1;ds()}else deliver(0)};
+$('sh').onclick=()=>{au();if(D.st!==2)return;if(D.sync){const r=S.rhythm;if(CONT.includes(r)||G.t<G.blank){bp(300,.3,.15);$('ms').textContent='SYNC: no se detecta onda R, no se puede sincronizar';log('Intento de descarga sincronizada sin onda R detectable (FV/asistolia)');return}D.wait=1;ds()}else deliver(0)};
 $('ds').onclick=()=>disarm(1);
 setInterval(()=>{if(rdy&&D.st===2){bp(1100,.12,.1);bp(1100,.12,.1,'sine',.2)}},900);
 /* marcapasos */
@@ -220,17 +1196,25 @@ $('rm').onclick=()=>{PC.rate=Math.max(30,PC.rate-5);G.capped=0;pu()};$('rp').onc
 $('am').onclick=()=>{PC.mA=Math.max(0,PC.mA-10);pu()};$('ap').onclick=()=>{PC.mA=Math.min(200,PC.mA+10);pu();if(PC.on)log(`Intensidad del marcapasos: ${PC.mA} mA`)};
 /* PNI con sonidos de bomba y válvula */
 let nb=0;$('pn').onclick=()=>{au();if(nb)return;nb=1;log('PNI iniciada');$('np').textContent='---/---';
-for(let i=0;i<8;i++)nz(.38,450,.22,i*.5);for(let i=0;i<10;i++)nz(.12,3500,.05,4+i*.4,'highpass');
-const t0=Date.now(),iv=setInterval(()=>{const s=(Date.now()-t0)/1000;$('nq').textContent='Manguito '+Math.round(s<4?s*40:160-(s-4)*25)+' mmHg'},250);
-setTimeout(()=>{clearInterval(iv);nb=0;if(!G.B.some(b=>b.perf&&G.t-b.t<5)){$('np').textContent='---/---';$('nq').textContent='ERROR: pulso no detectado';[0,.25,.5].forEach(a=>bp(300,.15,.12,'triangle',a));log('PNI: no se detecta pulso')}
-else{const sy=Math.round(S.sbp+Math.random()*6-3),di=Math.round(S.dbp+Math.random()*4-2);$('np').textContent=sy+'/'+di;$('nq').textContent='PAM '+Math.round((sy+2*di)/3)+' · '+hm();bp(784,.14,.12);bp(988,.2,.12,'sine',.16);log(`PNI medida: ${sy}/${di} mmHg`)}},8000)};
+const P0=Math.max(180,S.sbp+30),TI=5.5,DD=(P0-40)/20,TT=TI+DD,pf=G.B.some(b=>b.perf&&G.t-b.t<5);
+nz(.09,5000,.1,0,'highpass');for(let i=0;i<5;i++)nz(.05,3500,.14,.12+i*.07,'highpass');
+for(let i=0;i<9;i++){const at=.7+i*.55;nz(.15,1300,.25,at);nz(.1,450,.2,at+.12);bp(160,.05,.06,'sine',at+.13)}
+nz(DD,2600,.07,TI,'highpass');bp(2600,.01,.05,'square',TI);
+if(pf){const iv=60/Math.max(40,Math.min(180,S.hr||75)),a0=TI+(P0-S.sbp)/20,a1=TI+(P0-S.dbp)/20;for(let k=0;a0+k*iv<a1;k++){nz(.07,150,.28,a0+k*iv);bp(70,.07,.2,'sine',a0+k*iv)}}
+nz(.5,2200,.12,TT,'highpass');
+const t0=Date.now(),iv=setInterval(()=>{const s=(Date.now()-t0)/1000;$('nq').textContent='Manguito '+Math.round(s<TI?s/TI*P0:Math.max(40,P0-(s-TI)*20))+' mmHg'},250);
+setTimeout(()=>{clearInterval(iv);nb=0;if(!G.B.some(b=>b.perf&&G.t-b.t<5)){$('np').textContent='---/---';$('nq').textContent='ERROR: pulso no detectado';log('PNI: no se detecta pulso')}
+else{const sy=Math.round(S.sbp+Math.random()*6-3),di=Math.round(S.dbp+Math.random()*4-2);$('np').textContent=sy+'/'+di;$('nq').textContent='PAM '+Math.round((sy+2*di)/3)+' · '+hm();log(`PNI medida: ${sy}/${di} mmHg`)}},TT*1000)};
 /* cifras y alarmas */
-function ui(){const rc=G.B.slice(-6);let hr='--';if(rc.length>1&&G.t-rc[rc.length-1].t<4)hr=Math.round(60*(rc.length-1)/(rc[rc.length-1].t-rc[0].t));else if(S.rhythm==='asys'&&G.eff()==='asys')hr=0;
+function ui(){const rc=G.B.slice(-6);let hr='--';if(rc.length>1&&G.t-rc[rc.length-1].t<4)hr=Math.round(60*(rc.length-1)/(rc[rc.length-1].t-rc[0].t));
 const pf=G.B.some(b=>b.perf&&G.t-b.t<5),r=G.eff();$('nh').textContent=hr;$('ns').textContent=pf?S.spo2:'--';$('ne').textContent=S.rr>0?S.co2:'--';$('nr').textContent=S.rr||'--';$('nt').textContent=(+S.temp).toFixed(1);
-let c=0,w=0,tx='';if(r==='asys'){c=1;tx='ASISTOLIA'}else if(r==='vf'||r==='torsades'||r==='vt'){c=1;tx='FV/TV'}else if(pf&&S.spo2<90){w=1;tx='SpO₂ BAJA'}else if(hr>150){w=1;tx='FC ALTA'}else if(hr!=='--'&&hr<45){w=1;tx='FC BAJA'}
-AL={c,w};$('al').textContent=Date.now()<mutedUntil&&tx?tx+' 🔕':tx;$('al').style.color=c?'#ff5252':'#ffd23f'}
+let c=0,w=0,tx='';if(CRIT.includes(r)&&G.t>=G.blank){c=1;tx='ALARMA CRÍTICA'}else if(pf&&S.spo2<90){w=1;tx='SpO₂ BAJA'}else if(hr>150){w=1;tx='FC ALTA'}else if(hr!=='--'&&hr<45){w=1;tx='FC BAJA'}
+AL={c,w};$('al').textContent=Date.now()<mutedUntil&&tx?tx+' 🔕':tx;$('al').className=c&&Date.now()>=mutedUntil?'blink':w?'wn':''}
 setInterval(ui,300);
-setInterval(()=>{const n=Date.now();if(n<mutedUntil||n<nextAl||!AC)return;if(AL.c){[0,.14,.28,.56,.7].forEach(a=>alt(930,a));nextAl=n+2400}else if(AL.w){[0,.2,.4].forEach(a=>alt(660,a));nextAl=n+4500}},250);
+setInterval(()=>{const n=Date.now();if(n<mutedUntil||n<nextAl||!AC)return;
+if(AL.c){[0,.22,.44,.95,1.17,2.15,2.37,2.59,3.1,3.32].forEach(a=>pulse(900,a));nextAl=n+6000}
+else if(AL.w){[0,.25,.5].forEach(a=>pulse(640,a,.14,.08));nextAl=n+6500}},250);
 $('mu').onclick=()=>{au();mutedUntil=Date.now()+120000;log('Alarmas silenciadas 2 min')};
-ds();pu()}
+ds();pu();$('pq').onclick=()=>openPair('m');
+const pbc=new BroadcastChannel('simpair');pbc.onmessage=async e=>{if(e.data.t==='ans'&&PCx){try{await useAnswer(e.data.code);pbc.postMessage({t:'ack'})}catch(_){}}}}
 </script></body></html>

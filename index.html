@@ -41,7 +41,7 @@ body.mon{background:#080c0e;display:grid;grid-template-columns:minmax(0,1fr);gri
 .bty{display:inline-block;position:relative;width:24px;height:30px;border:2px solid #cfd3e0;border-radius:3px;margin:0 8px 0 4px;vertical-align:middle;background:#000}.bty span{position:absolute;left:2px;right:2px;bottom:2px;background:#3ddc84}
 #hdr{grid-template-columns:1fr auto 1fr;align-items:center;white-space:nowrap}#hdr .hrg{justify-self:end}#ht{font-variant-numeric:tabular-nums}
 #np.red{color:#ff3b30}
-#dp{display:none}#sks{display:none;grid-area:sks}
+#dp{display:none}
 /* disposición común de los equipos: pantalla a la izquierda, botonera a la derecha */
 body.sk-lp,body.sk-co{grid-template-columns:minmax(0,1fr) clamp(250px,25vw,300px);grid-template-rows:auto minmax(0,1fr);grid-template-areas:"top top" "mid dp"}
 .sk-lp #top,.sk-co #top{grid-area:top;background:transparent;border:0;min-height:34px;padding:4px 12px}
@@ -66,49 +66,30 @@ body.sk-lp #mid{margin:0 10px 10px;border:8px solid #cfccc8;border-radius:10px;b
 .sk-lp #tr{flex:0 0 auto;flex-direction:row;align-items:baseline;justify-content:flex-start;gap:8px;padding:0 8px}.sk-lp #tr i{display:inline;background:none;margin:0;padding:0}.sk-lp #tr b{font-size:20px}
 .sk-lp #wv{background:#000}.sk-lp .lb{left:auto;right:10px;font-size:13px}.sk-lp .lb1{color:#6be07a}.sk-lp .lb2{color:#4d8dff}.sk-lp .lb3{color:#ffa24d}
 /* botonera Lifepak: misma distribución que el equipo real */
-.sk-lp #dp{background:#4b4439;border-radius:18px 8px 8px 18px;box-shadow:inset 0 0 0 2px #6d6356,0 2px 8px #0006;color:#f1e9dd;padding:12px 10px}
-.lpP{display:flex;flex-direction:column;gap:9px;min-height:100%;justify-content:space-between}
-.lpTop{display:grid;grid-template-columns:1fr 20px 1fr;align-items:center;gap:6px 2px}
-.lpLeds{display:flex;gap:7px;align-items:center;padding-left:3px}.lpLeds i{width:7px;height:7px;border-radius:50%;background:#2c261f;box-shadow:inset 0 0 0 1px #75695b}.lpLeds i.on{background:#7be37b;box-shadow:0 0 6px #7be37b}
-.lpN{text-align:center;font-size:21px;font-weight:600;color:#fff;line-height:1}
-.lpCols{display:grid;grid-template-columns:1fr 1fr;gap:9px;align-items:stretch}.lpCol{display:flex;flex-direction:column;gap:5px;min-width:0}
-.lpG2{display:grid;grid-template-columns:1fr 1fr;gap:5px}
-.lpEn{display:flex;align-items:stretch;gap:2px;min-width:0}
-.lpEv{flex:1;min-width:0;display:flex;flex-direction:column;align-items:center;justify-content:center;background:#2a251f;border:1px solid #181410;border-radius:9px;line-height:1.05}.lpEv span{font-size:8px;letter-spacing:.3px;color:#cdbfb0}.lpEv b{font-size:15px;color:#ffc266;font-variant-numeric:tabular-nums;white-space:nowrap}
-.lpShockCell{display:flex;flex-direction:column;align-items:center;gap:4px}
-.lpPace{background:#3f5f48;border:1px solid #628a6c;border-radius:11px;padding:7px 5px;display:flex;flex-direction:column;gap:6px;margin-top:6px}
-.lpV{display:flex;flex-direction:column;gap:2px;min-width:0}.lpV>span{font-size:8.5px;letter-spacing:.5px;color:#d3e5d8;text-transform:uppercase;text-align:center}
-.lpAr{display:flex;align-items:center;gap:2px}.lpAr b{flex:1;min-width:0;text-align:center;font-size:12px;color:#ffc266;white-space:nowrap;font-variant-numeric:tabular-nums}
-.lpRound{display:flex;justify-content:space-around;align-items:center;padding:0 22px}.lpCol:first-child>button{flex:1 1 auto}
-.lpCap{font-size:9px;letter-spacing:2px;color:#d8ccbd;text-align:center;margin-bottom:-4px}
-.lpMini{display:grid;grid-template-columns:1fr 1fr;gap:5px}
+.sk-lp #dp{background:#4b4439;border-radius:18px 8px 8px 18px;box-shadow:inset 0 0 0 2px #6d6356,0 2px 8px #0006;color:#f1e9dd;padding:14px 10px}
+.lpP{display:flex;flex-direction:column;gap:12px;min-height:100%;justify-content:space-between}
+.lpRow{display:grid;grid-template-columns:20px 1fr;align-items:center;gap:6px}
+.lpN{text-align:center;font-size:22px;font-weight:600;color:#fff;line-height:1}
+.lpEn{display:flex;align-items:stretch;gap:3px;min-width:0}
+.lpEv{flex:1;min-width:0;display:flex;flex-direction:column;align-items:center;justify-content:center;background:#2a251f;border:1px solid #181410;border-radius:10px;line-height:1.1}.lpEv span{font-size:9px;letter-spacing:.5px;color:#cdbfb0}.lpEv b{font-size:24px;color:#ffc266;font-variant-numeric:tabular-nums;white-space:nowrap}
+.lpShockCell{display:flex;flex-direction:column;align-items:center;gap:5px}
+.lpCols{display:grid;grid-template-columns:1fr 1fr;gap:9px;align-items:stretch}.lpCol{display:flex;flex-direction:column;gap:7px;min-width:0}.lpCol>button{flex:1 1 auto}
+.lpPace{background:#3f5f48;border:1px solid #628a6c;border-radius:11px;padding:8px 6px;display:flex;flex-direction:column;gap:14px}
+.lpV{display:flex;flex-direction:column;gap:3px;min-width:0}.lpV>span{font-size:9px;letter-spacing:.5px;color:#d3e5d8;text-transform:uppercase;text-align:center}
+.lpAr{display:flex;align-items:center;gap:2px}.lpAr b{flex:1;min-width:0;text-align:center;font-size:15px;color:#ffc266;white-space:nowrap;font-variant-numeric:tabular-nums}
 .sk-lp #dp small{display:block;min-height:14px;text-align:center;color:#ffc266;font-size:10px;line-height:1.2}
-.sk-lp #dp button{background:linear-gradient(#3d362e,#2a251f);border:1px solid #181410;color:#f1e9dd;border-radius:9px;font-size:10.5px;letter-spacing:.4px;text-transform:uppercase;font-weight:700;min-height:32px;padding:3px 4px;box-shadow:0 2px 0 #0008,inset 0 1px 0 #ffffff1c;line-height:1.1;overflow:hidden}
+.sk-lp #dp button{background:linear-gradient(#3d362e,#2a251f);border:1px solid #181410;color:#f1e9dd;border-radius:10px;font-size:11px;letter-spacing:.4px;text-transform:uppercase;font-weight:700;min-height:52px;padding:3px 4px;box-shadow:0 2px 0 #0008,inset 0 1px 0 #ffffff1c;line-height:1.1;overflow:hidden}
 .sk-lp #dp button:active{transform:translateY(1px);box-shadow:0 1px 0 #0008}
-.sk-lp #dp .lpEn button{width:26px;min-height:34px;padding:0;flex:0 0 26px;font-size:11px}
-.sk-lp #dp .lpAr button{width:24px;min-height:28px;padding:0;flex:0 0 24px;font-size:10px}
-.sk-lp #dp #ch{background:linear-gradient(#f7aa3c,#e08a14);border-color:#8a4f06;color:#1a1100}
-.sk-lp #dp [data-a=ana]{color:#ffb04a}
-.sk-lp #dp .lpOn{background:linear-gradient(#49b86a,#2f8f4d);border-color:#17522b;color:#04200d}
-.sk-lp #dp #ds{min-height:32px;font-size:10px}
-.sk-lp #dp .lpMini button{min-height:30px;font-size:9.5px}
-.sk-lp #dp .lpRound button{width:38px;height:38px;border-radius:50%;padding:0;min-height:0}
-.sk-lp #dp .lpRound button svg{width:20px;height:20px}
-.sk-lp #dp .lpRound button[data-a=home]{background:radial-gradient(circle at 40% 35%,#f6f3ee,#cbc5bc);color:#4b4439}
-.sk-lp #dp #sh{width:80px;height:80px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#ff9a62,#d9441a 70%);border:3px solid #ffb89a;color:#fff;font-size:8px;padding:0;min-height:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:0;box-shadow:0 3px 0 #0008}
-.sk-lp #dp #sh svg{width:34px;height:34px}
+.sk-lp #dp .lpEn button{width:36px;min-height:62px;padding:0;flex:0 0 34px;font-size:12px}
+.sk-lp #dp .lpAr button{width:28px;min-height:40px;padding:0;flex:0 0 26px;font-size:10px}
+.sk-lp #dp #ch{background:linear-gradient(#f7aa3c,#e08a14);border-color:#8a4f06;color:#1a1100;min-height:62px;font-size:14px}
+.sk-lp #dp #sh{width:130px;height:130px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#ff9a62,#d9441a 70%);border:3px solid #ffb89a;color:#fff;font-size:9px;padding:0;min-height:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:0;box-shadow:0 3px 0 #0008}
+.sk-lp #dp #sh svg{width:54px;height:54px}.sk-lp #dp #sh span{font-size:10px}
 .sk-lp #dp button.on{background:linear-gradient(#f7aa3c,#e08a14);color:#1a1100;border-color:#8a4f06}
-.dial{position:relative;width:min(150px,100%,23vh);aspect-ratio:1;align-self:center;border-radius:50%;touch-action:none;cursor:grab;user-select:none;-webkit-user-select:none;flex:0 0 auto;outline:0}
-.dial:active{cursor:grabbing}.dial .dk{position:absolute;border-radius:50%}
-.dHint{font-size:10px;text-align:center;opacity:.7;margin-top:-4px}
-.sk-lp .dial{background:radial-gradient(circle,#101012 0 60%,#2d2d31 61% 100%);box-shadow:0 0 0 3px #d4d1cc,0 0 0 5px #2a251f,0 5px 12px #0009}
-.sk-lp .dial .dk{inset:14%;background:radial-gradient(circle at 38% 32%,#55555b,#222226 70%);box-shadow:inset 0 0 0 2px #000a,0 3px 6px #000a}
-.sk-lp .dial .dk::after{content:"";position:absolute;left:50%;top:7%;width:11%;height:11%;margin-left:-5.5%;border-radius:50%;background:#ffb04a;box-shadow:0 0 5px #ffb04a99}
-.dial:focus-visible{box-shadow:0 0 0 3px #4cc9f0}
 /* Corpuls3 */
 body.sk-co{background:#d2dce0;color:#1b262b}
 .sk-co #top #ms{color:#37474f}.sk-co #top #cd{color:#01579b}.sk-co #al{color:#c62828}.sk-co #al.wn{color:#a65f00}
-body.sk-co #mid{margin:0 10px 10px;border:5px solid #2f3b40;border-radius:6px;background:#fff;grid-template-columns:1fr;grid-template-rows:auto auto 1fr auto;grid-template-areas:"hdr" "nm" "wv" "sks"}
+body.sk-co #mid{margin:0 10px 10px;border:5px solid #2f3b40;border-radius:6px;background:#fff;grid-template-columns:1fr;grid-template-rows:auto auto 1fr;grid-template-areas:"hdr" "nm" "wv"}
 .sk-co #hdr{display:grid;background:#fff;color:#000;font:700 14px/1.2 "Courier New",ui-monospace,monospace;padding:3px 8px;border-bottom:1px solid #000}
 .sk-co .bty,.sk-co .bi{display:none}
 .sk-co #nm{flex-direction:row;border:0;border-bottom:2px solid #000;background:#fff;overflow:hidden}
@@ -119,48 +100,36 @@ body.sk-co #mid{margin:0 10px 10px;border:5px solid #2f3b40;border-radius:6px;ba
 .sk-co #th{order:1}.sk-co #ts{order:2}.sk-co #te{order:3}.sk-co #tr{order:4}.sk-co #tp{order:5}.sk-co #tt{order:6}
 .sk-co .lm{display:block;position:absolute;right:6px;top:4px;font:11px/1.1 "Courier New",ui-monospace,monospace;text-align:right;color:#000}
 .sk-co #wv{background:#fff}.sk-co .lb{font:700 13px "Courier New",ui-monospace,monospace}.sk-co .lb1{color:#000}.sk-co .lb2{color:#1565c0}.sk-co .lb3{color:#27208f}
-.sk-co #sks{display:flex;background:#0a4fa8;color:#fff;font:700 13px "Courier New",ui-monospace,monospace;border-top:2px solid #000}
-.sk-co #sks span,.sk-co #sks button{flex:1;text-align:center;padding:5px 0;border-left:1px solid #5a86c8}.sk-co #sks span:first-child{border-left:0}
-.sk-co #sks button{background:#0a4fa8;border-top:0;border-right:0;border-bottom:0;border-radius:0;color:#fff;min-height:0;font:inherit;font-weight:700}
 /* botonera Corpuls3: misma distribución que el equipo real */
-.sk-co #dp{background:#93a8aa;border-radius:10px;box-shadow:inset 0 0 0 2px #7b9092,0 2px 8px #0003;color:#13242a;padding:10px}
-.coP{display:flex;flex-direction:column;gap:9px;min-height:100%;justify-content:space-between}
-.coTop{display:flex;align-items:center;gap:7px}.coTop .gap{flex:1}
-.coRow{display:grid;grid-template-columns:1fr 16px 1fr;align-items:center;gap:4px}
-.coN{text-align:center;font-weight:700;font-size:18px;color:#e3001b;line-height:1}
+.sk-co #dp{background:#93a8aa;border-radius:10px;box-shadow:inset 0 0 0 2px #7b9092,0 2px 8px #0003;color:#13242a;padding:12px 10px}
+.coP{display:flex;flex-direction:column;gap:12px;min-height:100%;justify-content:space-between}
+.coRow{display:grid;grid-template-columns:1fr 18px 1fr;align-items:center;gap:4px}
+.coN{text-align:center;font-weight:700;font-size:19px;color:#e3001b;line-height:1}
 .coEn{display:flex;align-items:stretch;gap:2px;min-width:0}
-.coEv{flex:1;min-width:0;display:flex;flex-direction:column;align-items:center;justify-content:center;background:#e9eff0;border:1px solid #5e7377;border-radius:6px;line-height:1.05}.coEv span{font:700 7.5px "Courier New",ui-monospace,monospace;letter-spacing:.3px;color:#37474f}.coEv b{font:700 13px "Courier New",ui-monospace,monospace;color:#000;white-space:nowrap}
-.coWhite{background:#f4f7f7;border-radius:14px;padding:8px;display:flex;justify-content:center;box-shadow:inset 0 0 0 1px #b7c4c9}
-.coG2{display:grid;grid-template-columns:1fr 1fr;gap:6px}
-.coLow{display:grid;grid-template-columns:1fr 1fr;gap:6px}
-.coPace{display:none;background:#7d9496;border-radius:10px;padding:8px;flex-direction:column;gap:7px}.coPace.on{display:flex}
+.coEv{flex:1;min-width:0;display:flex;flex-direction:column;align-items:center;justify-content:center;background:#e9eff0;border:1px solid #5e7377;border-radius:6px;line-height:1.1}.coEv span{font:700 8px "Courier New",ui-monospace,monospace;letter-spacing:.3px;color:#37474f}.coEv b{font:700 16px "Courier New",ui-monospace,monospace;color:#000;white-space:nowrap}
+.coWhite{background:#f4f7f7;border-radius:14px;padding:18px 8px;display:flex;justify-content:center;box-shadow:inset 0 0 0 1px #b7c4c9}
+.coPace{background:#7d9496;border-radius:10px;padding:10px;display:flex;flex-direction:column;gap:14px}
 .coCap{font:700 10px "Courier New",ui-monospace,monospace;letter-spacing:1px;text-align:center;color:#10222a}
-.coV{display:flex;align-items:center;gap:4px;font:700 10px "Courier New",ui-monospace,monospace;color:#10222a}.coV span{flex:1}.coV b{min-width:44px;text-align:center;font:700 13px "Courier New",ui-monospace,monospace}
+.coV{display:flex;align-items:center;gap:4px;font:700 10px "Courier New",ui-monospace,monospace;color:#10222a}.coV span{flex:1}.coV b{min-width:46px;text-align:center;font:700 13px "Courier New",ui-monospace,monospace}
+.coG2{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:auto}
 .sk-co #dp small{display:block;min-height:14px;text-align:center;color:#13242a;font-size:10px;line-height:1.2}
-.sk-co #dp button{background:linear-gradient(#566a6f,#42545a);border:1px solid #2a393d;color:#fff;border-radius:6px;font-size:11.5px;font-weight:600;min-height:34px;padding:3px 5px;line-height:1.1;box-shadow:0 2px 0 #0004,inset 0 1px 0 #ffffff22}
+.sk-co #dp button{background:linear-gradient(#566a6f,#42545a);border:1px solid #2a393d;color:#fff;border-radius:6px;font-size:12.5px;font-weight:600;min-height:52px;padding:3px 5px;line-height:1.1;box-shadow:0 2px 0 #0004,inset 0 1px 0 #ffffff22}
 .sk-co #dp button:active{transform:translateY(1px)}
-.sk-co #dp .coEn button{width:24px;min-height:34px;padding:0;flex:0 0 24px;font-size:10px}
-.sk-co #dp .coV button{width:24px;min-height:28px;padding:0;flex:0 0 24px;font-size:10px}
-.sk-co #dp .coRed{background:linear-gradient(#f1182d,#c4001a);border-color:#7a0010}
-.sk-co #dp button.coRed.on{background:linear-gradient(#f1182d,#c4001a);color:#fff;box-shadow:0 0 0 2px #fff,0 0 0 4px #e3001b}
-.sk-co #dp .ic{width:42px;padding:0}.sk-co #dp .ic svg{width:19px;height:19px}
-.sk-co #dp .pwr{background:linear-gradient(#26c08d,#0f8f68);border-color:#075a42;width:46px;padding:0}.sk-co #dp .pwr svg{width:20px;height:20px}
-.sk-co #dp .wide{width:58%;align-self:center}.sk-co #dp .wide svg{width:16px;height:16px;vertical-align:-3px;margin-right:5px}
+.sk-co #dp .coEn button{width:28px;min-height:56px;padding:0;flex:0 0 26px;font-size:10px}
+.sk-co #dp .coV button{width:28px;min-height:38px;padding:0;flex:0 0 26px;font-size:10px}
+.sk-co #dp #sy,.sk-co #dp #ds{background:linear-gradient(#f1182d,#c4001a);border-color:#7a0010;min-height:56px}
+.sk-co #dp #sy.on{background:linear-gradient(#ffc233,#e09a00);color:#000;border-color:#9a6a00}
+.sk-co #dp #ch{min-height:56px}
+.sk-co #dp .ic svg{width:17px;height:17px;vertical-align:-3px;margin-right:6px}
 .sk-co #dp button.on{background:#e0a800;color:#000;border-color:#9a7400}
-.sk-co #dp #ch{background:linear-gradient(#566a6f,#42545a)}
-.sk-co #dp #sy.on{background:#ffb300;color:#000;border-color:#ff8f00}
-.sk-co #dp #ds{background:linear-gradient(#566a6f,#42545a)}
-.sk-co #dp #sh{width:84px;height:84px;border-radius:50%;background:radial-gradient(circle at 35% 28%,#ff5a5a,#c4001a 72%);border:5px solid #fff;box-shadow:0 0 0 2px #9fb0b3,0 3px 6px #0005;font-size:7.5px;padding:0;min-height:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:0;text-transform:uppercase}
-.sk-co #dp #sh svg{width:38px;height:38px}
-.sk-co .dial{width:min(170px,100%,26vh);background:radial-gradient(circle at 35% 30%,#fdfdfd,#e1e5e6 55%,#b4bcbe);box-shadow:0 0 0 4px #d7dfe1,0 0 0 6px #6f8386,0 5px 12px #0006}
-.sk-co .dial .dk{inset:0;background:radial-gradient(circle at 32% 28%,#fff,#e4e8e9 60%,#c3caca)}
-.sk-co .dial .dk::after{content:"";position:absolute;left:14%;top:50%;width:26%;height:26%;margin-top:-4%;border-radius:50%;background:radial-gradient(circle at 60% 60%,#f3f5f5,#c5cccd 70%);box-shadow:inset 2px 2px 4px #8a969a,inset -1px -1px 2px #fff}
+.sk-co #dp #sh{width:122px;height:122px;border-radius:50%;background:radial-gradient(circle at 35% 28%,#ff5a5a,#c4001a 72%);border:5px solid #fff;box-shadow:0 0 0 2px #9fb0b3,0 3px 6px #0005;font-size:8px;padding:0;min-height:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:0;text-transform:uppercase}
+.sk-co #dp #sh svg{width:52px;height:52px}
 @media(max-width:1000px){.sk-co #nm{flex-wrap:wrap}.sk-co .n{min-width:30%}}
 @media(max-width:760px){#ms{display:none}#top{padding:6px 8px}.bty,.bi{display:none}
 body.sk-lp,body.sk-co{grid-template-columns:minmax(0,1fr);grid-template-rows:auto minmax(0,1fr) auto;grid-template-areas:"top" "mid" "dp"}
 .sk-lp #dp,.sk-co #dp{margin:0 10px 10px;max-height:46dvh}
 body.sk-lp #mid{grid-template-columns:1fr;grid-template-rows:auto auto 1fr;grid-template-areas:"hdr" "nm" "wv"}
-body.sk-co #mid{grid-template-columns:1fr;grid-template-rows:auto auto 1fr auto;grid-template-areas:"hdr" "nm" "wv" "sks"}
+body.sk-co #mid{grid-template-columns:1fr;grid-template-rows:auto auto 1fr;grid-template-areas:"hdr" "nm" "wv"}
 .sk-lp #nm,.sk-co #nm{flex-direction:row;flex-wrap:wrap;border:0}.sk-lp .n,.sk-co .n{min-width:30%}.sk-lp .n b,.sk-co .n b{font-size:30px}.sk-lp #tp b,.sk-co #tp b{font-size:24px}}
 /* panel instructor */
 body.ctl{display:grid;grid-template-rows:auto auto 1fr auto;height:100dvh;overflow:hidden}
@@ -1279,7 +1248,7 @@ function monitor(code){
 history.replaceState(null,'','#monitor/'+code);
 document.body.className='mon sk-act';
 document.body.innerHTML=`<div id=top><b id=al></b><span id=ms>Toca la pantalla para activar el sonido</span><span id=cd>PANEL: ${code}</span><button id=pq>Sin internet</button><button id=mu>Silenciar alarma</button><button id=gear title="Cambiar el aspecto del equipo" aria-label="Cambiar el aspecto del equipo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a9 9 0 1 0 0 18c1.1 0 1.8-.8 1.8-1.7 0-.5-.2-.9-.5-1.3-.3-.4-.4-.8-.4-1.2 0-1 .8-1.8 1.8-1.8H17a4 4 0 0 0 4-4c0-4.4-4-8-9-8z"/><circle cx="7.5" cy="11" r="1" fill="currentColor"/><circle cx="10" cy="7" r="1" fill="currentColor"/><circle cx="14.5" cy="7" r="1" fill="currentColor"/></svg><span>Aspecto</span></button></div><div id=gm><b>ASPECTO DEL EQUIPO</b><button data-sk=act><svg viewBox="0 0 96 58"><rect width="96" height="58" rx="5" fill="#080c0e" stroke="#243236"/><path d="M6 14h14l3-7 4 14 3-7h18" fill="none" stroke="#3ddc84" stroke-width="2"/><path d="M6 31h12c3-6 6 6 9 0s7 0 12 0h8" fill="none" stroke="#4cc9f0" stroke-width="2"/><path d="M6 47h44" stroke="#ffd23f" stroke-width="2"/><rect x="66" y="7" width="24" height="12" rx="2" fill="#3ddc84" opacity=".85"/><rect x="66" y="23" width="24" height="12" rx="2" fill="#4cc9f0" opacity=".85"/><rect x="66" y="39" width="24" height="12" rx="2" fill="#ffd23f" opacity=".85"/></svg><span>Actual<em>Monitor genérico</em></span></button><button data-sk=lp><svg viewBox="0 0 96 58"><rect width="96" height="58" rx="5" fill="#b4b1ad"/><rect x="4" y="4" width="58" height="50" rx="3" fill="#000"/><rect x="4" y="4" width="58" height="6" fill="#242a3a"/><rect x="7" y="14" width="14" height="8" rx="1" fill="#6be07a"/><rect x="7" y="26" width="14" height="8" rx="1" fill="#4d8dff"/><rect x="7" y="38" width="14" height="8" rx="1" fill="#ffa24d"/><path d="M26 22h8l3-6 3 12 3-6h14" fill="none" stroke="#6be07a" stroke-width="1.6"/><path d="M26 44h10c4-9 8-9 12 0h10" fill="none" stroke="#ffa24d" stroke-width="1.6"/><rect x="66" y="4" width="26" height="50" rx="4" fill="#4b4439"/><rect x="69" y="8" width="9" height="5" rx="2" fill="#2a251f"/><rect x="80" y="8" width="9" height="5" rx="2" fill="#f29a2a"/><circle cx="79" cy="25" r="6" fill="#e8571f"/><rect x="69" y="34" width="20" height="4" rx="2" fill="#2a251f"/><circle cx="79" cy="46" r="6" fill="#222226" stroke="#cfccc8"/></svg><span>Lifepak 15<em>Monitor-desfibrilador</em></span></button><button data-sk=co><svg viewBox="0 0 96 58"><rect width="96" height="58" rx="5" fill="#d2dce0"/><rect x="4" y="4" width="60" height="50" rx="2" fill="#fff" stroke="#2f3b40" stroke-width="1.5"/><rect x="7" y="7" width="12" height="7" fill="#c9d0d3"/><rect x="21" y="7" width="12" height="7" fill="#cfd8f2"/><rect x="35" y="7" width="12" height="7" fill="#f2cfcf"/><rect x="49" y="7" width="12" height="7" fill="#cfd8f2"/><path d="M8 24h8l3-5 3 10 3-5h12" fill="none" stroke="#111" stroke-width="1.4"/><path d="M8 38h10c4-7 8-7 12 0h10" fill="none" stroke="#1565c0" stroke-width="1.4"/><rect x="5" y="46" width="58" height="7" fill="#0a4fa8"/><rect x="68" y="6" width="12" height="7" rx="2" fill="#e3001b"/><rect x="82" y="6" width="10" height="7" rx="2" fill="#566a6f"/><circle cx="80" cy="21" r="5" fill="#e3001b"/><circle cx="80" cy="42" r="11" fill="#f3f5f5" stroke="#9fb0b3" stroke-width="1.5"/><circle cx="75" cy="43" r="3" fill="#c5cccd"/></svg><span>Corpuls3<em>Monitor-desfibrilador</em></span></button></div>
-<div id=mid><div id=hdr><span class=pid>ID Pac. n/d</span><b id=ht></b><span class=hrg><span class=bi>1</span><span class=bty><span style="height:30%;background:#e53935"></span></span><span class=bi>2</span><span class=bty><span style="height:90%"></span></span><b id=he></b></span></div><div id=nm><div class="n g" id=th><i>FC (lpm)</i><em class=lm>150<br>45</em><b id=nh>--</b></div><div class="n c" id=ts><i>SpO₂ (%)</i><em class=lm>--<br>90</em><b id=ns>--</b></div><div class="n w" id=tp><i>PNI (mmHg)</i><b id=np>---/---</b><small id=nq></small></div><div class="n y" id=te><i>EtCO₂ (mmHg)</i><b id=ne>--</b></div><div class="n w" id=tr><i>FR (rpm)</i><b id=nr>--</b></div><div class="n w" id=tt><i>Temp (°C)</i><b id=nt>--</b></div></div><div id=wv><canvas id=cv></canvas><span class="lb lb1"></span><span class="lb lb2"></span><span class="lb lb3"></span></div><div id=sks><span>QRS</span><span>Vistas</span><span>Tendencia</span><span>ECG-LD</span><span>ECG-D</span><button id=skn>PNI</button></div></div>
+<div id=mid><div id=hdr><span class=pid>ID Pac. n/d</span><b id=ht></b><span class=hrg><span class=bi>1</span><span class=bty><span style="height:30%;background:#e53935"></span></span><span class=bi>2</span><span class=bty><span style="height:90%"></span></span><b id=he></b></span></div><div id=nm><div class="n g" id=th><i>FC (lpm)</i><em class=lm>150<br>45</em><b id=nh>--</b></div><div class="n c" id=ts><i>SpO₂ (%)</i><em class=lm>--<br>90</em><b id=ns>--</b></div><div class="n w" id=tp><i>PNI (mmHg)</i><b id=np>---/---</b><small id=nq></small></div><div class="n y" id=te><i>EtCO₂ (mmHg)</i><b id=ne>--</b></div><div class="n w" id=tr><i>FR (rpm)</i><b id=nr>--</b></div><div class="n w" id=tt><i>Temp (°C)</i><b id=nt>--</b></div></div><div id=wv><canvas id=cv></canvas><span class="lb lb1"></span><span class="lb lb2"></span><span class="lb lb3"></span></div></div>
 <div id=bt><div class=gp><h4>DESFIBRILADOR</h4><div class=rw><button id=em>−</button><b id=ev></b><button id=ep>+</button><button id=sy>SINCR.</button></div><div class=rw><button id=ch class=grn>Cargar</button><button id=sh class=red>Descargar</button><button id=ds>Desarmar</button></div><small id=dm></small></div>
 <div class=gp><h4>MARCAPASOS</h4><div class=rw><button id=pf>Activar</button><button id=rm>−</button><b id=rv></b><button id=rp>+</button></div><div class=rw><span>Intensidad</span><button id=am>−</button><b id=av></b><button id=ap>+</button></div></div>
 <div class=gp><h4>PRESIÓN ARTERIAL</h4><div class=rw><button id=pn>Medir PNI</button></div><small>Se infla y desinfla como uno manual (unos 12 s).</small></div></div><div id=dp></div>`;
@@ -1318,84 +1287,36 @@ let skin=SKN[ls('skin')]?ls('skin'):'act',K=SKN[skin];
 function clk(){const e=$('ht');if(!e)return;if(skin==='lp'){const s=Math.floor((Date.now()-T0)/1000),p=n=>String(n).padStart(2,'0');e.textContent=p(s/3600|0)+':'+p(s/60%60|0)+':'+p(s%60)}else e.textContent=hm()}
 const IC={
 bell:'<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 22a2.4 2.4 0 0 0 2.4-2.4H9.6A2.4 2.4 0 0 0 12 22zm7-6.4V11a7 7 0 0 0-5.5-6.8V3.5a1.5 1.5 0 0 0-3 0v.7A7 7 0 0 0 5 11v4.6l-2 2v1h18v-1z"/></svg>',
-flag:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 21V4M5 4h11l-2 4 2 4H5"/></svg>',
-pwr:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M12 3v9M6.3 6.8a8 8 0 1 0 11.4 0"/></svg>',
-home:'<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 3 2 12h3v8h5v-5h4v5h5v-8h3z"/></svg>',
-back:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 7 4 12l5 5M4 12h11a5 5 0 0 1 5 5v1"/></svg>',
-sun:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9 7 7M17 17l2.1 2.1M4.9 19.1 7 17M17 7l2.1-2.1"/></svg>',
-print:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M7 9V3h10v6M7 17H4v-7h16v7h-3M7 14h10v7H7z"/></svg>',
 bolt:'<svg viewBox="0 0 24 24"><path d="M13 2 4 14h6l-1 8 9-12h-6z" fill="#fff"/></svg>',
 heart:'<svg viewBox="0 0 24 24"><path d="M12 21s-8-5.2-8-11a4.5 4.5 0 0 1 8-2.8A4.5 4.5 0 0 1 20 10c0 5.8-8 11-8 11z" fill="#fff"/><path d="M13 5 8.5 12h3l-1 5 4.5-7h-3z" fill="#d32f2f"/></svg>'},
 ORD=[...document.querySelectorAll('#bt .rw')].map(r=>[r,[...r.children]]),DMP=$('dm').parentNode,
 DPL={lp:`<div class=lpP>
-<div class=lpTop>
-<div class=lpLeds><i class=on></i><i></i><i></i></div><span class=lpN>1</span><button class=lpOn data-a=on>Enc.</button>
-<button data-a=cpr>RCP</button><span class=lpN>2</span><div class=lpEn><i data-m=em></i><div class=lpEv><span>ENERGÍA</span><i data-m=ev></i></div><i data-m=ep></i></div>
-<button data-a=ana>Analizar</button><span class=lpN>3</span><i data-m=ch></i></div>
+<div class=lpRow><span class=lpN>1</span><div class=lpEn><i data-m=em></i><div class=lpEv><span>ENERGÍA</span><i data-m=ev></i></div><i data-m=ep></i></div></div>
+<div class=lpRow><span class=lpN>2</span><i data-m=ch></i></div>
+<div class=lpRow><span class=lpN>3</span><div class=lpShockCell><i data-m=sh></i><i data-m=dm></i></div></div>
 <div class=lpCols>
-<div class=lpCol>
-<i data-m=sy></i><i data-m=ds></i><i data-m=pn></i><i data-m=mu></i>
-<button data-a=evt>Evento</button><button data-a=print>Imprimir</button>
-</div>
-<div class=lpCol>
-<div class=lpShockCell><i data-m=sh></i><i data-m=dm></i></div>
+<div class=lpCol><i data-m=sy></i><i data-m=ds></i><i data-m=pn></i><i data-m=mu></i></div>
 <div class=lpPace><i data-m=pf></i>
 <div class=lpV><span>Frecuencia</span><div class=lpAr><i data-m=rm></i><i data-m=rv></i><i data-m=rp></i></div></div>
-<div class=lpV><span>Corriente</span><div class=lpAr><i data-m=am></i><i data-m=av></i><i data-m=ap></i></div></div>
-<button data-a=pz>Pausa</button></div>
-</div></div>
-<div class=lpRound><button data-a=home aria-label="Pantalla principal">${IC.home}</button><button data-a=bri aria-label="Brillo de pantalla">${IC.sun}</button></div>
-<div class=lpCap>SELECTOR</div>
-<div class=dial id=dial tabindex=0 role=slider aria-label="Selector de energía"><div class=dk></div></div>
-<div class=dHint>Gira el selector para cambiar la energía</div></div>`,
+<div class=lpV><span>Corriente</span><div class=lpAr><i data-m=am></i><i data-m=av></i><i data-m=ap></i></div></div></div>
+</div></div>`,
 co:`<div class=coP>
-<div class=coTop><i data-m=mu></i><button class=ic data-a=evt aria-label="Marca de evento">${IC.flag}</button><span class=gap></span><button class=pwr data-a=on aria-label="Encendido">${IC.pwr}</button></div>
-<div class=coRow><button class=coRed data-a=aed>DEA</button><span class=coN>1</span><div class=coEn><i data-m=em></i><div class=coEv><span>ENERGÍA</span><i data-m=ev></i></div><i data-m=ep></i></div></div>
-<div class=coRow><button class=coRed data-a=ana>Analizar</button><span class=coN>2</span><i data-m=ch></i></div>
-<div class=coWhite><i data-m=sh></i></div>
-<div class=coG2><i data-m=sy></i><i data-m=ds></i></div><i data-m=dm></i>
-<div class=dial id=dial tabindex=0 role=slider aria-label="Selector de energía"><div class=dk></div></div>
-<div class=dHint>Gira el selector para cambiar la energía</div>
-<div class=coLow><button data-a=mon>Monitor</button><button class=ic data-a=back aria-label="Atrás">${IC.back}</button><button data-a=pac>Marcapasos</button><button class=ic data-a=home aria-label="Inicio">${IC.home}</button></div>
-<div class=coPace id=coPace><div class=coCap>MARCAPASOS</div><div class=coG2><i data-m=pf></i><button data-a=pz>Pausa</button></div>
+<div class=coRow><i data-m=sy></i><span class=coN>1</span><div class=coEn><i data-m=em></i><div class=coEv><span>ENERGÍA</span><i data-m=ev></i></div><i data-m=ep></i></div></div>
+<div class=coRow><i data-m=ds></i><span class=coN>2</span><i data-m=ch></i></div>
+<div class=coWhite><i data-m=sh></i></div><i data-m=dm></i>
+<div class=coPace><div class=coCap>MARCAPASOS</div><i data-m=pf></i>
 <div class=coV><span>Frec.</span><i data-m=rm></i><i data-m=rv></i><i data-m=rp></i></div>
 <div class=coV><span>Int.</span><i data-m=am></i><i data-m=av></i><i data-m=ap></i></div></div>
-<button class=wide data-a=print>${IC.print}Imprimir</button></div>`};
+<div class=coG2><i data-m=pn></i><i data-m=mu></i></div></div>`};
 const SHK={lp:IC.bolt+'<span>Descargar</span>',co:IC.heart+'<span>Descargar</span>'};
-let PZ=0,PO=false,BR=0,CPRiv=0,AN=0;
-const NOTE=(t,ms=3500)=>{const m=$('ms');m.textContent=t;setTimeout(()=>{if(m.textContent===t)m.textContent=''},ms)};
-function refresh(){document.querySelectorAll('[data-a=aed]').forEach(b=>b.classList.toggle('on',!!D.aed));document.querySelectorAll('[data-a=cpr]').forEach(b=>b.classList.toggle('on',!!CPRiv));document.querySelectorAll('[data-a=pac]').forEach(b=>b.classList.toggle('on',!!PC.on));document.querySelectorAll('[data-a=pz]').forEach(b=>b.classList.toggle('on',!!PZ));const cp=$('coPace');if(cp)cp.classList.toggle('on',PO);$('mid').style.filter=BR?'brightness('+[1,.72,.5][BR]+')':''}
-function analyse(){au();if(AN)return;AN=1;log('Análisis de ritmo iniciado');NOTE('ANALIZANDO RITMO… NO TOQUE AL PACIENTE',4500);[0,.5,1,1.5,2,2.5,3,3.5].forEach(a=>bp(700,.06,.07,'sine',a));
-setTimeout(()=>{AN=0;const r=G.t<G.blank?'asys':S.rhythm,sh=LD.includes(r);log(`Análisis de ritmo (${RH[r][0]}): ${sh?'DESCARGA ACONSEJADA':'DESCARGA NO ACONSEJADA'}`);NOTE(sh?'DESCARGA ACONSEJADA':'DESCARGA NO ACONSEJADA',6000);
-if(sh){[0,.18,.36].forEach(a=>bp(1100,.12,.1,'sine',a));if(D.aed&&!D.st)$('ch').click()}else bp(440,.3,.1)},4000)}
-function cprToggle(){au();if(CPRiv){clearInterval(CPRiv);CPRiv=0;log('RCP finalizada (metrónomo apagado)');NOTE('RCP: metrónomo apagado')}else{CPRiv=setInterval(()=>bp(1000,.045,.1,'square'),545);log('RCP iniciada (metrónomo 110/min)');NOTE('RCP: siga el metrónomo (110/min)',4000)}refresh()}
-const ACT={nd:()=>NOTE('Función no disponible en este simulador'),on:()=>NOTE('Equipo encendido'),
-evt:()=>{log('Marca de evento');NOTE('EVENTO MARCADO '+hm())},
-print:()=>{for(let i=0;i<14;i++)nz(.035,2600,.05,i*.08,'bandpass');NOTE('Imprimiendo tira de ECG…',2500);log('Impresión de ECG solicitada')},
-cpr:cprToggle,ana:analyse,
-aed:()=>{D.aed=D.aed?0:1;log('Modo DEA '+(D.aed?'activado':'desactivado'));NOTE(D.aed?'MODO DEA: pulse ANALIZAR (cargará solo si aconseja descarga)':'Modo DEA desactivado',4000);refresh()},
-bri:()=>{BR=(BR+1)%3;refresh();NOTE('Brillo de pantalla: '+['alto','medio','bajo'][BR],1500)},
-pz:()=>{if(PC.on){PC.on=0;PZ=1;log('Marcapasos en pausa')}else if(PZ){PC.on=1;PZ=0;G.nP=G.t;G.capped=0;log('Marcapasos reanudado')}pu()},
-pac:()=>{PO=!PO;refresh()},mon:()=>{PO=false;refresh()}};
-ACT.home=ACT.back=ACT.mon;
-/* rueda: girar con el dedo o el ratón (o la rueda del ratón) cambia la energía */
-function bindDial(){const d=$('dial');if(!d)return;const dk=d.firstElementChild;let rot=D.rot||0,last=0,acc=0,drag=0,wt=0;
-const ang=e=>{const r=d.getBoundingClientRect();return Math.atan2(e.clientY-(r.top+r.height/2),e.clientX-(r.left+r.width/2))*180/Math.PI},
-paint=()=>{dk.style.transform='rotate('+rot+'deg)';D.rot=rot},step=n=>{au();$(n>0?'ep':'em').click()};
-d.onpointerdown=e=>{e.preventDefault();au();try{d.setPointerCapture(e.pointerId)}catch(_){}drag=1;last=ang(e);d.focus()};
-d.onpointermove=e=>{if(!drag)return;const a=ang(e);let dl=a-last;if(dl>180)dl-=360;if(dl<-180)dl+=360;last=a;rot+=dl;acc+=dl;paint();while(acc>=28){acc-=28;step(1)}while(acc<=-28){acc+=28;step(-1)}};
-d.onpointerup=d.onpointercancel=()=>{drag=0};
-d.onwheel=e=>{e.preventDefault();if(e.timeStamp-wt<110)return;wt=e.timeStamp;const n=e.deltaY<0?1:-1;rot+=n*28;paint();step(n)};
-d.onkeydown=e=>{const n=(e.key==='ArrowRight'||e.key==='ArrowUp')?1:(e.key==='ArrowLeft'||e.key==='ArrowDown')?-1:0;if(n){e.preventDefault();rot+=n*28;paint();step(n)}};paint()}
-$('dp').addEventListener('click',e=>{const b=e.target.closest('[data-a]');if(!b)return;au();bp(1200,.03,.04);(ACT[b.dataset.a]||ACT.nd)(b)});
 function setSkin(v){if(!SKN[v])v='act';skin=v;K=SKN[v];ls('skin',v);const b=document.body;b.classList.remove('sk-act','sk-lp','sk-co');b.classList.add('sk-'+v);
 ORD.forEach(([r,c])=>r.append(...c));DMP.append($('dm'));$('top').insertBefore($('mu'),$('gear'));
 const dp=$('dp');dp.innerHTML=DPL[v]||'';dp.querySelectorAll('[data-m]').forEach(ph=>ph.replaceWith($(ph.dataset.m)));
 [['em','▼','−'],['ep','▲','+'],['rm','▼','−'],['rp','▲','+'],['am','▼','−'],['ap','▲','+']].forEach(([i,a,n])=>$(i).textContent=v!=='act'?a:n);
-$('sh').innerHTML=SHK[v]||'Descargar';$('pn').textContent=v==='lp'?'PNI':'Medir PNI';
-$('mu').innerHTML=v==='co'?IC.bell:v==='lp'?'Alarmas':'Silenciar alarma';$('mu').classList.toggle('ic',v==='co');$('mu').title='Silenciar alarma';$('mu').setAttribute('aria-label','Silenciar alarma');
+$('sh').innerHTML=SHK[v]||'Descargar';$('pn').textContent=v==='act'?'Medir PNI':'PNI';
+$('mu').innerHTML=v==='co'?IC.bell+'Silenciar':v==='lp'?'Alarmas':'Silenciar alarma';$('mu').classList.toggle('ic',v==='co');$('mu').title='Silenciar alarma';
 $('gm').querySelectorAll('button').forEach(x=>x.classList.toggle('on',x.dataset.sk===v));
-for(let i=1;i<4;i++)document.querySelector('.lb'+i).textContent=K.l[i-1];bindDial();pu();size();ds();clk()}
+for(let i=1;i<4;i++)document.querySelector('.lb'+i).textContent=K.l[i-1];pu();size();ds();clk()}
 setInterval(clk,1000);
 function size(){cv.width=cv.clientWidth*dpr;cv.height=cv.clientHeight*dpr;cx.lineWidth=K.w*dpr;cx.lineJoin='round';X=0;PY=null}addEventListener('resize',size);size();
 function plot(v,mk){const W=cv.width,H=cv.height,st=W/(6*FS);X+=st;if(X>=W){X=0;PY=null}cx.clearRect(X,0,16*dpr,H);
@@ -1427,8 +1348,8 @@ $('sh').onclick=()=>{au();if(D.st!==2)return;if(D.sync){const r=S.rhythm;if(CONT
 $('ds').onclick=()=>disarm(1);
 setInterval(()=>{if(rdy&&D.st===2&&skin!=='lp'){bp(1100,.12,.1);bp(1100,.12,.1,'sine',.2)}},900);
 /* marcapasos */
-const pu=()=>{$('rv').textContent=PC.rate;$('av').textContent=PC.mA+' mA';$('pf').textContent=skin==='act'?(PC.on?'Pausar':'Activar'):'Marcapasos';$('pf').classList.toggle('on',!!PC.on);refresh()};
-$('pf').onclick=()=>{PZ=0;PC.on=PC.on?0:1;G.nP=G.t;G.capped=0;log(PC.on?`Marcapasos activado: ${PC.rate} lpm, ${PC.mA} mA`:'Marcapasos pausado');pu()};
+const pu=()=>{$('rv').textContent=PC.rate;$('av').textContent=PC.mA+' mA';$('pf').textContent=PC.on?'Pausar':'Activar';$('pf').classList.toggle('on',!!PC.on)};
+$('pf').onclick=()=>{PC.on=PC.on?0:1;G.nP=G.t;G.capped=0;log(PC.on?`Marcapasos activado: ${PC.rate} lpm, ${PC.mA} mA`:'Marcapasos pausado');pu()};
 $('rm').onclick=()=>{PC.rate=Math.max(30,PC.rate-5);G.capped=0;pu()};$('rp').onclick=()=>{PC.rate=Math.min(180,PC.rate+5);G.capped=0;pu()};
 $('am').onclick=()=>{PC.mA=Math.max(0,PC.mA-10);pu()};$('ap').onclick=()=>{PC.mA=Math.min(200,PC.mA+10);pu();if(PC.on)log(`Intensidad del marcapasos: ${PC.mA} mA`)};
 /* PNI con sonidos de bomba y válvula */
@@ -1452,6 +1373,6 @@ setInterval(()=>{const n=Date.now();if(n<mutedUntil||n<nextAl||!AC)return;
 if(AL.c){[0,.22,.44,.95,1.17,2.15,2.37,2.59,3.1,3.32].forEach(a=>pulse(900,a));nextAl=n+6000}
 else if(AL.w){[0,.25,.5].forEach(a=>pulse(640,a,.14,.08));nextAl=n+6500}},250);
 $('mu').onclick=()=>{au();mutedUntil=Date.now()+120000;log('Alarmas silenciadas 2 min')};
-ds();pu();setSkin(skin);const gmo=v=>{$('gm').classList.toggle('on',v);$('gear').classList.toggle('on',v)};$('gear').onclick=()=>gmo(!$('gm').classList.contains('on'));document.addEventListener('pointerdown',e=>{if(!e.target.closest('#gm,#gear'))gmo(false)});$('gm').querySelectorAll('button').forEach(x=>x.onclick=()=>{setSkin(x.dataset.sk);gmo(false)});$('skn').onclick=()=>$('pn').click();$('pq').onclick=()=>openPair('m');
+ds();pu();setSkin(skin);const gmo=v=>{$('gm').classList.toggle('on',v);$('gear').classList.toggle('on',v)};$('gear').onclick=()=>gmo(!$('gm').classList.contains('on'));document.addEventListener('pointerdown',e=>{if(!e.target.closest('#gm,#gear'))gmo(false)});$('gm').querySelectorAll('button').forEach(x=>x.onclick=()=>{setSkin(x.dataset.sk);gmo(false)});$('pq').onclick=()=>openPair('m');
 const pbc=new BroadcastChannel('simpair');pbc.onmessage=async e=>{if(e.data.t==='ans'&&PCx){try{await useAnswer(e.data.code);pbc.postMessage({t:'ack'})}catch(_){}}}}
 </script></body></html>

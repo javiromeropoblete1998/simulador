@@ -84,6 +84,7 @@ html{background:#070d10}body.landing{min-height:100%;height:auto;background:radi
 .lc .tx span{display:block;color:#9fb4b9;font-size:13.5px;line-height:1.4}
 .lc::after{content:"›";font-size:30px;color:#4a7480;line-height:1;margin-left:2px}
 .lc.main::after{color:#8fe3d6}
+.lver2{margin:2px 0 0;text-align:center;color:#4f666c;font-size:11px;letter-spacing:.05em}
 .lnote{margin:2px 0 0;text-align:center;color:#6f878d;font-size:13px}
 @media(max-width:640px){.lgrid{grid-template-columns:1fr}.lc{padding:14px}.lc .ic{width:48px;height:48px}.lc .tx b{font-size:17px}.lcode input{font-size:22px}}
 @media(max-height:520px) and (min-aspect-ratio:1/1){.lhead{padding-top:4px}.lhead img{width:48px;height:48px;margin-bottom:8px}.lhead p,.lecg{display:none}}
@@ -390,7 +391,7 @@ body.sk-act #bt{min-height:clamp(0px,calc(var(--vh,100dvh)*.19),300px)}
 #rpo #rp_t.on{opacity:1}
 #pc .pca #pc_i{flex:1 1 100%;min-height:44px}
 @media(max-width:600px){#rpo .rph{gap:6px;padding-bottom:8px}#rpo .rph b{display:none}#rpo .rph button{padding:7px 10px;min-height:36px;font-size:13px}#rpo #rp_b{margin-right:auto}}
-#rpbtn{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:6px}#rpbtn .sm{margin-bottom:0}#rp{background:#1f5f36;border-color:#2e8b57;font-weight:700}
+#rpbtn{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:6px}#rpbtn .sm{margin-bottom:0}#rpbtn #rpt{background:#1f5f36;border-color:#2e8b57;font-weight:700}
 </style></head><body><script>
 const $=i=>document.getElementById(i),g=(x,m,s)=>Math.exp(-((x-m)**2)/(2*s*s)),hm=()=>new Date().toLocaleTimeString('es-ES');
 const ls=(k,v)=>{try{if(v===undefined)return localStorage.getItem(k);localStorage.setItem(k,v)}catch(_){}};
@@ -1728,7 +1729,7 @@ addEventListener('hashchange',()=>location.reload());
 
 function land(){document.body.className='landing';document.body.innerHTML=`<div class=land>
 <header class=lhead><img src="icon-192.png" alt="" width=72 height=72><h1>Simulador de monitor-desfibrilador</h1>
-<p>Monitor, desfibrilador, marcapasos y panel de instructor para prácticas de emergencias.</p><span class=lver>Versión 10</span>
+<p>Monitor, desfibrilador, marcapasos y panel de instructor para prácticas de emergencias.</p>
 <svg class=lecg viewBox="0 0 520 46" preserveAspectRatio="none" aria-hidden="true"><path d="M0 28H90l10-8 10 8h40l8 6 8-26 10 42 8-22h30l10-8 10 8h80l10-8 10 8h40l8 6 8-26 10 42 8-22H520"/></svg></header>
 ${FB?'':'<div class=lwarn>Falta configurar la base de datos: edita el archivo config.js siguiendo la guía.</div>'}
 <section class=lcode><label for=cin>CÓDIGO DE SESIÓN</label><input id=cin maxlength=8 placeholder="AUTO" autocomplete=off autocapitalize=characters spellcheck=false value="${ls('cc')||''}">
@@ -1738,7 +1739,8 @@ ${FB?'':'<div class=lwarn>Falta configurar la base de datos: edita el archivo co
 <button class=lc id=cgo><span class=ic><svg viewBox="0 0 32 32" fill="none" stroke="#7bd8ff" stroke-width="2.2" stroke-linecap="round"><path d="M5 9h22M5 16h22M5 23h22"/><circle cx="12" cy="9" r="3" fill="#0a171b"/><circle cx="21" cy="16" r="3" fill="#0a171b"/><circle cx="10" cy="23" r="3" fill="#0a171b"/></svg></span><span class=tx><em>Instructor · móvil</em><b>Panel del instructor</b><span>Controla el ritmo y las constantes de esa sesión. Necesita el código del monitor.</span></span></button>
 <button class=lc id=cof><span class=ic><svg viewBox="0 0 32 32" fill="none" stroke="#ffcf6b" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12c7-6 19-6 26 0M8 17c5-4 11-4 16 0M13 22c2-1.5 4-1.5 6 0"/><circle cx="16" cy="26" r="1.4" fill="#ffcf6b"/><path d="M5 5l22 22"/></svg></span><span class=tx><em>Sin internet</em><b>Panel sin internet</b><span>Para controlar un monitor emparejado con QR, sin wifi con internet.</span></span></button>
 </div>
-<p class=lnote>Usa un código distinto en cada monitor: si dos monitores comparten código, recibirán las mismas órdenes.</p></div>`;
+<p class=lnote>Usa un código distinto en cada monitor: si dos monitores comparten código, recibirán las mismas órdenes.</p><p class=lver2 id=lv>Versión 20</p></div>`;
+try{caches.keys().then(k=>{const v=k.map(x=>(x.match(/^simulador-v(\d+)$/)||[])[1]).filter(Boolean).map(Number);if(v.length&&$('lv'))$('lv').textContent='Versión '+Math.max(...v)}).catch(()=>{})}catch(_){}
 $('bm').onclick=()=>{const c=cl($('cin').value);location.hash='#monitor'+(c?'/'+c:'')};
 $('cof').onclick=()=>{location.hash='#panel'};
 $('cgo').onclick=()=>{const c=cl($('cin').value);if(c){ls('cc',c);location.hash='#control/'+c}else{const i=$('cin');i.focus();i.classList.remove('err');void i.offsetWidth;i.classList.add('err');setTimeout(()=>i.classList.remove('err'),900)}}}
@@ -1769,7 +1771,7 @@ document.body.innerHTML=`<div id=hd><button class="pb hbk" id=hb title="Volver a
 <div class=pg id=p2><div class=tl><h4>Desfibrilación (sin SYNC)</h4><small>Sobre FV (gruesa y fina), TV monomorfa, TV polimorfa y torsades. Energía mínima para que sea eficaz:</small><div class=sr><input type=range id=r_eD min=30 max=360 step=10><output id=o_eD></output></div><small>Ritmo tras descarga eficaz</small><select id=s_oD></select></div>
 <div class=tl><h4>Cardioversión (con SYNC)</h4><small>Sobre TV con pulso, TSV, FA y flutter. Energía mínima para que sea eficaz:</small><div class=sr><input type=range id=r_eC min=30 max=360 step=10><output id=o_eC></output></div><small>Ritmo tras cardioversión eficaz</small><select id=s_oC></select></div>
 <div class=tl><h4>Marcapasos transcutáneo</h4><small>Intensidad mínima para conseguir captura:</small><div class=sr><input type=range id=r_thr min=20 max=200 step=5><output id=o_thr></output></div></div></div>
-<div class=pg id=p3><div id=rpbtn><button class=sm id=rp>Generar informe de debriefing</button><button class=sm id=lc>Borrar registro</button></div><div id=lgl><p class=mu>Aquí aparecerán las acciones del alumno.</p></div></div>
+<div class=pg id=p3><div id=rpbtn><button class=sm id=rpt>Generar informe de debriefing</button><button class=sm id=lc>Borrar registro</button></div><div id=lgl><p class=mu>Aquí aparecerán las acciones del alumno.</p></div></div>
 <div class="pg on" id=p4><button class=pwb id=dv_pw><span class=pwi>⏻</span><span><b>Monitor-desfibrilador</b><em></em><small>El alumno lo ve apagado hasta que lo enciendas.</small></span></button>
 
 <h3>Sensores y accesorios</h3><div class=dvg id=dvg></div>
@@ -1801,7 +1803,7 @@ $('dv_pw').onclick=()=>devSet('pw',S.pw?0:1);
 $('dv_on').onclick=()=>{DEVS.forEach(([k])=>S[k]=1);S.pw=1;addLog('Instructor: monitor encendido y todos los accesorios conectados');ui();sync()};
 $('dv_off').onclick=()=>{DEVS.forEach(([k])=>S[k]=0);addLog('Instructor: todos los accesorios retirados');ui();sync()};
 $('hb').onclick=()=>{location.hash=''};
-$('lc').onclick=()=>{if(confirm('¿Borrar el registro y empezar una nueva simulación? El informe se perderá.'))evClear()};$('rp').onclick=()=>evOpen();EVS.onClear=()=>{$('lgl').innerHTML='<p class=mu>Registro vacío.</p>'};
+$('lc').onclick=()=>{if(confirm('¿Borrar el registro y empezar una nueva simulación? El informe se perderá.'))evClear()};$('rpt').onclick=()=>evOpen();EVS.onClear=()=>{$('lgl').innerHTML='<p class=mu>Registro vacío.</p>'};
 function ui(){devUi();$('ia').classList.toggle('on',!!S.ia);$('il').classList.toggle('on',!!S.ilink);$('vti').style.display=S.ilink?'none':'';$('s_is').value=S.isite;VT.concat(VI).forEach(([k])=>$('v_'+k).textContent=k==='temp'?(+S[k]).toFixed(1):S[k]);$('cp').classList.toggle('on',!!S.pulse);$('ca').classList.toggle('on',!!S.art);
 document.querySelectorAll('.rc').forEach(b=>b.classList.toggle('on',b.dataset.k===S.rhythm));
 ['eD','eC','thr'].forEach(k=>{$('r_'+k).value=S[k];$('o_'+k).textContent=S[k]+(k==='thr'?' mA':' J')});$('s_oD').value=S.oD;$('s_oC').value=S.oC;

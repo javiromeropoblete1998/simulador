@@ -376,44 +376,47 @@ body.sk-act #bt{min-height:clamp(0px,calc(var(--vh,100dvh)*.19),300px)}
 #pc .pct button{display:flex;justify-content:space-between;align-items:center;gap:6px;padding:8px 10px;border-radius:10px;background:#0f181b;border:2px solid #22333a;color:#e8eeee;text-align:left;font-size:13px;min-height:44px}#pc .pct button em{font-style:normal;font-size:11px;font-weight:700;color:#e57373}#pc .pct button.on{border-color:#3ddc84;background:#10231c}#pc .pct button.on em{color:#3ddc84}
 .pca{display:flex;gap:6px;margin-top:10px;flex-wrap:wrap}.pca button{flex:1;min-width:90px}
 #dv_free{display:block;width:100%;margin-top:10px;padding:12px;border-radius:999px;border:1px solid #2a3a3f;background:#121c20;text-align:center}#dv_free.on{background:#0b6e78;border-color:#4cc9f0}
-/* ===== modo DESA ===== */
-body.desa{background:radial-gradient(900px 600px at 50% 0,#14323a 0,#0b1a1f 55%,#070d10 100%) no-repeat #070d10;height:100vh;height:var(--vh,100dvh);overflow:hidden;display:flex;flex-direction:column;color:#e8eeee}
-#dtop{display:flex;align-items:center;gap:10px;padding:max(8px,env(safe-area-inset-top)) 12px 6px}
-#dtop button{background:transparent;border:1px solid #2f4249;border-radius:10px;padding:6px 12px;color:#9fb4b9;min-height:36px}
-#dtop #dgear{border:0;font-size:24px;line-height:1;padding:0 8px;opacity:.7;margin-left:auto;color:#9fb4b9}#dtop #dgear:hover{opacity:1}
-#dst{color:#6fb9c4;font-size:13px;letter-spacing:.08em;text-transform:uppercase}
-#dstage{flex:1;min-height:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;padding:0 12px max(12px,env(safe-area-inset-bottom))}
-#aed{position:relative;--u:6px;width:min(92vw,calc((var(--vh,100vh) - 175px)*.92));aspect-ratio:.92;flex:0 0 auto;border-radius:calc(var(--u)*9);background:linear-gradient(160deg,#f4f8fb,#dbe6ed 55%,#c8d7e0);box-shadow:inset 0 0 0 calc(var(--u)*.3) #ffffffb0,inset 0 calc(var(--u)*-2.2) calc(var(--u)*2.4) #9fb3bf90,0 calc(var(--u)*1.6) calc(var(--u)*4) #000c,0 0 0 calc(var(--u)*.3) #aebfca}
-#aed .arim{position:absolute;left:0;right:0;bottom:0;height:11%;border-radius:0 0 calc(var(--u)*9) calc(var(--u)*9);background:linear-gradient(#cfdce5,#b9cad5);box-shadow:inset 0 calc(var(--u)*.4) 0 #ffffff90}
-#aed .atag{position:absolute;top:5.5%;left:0;right:0;text-align:center;font:700 calc(var(--u)*3)/1 var(--ui);letter-spacing:.14em;color:#5d6c76}
-#aled{position:absolute;left:63%;top:13.2%;width:calc(var(--u)*2);height:calc(var(--u)*2);margin-left:calc(var(--u)*-1);border-radius:50%;background:#1a2227;box-shadow:inset 0 0 0 calc(var(--u)*.2) #0008}
-#apw{position:absolute;left:63%;top:25%;width:15%;aspect-ratio:1;transform:translate(-50%,-50%);border:0;padding:0;border-radius:24%;background:linear-gradient(#3fcf78,#1f9d52);box-shadow:inset 0 0 0 calc(var(--u)*.45) #d9f7e6,0 calc(var(--u)*.5) calc(var(--u)*1) #0005;display:grid;place-items:center}
-#apw svg{width:56%;height:56%}
-#apw:active{filter:brightness(.9)}
-#afig{position:absolute;left:7%;top:11%;width:45%;height:62%}
+/* ===== modo DESA: el aparato ocupa TODA la pantalla (sin barras, subtítulos ni tiempo) ===== */
+body.desa{position:fixed;left:0;right:0;top:0;height:100vh;height:100dvh;height:var(--vh,100dvh);margin:0;padding:0;overflow:hidden;display:block;background:#cfdce5;color:#e8eeee;overscroll-behavior:none;touch-action:manipulation}
+#aed{position:absolute;inset:0;display:grid;grid-template-columns:minmax(0,1fr);grid-template-rows:auto minmax(0,1.1fr) minmax(0,1fr) auto;grid-template-areas:"tag" "fig" "ctl" "spk";gap:6px;background:linear-gradient(160deg,#f4f8fb,#dbe6ed 55%,#c8d7e0);color:#44545e;padding:max(10px,env(safe-area-inset-top)) max(14px,env(safe-area-inset-right)) max(12px,env(safe-area-inset-bottom)) max(14px,env(safe-area-inset-left))}
+@media(min-aspect-ratio:5/4){#aed{grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);grid-template-rows:auto minmax(0,1fr) auto;grid-template-areas:"tag tag" "fig ctl" "spk spk"}}
+#aed .atag{grid-area:tag;text-align:center;font:700 clamp(12px,min(2.6vw,2.6vh),22px)/1 var(--ui);letter-spacing:.16em;color:#5d6c76;padding:6px 60px 0}
+.dfl{position:absolute;top:max(10px,env(safe-area-inset-top));width:46px;height:46px;padding:0;border-radius:50%;border:1px solid #aebfca;background:#ffffffa0;color:#586a75;font-size:24px;line-height:1;display:grid;place-items:center;z-index:5}
+#dhm{left:max(10px,env(safe-area-inset-left))}#dgear{right:max(10px,env(safe-area-inset-right))}
+#afw{grid-area:fig;min-width:0;min-height:0;display:flex}
+#afig{width:100%;height:100%;display:block}
+#actl{grid-area:ctl;min-width:0;min-height:0;display:flex;flex-direction:column;align-items:center;justify-content:space-evenly;gap:clamp(8px,2vh,22px)}
+.apr{display:flex;flex-direction:column;align-items:center;gap:clamp(6px,1.4vh,14px)}
+#aled{width:clamp(12px,min(2.6vw,2.6vh),22px);height:clamp(12px,min(2.6vw,2.6vh),22px);border-radius:50%;background:#1a2227;box-shadow:inset 0 0 0 2px #0008}
+#apw{width:min(22vw,calc(var(--vh,100vh)*.17));min-width:64px;aspect-ratio:1;border:0;padding:0;border-radius:24%;background:linear-gradient(#3fcf78,#1f9d52);box-shadow:inset 0 0 0 4px #d9f7e6,0 4px 8px #0005;display:grid;place-items:center}
+#apw svg{width:56%;height:56%}#apw:active{filter:brightness(.9)}
+#ash{width:min(44vw,calc(var(--vh,100vh)*.34));aspect-ratio:1.1;border:0;padding:0;background:none;filter:drop-shadow(0 4px 6px #0005)}
+#ash svg{width:100%;height:100%;display:block}#ash:active{transform:scale(.97)}
+@media(max-aspect-ratio:5/4){#apw{width:min(22vw,calc(var(--vh,100vh)*.11))}#ash{width:min(44vw,calc(var(--vh,100vh)*.2))}}
+#apd{display:flex;align-items:center;gap:10px;min-height:50px;padding:12px 24px;border:0;border-radius:999px;background:linear-gradient(#2d9cdb,#1b6fa8);color:#fff;font:700 clamp(15px,min(3.6vw,3.4vh),24px) var(--ui);letter-spacing:.03em;box-shadow:0 4px 12px #0004}
+#apd[hidden]{display:none}#apd svg{width:1.5em;height:1.5em;flex:0 0 auto}#apd:active{filter:brightness(.92)}
+#apd.ask{animation:dpbtn 1.1s ease-in-out infinite}
+@keyframes dpbtn{50%{transform:scale(1.06);box-shadow:0 0 0 8px #2d9cdb40,0 4px 12px #0004}}
+.aspk{grid-area:spk;justify-self:center;width:min(34vw,260px);height:clamp(22px,5vh,44px);border-radius:12px;background-image:radial-gradient(circle,#8fa0ab 38%,transparent 42%);background-size:8px 8px;opacity:.85}
 #afig .pad{cursor:pointer}#afig .hit{fill:transparent;pointer-events:all}
-#afig .padb{fill:#7d8b95;stroke:#4d5a63;stroke-width:1.6}#afig .ck{display:none;fill:none;stroke:#fff;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
-#afig .pad.on .padb{fill:#2faa60;stroke:#1c7a43}#afig .pad.on .ck{display:block}
+#afig .padb{fill:#7d8b95;stroke:#4d5a63;stroke-width:1.6;transform-box:fill-box;transform-origin:center}
+#afig .ck{display:none;fill:none;stroke:#fff;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
+#afig .wire{display:none;fill:none;stroke:#37474f;stroke-width:2.2;stroke-linecap:round;pointer-events:none}
+#afig .pad.on .padb{fill:#2faa60;stroke:#1c7a43;animation:pstick .4s ease-out}
+#afig .pad.on .ck,#afig .pad.on .wire{display:block}
 #afig .pad.hint .padb{animation:dpb 1s ease-in-out infinite}
-@keyframes dpb{50%{fill:#ffb74d;stroke:#e08a00}}
-#ash{position:absolute;left:63%;top:55%;width:24%;aspect-ratio:1.1;transform:translate(-50%,-50%);border:0;padding:0;background:none;filter:drop-shadow(0 calc(var(--u)*.5) calc(var(--u)*.6) #0005)}
-#ash svg{width:100%;height:100%;display:block}
-#ash:active{transform:translate(-50%,-50%) scale(.97)}
+@keyframes pstick{0%{transform:scale(1.6);opacity:.3}60%{opacity:1}100%{transform:scale(1)}}
+@keyframes dpb{50%{fill:#ffb74d;stroke:#e08a00;transform:scale(1.14)}}
 #aed[data-s=ready] #ash{animation:dsh .6s ease-in-out infinite}
-@keyframes dsh{50%{filter:brightness(1.4) drop-shadow(0 0 calc(var(--u)*3) #ff8a4c)}}
-#aed .aspk{position:absolute;left:30%;right:30%;top:77%;height:9%;border-radius:calc(var(--u)*3);background-image:radial-gradient(circle,#8fa0ab 38%,transparent 42%);background-size:calc(var(--u)*1.7) calc(var(--u)*1.7);opacity:.85}
+@keyframes dsh{50%{filter:brightness(1.4) drop-shadow(0 0 18px #ff8a4c)}}
 #aed[data-s=off] #apw{filter:saturate(.55) brightness(.9)}
-#aed:not([data-s=off]) #apw{box-shadow:inset 0 0 0 calc(var(--u)*.45) #d9f7e6,0 0 calc(var(--u)*3) #2ee27a,0 calc(var(--u)*.5) calc(var(--u)*1) #0005}
+#aed:not([data-s=off]) #apw{box-shadow:inset 0 0 0 4px #d9f7e6,0 0 18px #2ee27a,0 4px 8px #0005}
 #aed:not([data-s=off]) #aled{background:#27d36b;animation:dled 1.6s ease-in-out infinite}
 #aed[data-s=analyze] #aled{background:#ff3b30;animation:dled .35s steps(2) infinite}
 #aed[data-s=ready] #aled,#aed[data-s=charge] #aled{background:#ff9f1a;animation:dled .5s steps(2) infinite}
 @keyframes dled{50%{opacity:.25}}
-#dsub{flex:0 0 auto;max-width:min(94vw,760px);min-height:70px;text-align:center}
-#dtx{display:block;font:600 clamp(18px,2.6vw,26px)/1.25 var(--num);color:#e8eeee}
-#dtm{display:block;color:#ffcf6b;font:700 22px var(--mono);margin-top:4px;min-height:26px}
-body.notx #dtx{visibility:hidden}
 #dpn{position:fixed;top:0;bottom:0;right:0;width:min(370px,94vw);z-index:40;background:#0f181b;border-left:1px solid #2a3a3f;box-shadow:-10px 0 30px #000a;overflow:auto;padding:max(12px,env(safe-area-inset-top)) 14px 24px;transform:translateX(105%);transition:transform .2s}
-#dpn.on{transform:none}
+#dpn:not(.on){box-shadow:none;visibility:hidden;transition:transform .2s,visibility 0s .2s}#dpn.on{transform:none;visibility:visible}
 #dpn header{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px}#dpn header b{font:700 17px var(--num)}
 #dpn button{background:#17252a;border:1px solid #2f4249;border-radius:10px;color:#e8eeee;padding:9px 12px;text-align:left}
 #dpn button.on{background:#0b6e78;border-color:#2fb5c2}
@@ -1685,32 +1688,33 @@ const TS=window.DESA_TS||1,CAP={S:'DESCARGA',N:'SIN DESCARGA'},
 PRE=[['Desfibrilable','Primer análisis: descarga aconsejada','S'],['No desfibrilable','Primer análisis: no se aconseja descarga','N'],['2 no desfibrilables y a la 3.ª, descarga','Análisis 1 y 2 sin descarga; análisis 3 con descarga','NNS']],
 MALE=/jorge|pablo|[aá]lvaro|enrique|diego|juan|ra[uú]l|carlos|antonio|miguel|pedro|eddy|reed|rocko|jaime|andr[eé]s|alberto|luis|jos[eé]|male|hombre|masculin/i,
 FEM=/m[oó]nica|paulina|helena|laura|sabina|elvira|marisol|esperanza|luc[ií]a|isabela|camila|dalia|salom[eé]|female|mujer|google espa|\bflo\b|sandy|shelley|grandma|ximena|valentina|catalina|paloma|marta|in[eé]s|elena|sofia|sof[ií]a/i;
-let sq=(ls('dseq')||'S').replace(/[^SN]/g,'').slice(0,8)||'S',met=ls('dmet')!=='0',bpm=+ls('dbpm')||110,txt=ls('dtxt')!=='0',vsel=ls('dvz')||'auto',
+let sq=(ls('dseq')||'S').replace(/[^SN]/g,'').slice(0,8)||'S',met=ls('dmet')!=='0',bpm=+ls('dbpm')||110,vrate=+ls('drate')||.8,grave=ls('dgr')!=='0',vsel=ls('dvz')||'auto',
 st='off',tok=0,pad=[0,0],nAn=0,nSh=0,cprEnd=0,padWake=null,shWake=null,shHit=0,ctx=null,metT=null,rdyT=null,chO=null,lastCx=0,VZ=[];
 class Cn{}
-document.body.innerHTML=`<div id=dtop><button id=dhm>‹ Inicio</button><span id=dst></span><button id=dgear aria-label="Panel del instructor" title="Panel del instructor">⚙</button></div>
-<div id=dstage><div id=aed data-s=off>
-<div class=atag>SOLO ENTRENAMIENTO</div><i id=aled></i>
-<button id=apw aria-label="Encender o apagar"><svg viewBox="0 0 40 40" fill=none stroke=#fff stroke-width=4 stroke-linecap=round><path d="M20 6v14"/><path d="M12.5 11.5a12 12 0 1 0 15 0"/></svg></button>
-<svg id=afig viewBox="0 0 120 200" aria-label="Colocación de los parches">
+document.body.innerHTML=`<div id=aed data-s=off>
+<button class=dfl id=dhm aria-label="Volver al inicio" title="Volver al inicio">‹</button><button class=dfl id=dgear aria-label="Panel del instructor" title="Panel del instructor">⚙</button>
+<div class=atag>SOLO ENTRENAMIENTO</div>
+<div id=afw><svg id=afig viewBox="0 0 120 210" preserveAspectRatio="xMidYMid meet" aria-label="Colocación de los parches">
 <g fill="#eef4f7" stroke="#5c6770" stroke-width="2.2" stroke-linejoin="round"><circle cx=60 cy=26 r=15 /><rect x=54 y=38 width=12 height=12 rx=3 /><rect x=20 y=52 width=15 height=84 rx=7.5 transform="rotate(7 27 52)"/><rect x=85 y=52 width=15 height=84 rx=7.5 transform="rotate(-7 93 52)"/><rect x=38 y=128 width=19 height=68 rx=9 /><rect x=63 y=128 width=19 height=68 rx=9 /><rect x=36 y=46 width=48 height=86 rx=16 /></g>
-<g class=pad id=pd0><rect class=hit x=32 y=46 width=40 height=50 /><rect class=padb x=41 y=56 width=17 height=24 rx=4 transform="rotate(-12 49 68)"/><path class=ck d="M43 68l4.5 4.5 8-10"/></g>
-<g class=pad id=pd1><rect class=hit x=56 y=82 width=40 height=50 /><rect class=padb x=64 y=92 width=17 height=24 rx=4 transform="rotate(12 72 104)"/><path class=ck d="M66 104l4.5 4.5 8-10"/></g>
-</svg>
+<g class=pad id=pd0><rect class=hit x=28 y=44 width=44 height=54 /><path class=wire d="M42 82C28 112 22 160 32 208"/><g transform="rotate(-12 49 68)"><rect class=padb x=37 y=52 width=24 height=32 rx=5 /><path class=ck d="M43 68l5 5 9-11"/></g></g>
+<g class=pad id=pd1><rect class=hit x=54 y=86 width=44 height=54 /><path class=wire d="M76 112C94 140 96 170 86 208"/><g transform="rotate(12 73 106)"><rect class=padb x=61 y=90 width=24 height=32 rx=5 /><path class=ck d="M67 106l5 5 9-11"/></g></g>
+</svg></div>
+<div id=actl>
+<div class=apr><i id=aled></i><button id=apw aria-label="Encender o apagar"><svg viewBox="0 0 40 40" fill=none stroke=#fff stroke-width=4 stroke-linecap=round><path d="M20 6v14"/><path d="M12.5 11.5a12 12 0 1 0 15 0"/></svg></button></div>
 <button id=ash aria-label="Botón de descarga"><svg viewBox="0 0 100 90"><path d="M50 10 90 80H10Z" fill=#f26b3a stroke=#f26b3a stroke-width=12 stroke-linejoin=round /><path d="M55 32 39 55h11l-4 19 17-27H52z" fill=#fff /></svg></button>
-<div class=aspk></div><div class=arim></div></div>
-<div id=dsub><b id=dtx></b><span id=dtm></span></div></div>
+<button id=apd><svg viewBox="0 0 32 32" fill=none stroke=#fff stroke-width=2.4 stroke-linecap=round stroke-linejoin=round><rect x=4 y=6 width=11 height=15 rx=2.5 transform="rotate(-12 9 13)"/><rect x=17 y=11 width=11 height=15 rx=2.5 transform="rotate(12 22 18)"/></svg><span>Pegar parches</span></button>
+</div>
+<div class=aspk></div></div>
 <aside id=dpn>
 <header><b>Panel del instructor · DESA</b><button id=dpx aria-label="Cerrar">✕</button></header>
 <section><h4>Escenario</h4><div id=dsc class=dl></div><p class=dn>Toca cada análisis para cambiar su resultado. Si hay más análisis que los programados, se repite el último.</p><div id=dsq class=dchips></div></section>
 <section><h4>RCP</h4><div class=seg id=dmet><button data-v=1>Con metrónomo</button><button data-v=0>Sin metrónomo</button></div><label class=dr>Ritmo del metrónomo <select id=dbpm><option>100</option><option>110</option><option>120</option></select> /min</label></section>
-<section><h4>Voz</h4><select id=dvz></select><button id=dtest class=db>Probar voz</button><p class=dn id=dvn hidden>Este dispositivo no tiene ninguna voz en español. Instálala en los ajustes del sistema (texto a voz) y descárgala para usarla sin internet.</p><p class=dn>Sube el volumen de la tablet al máximo para que se oiga bien en el aula.</p></section>
-<section><h4>Pantalla</h4><div class=seg id=dtxs><button data-v=1>Mostrar texto</button><button data-v=0>Solo voz</button></div></section>
+<section><h4>Voz</h4><select id=dvz></select><button id=dtest class=db>Probar voz</button><div class=dn style="margin-top:12px">Velocidad de la voz</div><div class=seg id=dspd><button data-v=".7">Muy lenta</button><button data-v=".8">Lenta</button><button data-v=".95">Normal</button></div><div class=dn style="margin-top:12px">Tono</div><div class=seg id=dtone><button data-v=1>Grave (masculino)</button><button data-v=0>Natural</button></div><p class=dn id=dvn hidden>Este dispositivo no tiene ninguna voz en español. Instálala en los ajustes del sistema (texto a voz) y descárgala para usarla sin internet.</p><p class=dn>Sube el volumen de la tablet al máximo para que se oiga bien en el aula.</p></section>
 <section><h4>Controles</h4><button id=dpads class=db>Pegar los parches (simulado)</button><button id=drst class=db>Apagar y reiniciar</button></section>
 <section><h4>Estado</h4><div id=dinfo class=dn></div></section></aside>`;
 /* ---- utilidades ---- */
 const sleep=(ms,my)=>new Promise((res,rej)=>setTimeout(()=>my===tok?res():rej(new Cn),ms*TS)),
-sub=t=>{$('dtx').textContent=t},
+sub=()=>{},
 fmt=ms=>{const s=Math.max(0,Math.ceil(ms/1000));return Math.floor(s/60)+':'+String(s%60).padStart(2,'0')};
 function cancelSp(){try{speechSynthesis.cancel()}catch(_){}lastCx=Date.now()}
 function loadV(){VZ=(window.speechSynthesis?speechSynthesis.getVoices():[]).filter(v=>/^es/i.test(v.lang));const s=$('dvz');if(!s)return;
@@ -1719,13 +1723,13 @@ s.value=VZ.some(v=>v.name+'|'+v.lang===vsel)?vsel:'auto';$('dvn').hidden=VZ.leng
 function pickV(){if(!VZ.length)return{v:null,m:0};let v=vsel!=='auto'?VZ.find(x=>x.name+'|'+x.lang===vsel):null;
 if(!v){const on=navigator.onLine!==false,sc=x=>(/^es[-_]es$/i.test(x.lang)?6:2)+(MALE.test(x.name)?10:0)-(FEM.test(x.name)?10:0)+(x.localService?(on?2:6):(on?0:-6));v=[...VZ].sort((a,b)=>sc(b)-sc(a))[0]}
 return{v,m:MALE.test(v.name)&&!FEM.test(v.name)}}
-function speak(t){return new Promise(res=>{
-if(!window.speechSynthesis||!window.SpeechSynthesisUtterance){setTimeout(res,Math.max(1200,t.length*65)*TS);return}
-const pv=pickV(),u=new SpeechSynthesisUtterance(t);u.lang=pv.v?pv.v.lang:'es-ES';if(pv.v)u.voice=pv.v;u.volume=1;u.rate=.95;u.pitch=pv.m||vsel!=='auto'?1:.8;
+function speak(t){return new Promise(res=>{const k=.95/vrate;
+if(!window.speechSynthesis||!window.SpeechSynthesisUtterance){setTimeout(res,Math.max(1200,t.length*65*k)*TS);return}
+const pv=pickV(),u=new SpeechSynthesisUtterance(t);u.lang=pv.v?pv.v.lang:'es-ES';if(pv.v)u.voice=pv.v;u.volume=1;u.rate=vrate;u.pitch=grave?(pv.m?0.92:0.6):1;
 let d=0,tm;const fin=()=>{if(d)return;d=1;clearTimeout(tm);res()};u.onend=fin;u.onerror=fin;
-tm=setTimeout(fin,(Math.max(3000,t.length*105)+2000)*TS);
+tm=setTimeout(fin,(Math.max(3000,t.length*105*k)+2000)*TS);
 const go=()=>{try{speechSynthesis.speak(u)}catch(_){fin()}};Date.now()-lastCx<150?setTimeout(go,160):go()})}
-async function say(t,my){if(my!==tok)throw new Cn;sub(t);await speak(t);if(my!==tok)throw new Cn}
+async function say(t,my){if(my!==tok)throw new Cn;await speak(t);if(my!==tok)throw new Cn;await sleep(300,my)}
 function audio(){if(!ctx)ctx=new(window.AudioContext||window.webkitAudioContext)();if(ctx.state==='suspended')ctx.resume();return ctx}
 function beep(f,d,v,ty){try{const a=audio(),o=a.createOscillator(),g=a.createGain(),t=a.currentTime;o.type=ty||'sine';o.frequency.value=f;g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(v,t+.006);g.gain.exponentialRampToValueAtTime(.0008,t+d);o.connect(g);g.connect(a.destination);o.start(t);o.stop(t+d+.03)}catch(_){}}
 function thump(){try{const a=audio(),t=a.currentTime,b=a.createBuffer(1,Math.floor(a.sampleRate*.25),a.sampleRate),d=b.getChannelData(0);for(let i=0;i<d.length;i++)d[i]=(Math.random()*2-1)*Math.pow(1-i/d.length,3);
@@ -1736,10 +1740,10 @@ g.gain.setValueAtTime(.0001,t);g.gain.linearRampToValueAtTime(.1,t+.2);g.gain.se
 function metCtl(){if(metT){clearTimeout(metT);metT=null}if(st==='cpr'&&met){const my=tok;(function tk(){if(my!==tok||st!=='cpr'||!met){metT=null;return}beep(1000,.07,.4,'square');metT=setTimeout(tk,60000/bpm*TS)})()}}
 function stopAll(){if(metT){clearTimeout(metT);metT=null}if(rdyT){clearInterval(rdyT);rdyT=null}try{chO&&chO.stop()}catch(_){}chO=null;cancelSp();padWake=null;shWake=null}
 function tmr(){ui()}
-function ui(){const a=$('aed');a.dataset.s=st;$('dtm').textContent=st==='cpr'?'RCP · '+fmt((cprEnd-Date.now())/TS):'';
+function ui(){const a=$('aed');a.dataset.s=st;
 [0,1].forEach(i=>{const p=$('pd'+i);p.classList.toggle('on',!!pad[i]);p.classList.toggle('hint',(st==='pads'||st==='on')&&!pad[i])});
+const ap=$('apd');ap.hidden=!!(pad[0]&&pad[1]);ap.classList.toggle('ask',st==='pads'||st==='on');
 const T={off:'Apagado',on:'Encendido',pads:'Esperando los parches',analyze:'Analizando el ritmo',charge:'Cargando',ready:'Descarga lista',shock:'Descarga administrada',cpr:'RCP en curso'}[st];
-$('dst').textContent='DESA · '+T;
 $('dinfo').innerHTML=`${T}${st==='cpr'?' · '+fmt((cprEnd-Date.now())/TS):''}<br>Análisis realizados: ${nAn} · Descargas: ${nSh}<br>Parches: ${pad[0]+pad[1]}/2 pegados`}
 /* ---- flujo de un DESA real ---- */
 async function pads(my,again){if(pad[0]&&pad[1])return;st='pads';ui();let k=0;
@@ -1782,33 +1786,37 @@ await cprPh(my,sh)}
 /* ---- acciones ---- */
 function powerOn(){audio();try{const u=new SpeechSynthesisUtterance(' ');u.volume=0;speechSynthesis.speak(u)}catch(_){}
 nAn=0;nSh=0;st='on';ui();pn(false);run(++tok,0)}
-function off(){++tok;stopAll();st='off';nAn=0;nSh=0;sub('');$('dtm').textContent='';ui()}
+function off(){++tok;stopAll();st='off';nAn=0;nSh=0;ui()}
 function restartPads(){stopAll();st='pads';ui();run(++tok,1)}
-function setPad(i,v){pad[i]=v===undefined?pad[i]^1:v;ui();
-if(st==='off'||st==='on')return;
+function stick(){try{const a=audio(),t=a.currentTime,n=Math.floor(a.sampleRate*.16),b=a.createBuffer(1,n,a.sampleRate),d=b.getChannelData(0);for(let i=0;i<n;i++){const e=i/n;d[i]=(Math.random()*2-1)*(e<.2?e/.2:Math.pow(1-e,2))*(.6+.4*Math.sin(i/9))}
+const s=a.createBufferSource(),f=a.createBiquadFilter(),g=a.createGain();s.buffer=b;f.type='bandpass';f.frequency.value=2200;f.Q.value=.8;g.gain.value=.55;s.connect(f);f.connect(g);g.connect(a.destination);s.start(t)}catch(_){}}
+function padsAll(){audio();const x=!pad[0],y=!pad[1];if(!x&&!y)return;if(x&&y){setPad(0,1,1);setTimeout(()=>setPad(1,1),420)}else setPad(x?0:1,1)}
+function setPad(i,v,q){const was=pad[i];pad[i]=v===undefined?pad[i]^1:v;if(pad[i]&&!was)stick();ui();if(!q)padEv()}
+function padEv(){if(st==='off'||st==='on')return;
 if(st==='pads'){if(pad[0]&&pad[1])cancelSp();if(padWake){const w=padWake;padWake=null;w()}}
 else if(!(pad[0]&&pad[1]))restartPads()}
 function shock(){if(st!=='ready'||shHit)return;shHit=1;cancelSp();if(shWake){const w=shWake;shWake=null;w()}}
 const pn=v=>{$('dpn').classList.toggle('on',v);$('dgear').classList.toggle('on',v)};
 $('apw').onclick=()=>st==='off'?powerOn():off();
-$('pd0').onclick=()=>setPad(0);$('pd1').onclick=()=>setPad(1);$('ash').onclick=shock;
+$('apd').onclick=padsAll;$('pd0').onclick=()=>setPad(0);$('pd1').onclick=()=>setPad(1);$('ash').onclick=shock;
 $('dgear').onclick=()=>pn(!$('dpn').classList.contains('on'));$('dpx').onclick=()=>pn(false);
 $('dhm').onclick=()=>{if(st!=='off'&&!confirm('¿Volver al inicio? Se apagará el DESA.'))return;off();location.hash=''};
 $('dpads').onclick=()=>{setPad(0,1);setPad(1,1)};$('drst').onclick=()=>{off();pad=[0,0];ui()};
 /* ---- panel del instructor ---- */
-const save=()=>{ls('dseq',sq);ls('dmet',met?1:0);ls('dbpm',bpm);ls('dtxt',txt?1:0)};
+const save=()=>{ls('dseq',sq);ls('dmet',met?1:0);ls('dbpm',bpm);ls('drate',vrate);ls('dgr',grave?1:0)};
 function drawSc(){const i=PRE.findIndex(p=>p[2]===sq);
 $('dsc').innerHTML=PRE.map((p,k)=>`<button data-k=${k} class="${k===i?'on':''}"><b>${p[0]}</b><small>${p[1]}</small></button>`).join('');
 $('dsq').innerHTML=[...sq].map((c,k)=>`<button class="dchip ${c}" data-i=${k}>${k+1} · ${CAP[c]}</button>`).join('')+(sq.length<8?'<button class=dchip data-a=1 aria-label="Añadir análisis">＋</button>':'')+(sq.length>1?'<button class=dchip data-r=1 aria-label="Quitar análisis">－</button>':'')}
-function segs(){$('dmet').querySelectorAll('button').forEach(b=>b.classList.toggle('on',(b.dataset.v==='1')===met));$('dtxs').querySelectorAll('button').forEach(b=>b.classList.toggle('on',(b.dataset.v==='1')===txt));$('dbpm').value=bpm;document.body.classList.toggle('notx',!txt)}
+function segs(){$('dmet').querySelectorAll('button').forEach(b=>b.classList.toggle('on',(b.dataset.v==='1')===met));$('dspd').querySelectorAll('button').forEach(b=>b.classList.toggle('on',+b.dataset.v===vrate));$('dtone').querySelectorAll('button').forEach(b=>b.classList.toggle('on',(b.dataset.v==='1')===grave));$('dbpm').value=bpm}
 $('dsc').onclick=e=>{const b=e.target.closest('button');if(!b)return;sq=PRE[+b.dataset.k][2];save();drawSc()};
 $('dsq').onclick=e=>{const b=e.target.closest('button');if(!b)return;
 if(b.dataset.a)sq+=sq.slice(-1);else if(b.dataset.r)sq=sq.slice(0,-1);else{const i=+b.dataset.i;sq=sq.slice(0,i)+(sq[i]==='S'?'N':'S')+sq.slice(i+1)}save();drawSc()};
 $('dmet').onclick=e=>{const b=e.target.closest('button');if(!b)return;met=b.dataset.v==='1';save();segs();metCtl()};
-$('dtxs').onclick=e=>{const b=e.target.closest('button');if(!b)return;txt=b.dataset.v==='1';save();segs()};
+$('dspd').onclick=e=>{const b=e.target.closest('button');if(!b)return;vrate=+b.dataset.v;save();segs()};
+$('dtone').onclick=e=>{const b=e.target.closest('button');if(!b)return;grave=b.dataset.v==='1';save();segs()};
 $('dbpm').onchange=()=>{bpm=+$('dbpm').value;save();metCtl()};
 $('dvz').onchange=()=>{vsel=$('dvz').value;ls('dvz',vsel)};
-$('dtest').onclick=()=>{cancelSp();const t='Analizando el ritmo cardíaco. No toque al paciente.';sub(t);speak(t)};
+$('dtest').onclick=()=>{cancelSp();speak('Analizando el ritmo cardíaco. No toque al paciente.')};
 if(window.speechSynthesis){speechSynthesis.onvoiceschanged=loadV}
 loadV();drawSc();segs();ui();pn(true);
 const fit=()=>{const a=$('aed');if(a)a.style.setProperty('--u',a.clientWidth/100+'px')};

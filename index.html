@@ -520,6 +520,129 @@ body.ctl>*{min-width:0}
 body.mon{padding-left:env(safe-area-inset-left,0px);padding-right:env(safe-area-inset-right,0px)}
 .ov{padding-left:max(16px,env(safe-area-inset-left));padding-right:max(16px,env(safe-area-inset-right));overflow-x:hidden}
 #dpn{max-width:100vw}
+
+/* =====================================================================
+   BARRA SUPERIOR del monitor: integrada con cada equipo
+   ===================================================================== */
+body.mon{padding-top:0}
+body.mon #top{--bh:38px;--pv:6px;--ph:10px;display:flex;flex-wrap:nowrap;justify-content:flex-start;align-items:center;gap:8px;
+ padding:calc(env(safe-area-inset-top,0px) + var(--pv)) var(--ph) var(--pv);min-height:calc(var(--bh) + var(--pv)*2 + env(safe-area-inset-top,0px));position:relative;z-index:35}
+body.mon #top>*{flex:0 0 auto;min-width:0}
+body.mon #top #ms{flex:1 1 0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+body.mon #top #al{flex:0 1 auto;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:clamp(13px,1.6vw,18px);font-weight:700;min-width:0}
+body.mon #top #al:empty{display:none}
+body.mon #top #hm,body.mon #top #gear{display:inline-grid;place-items:center;width:var(--bh);height:var(--bh);min-height:0;padding:0;margin:0;border-radius:11px;gap:0}
+body.mon #top #gear{margin-left:auto}
+body.mon #top #hm svg,body.mon #top #gear svg{width:calc(var(--bh)*.58);height:calc(var(--bh)*.58);flex:0 0 auto}
+body.mon #top #mu{display:inline-flex;align-items:center;gap:7px;height:var(--bh);min-height:0;padding:0 13px;border-radius:11px;font-size:clamp(13px,1.45vmin,18px)}
+body.mon #top #mu svg{width:18px;height:18px;flex:0 0 auto}
+body.mon #top #lk{display:inline-flex;align-items:center;gap:9px;height:var(--bh);min-height:0;padding:0 13px 0 11px;border-radius:999px;font-size:13px;white-space:nowrap}
+body.mon #top #lk svg{display:none;width:17px;height:17px;flex:0 0 auto;opacity:.85}
+body.mon #top #lk.nw svg{display:block}
+body.mon #top #cd{font:700 15px/1 var(--mono);letter-spacing:.16em;color:inherit}
+#ld{display:block;width:12px;height:12px;border-radius:50%;flex:0 0 auto;background:#6f858a}
+#ld[data-s=ok]{background:#27d36b;box-shadow:0 0 0 2px #27d36b33,0 0 9px #27d36bcc}
+#ld[data-s=warn]{background:#ffa31a;box-shadow:0 0 0 2px #ffa31a33,0 0 9px #ffa31acc;animation:ldp 1.5s ease-in-out infinite}
+#ld[data-s=bad]{background:#ff3b30;box-shadow:0 0 0 2px #ff3b3033,0 0 9px #ff3b30cc}
+@keyframes ldp{50%{opacity:.4}}
+
+/* Monitor genérico */
+body.sk-act #top{background:#0b1215;border-bottom:1px solid #1d2a2d}
+body.sk-act #top #hm,body.sk-act #top #gear{background:#142126;border:1px solid #2f4249;color:#bfe9f5}
+body.sk-act #top #gear.on{background:#0b6e78;border-color:#4cc9f0;color:#fff}
+body.sk-act #top #lk{background:#0f181b;border:1px solid #2a4249;color:#d6f2f8}
+
+/* Lifepak 15: carcasa gris, teclas oscuras, placa tipo pantalla con el código */
+body.mon.sk-lp{background:#a9a6a1}
+body.sk-lp #stage{box-shadow:inset 0 0 0 3px #8c8884,inset 0 2px 0 #ffffff66,0 3px 12px #0004}
+body.sk-lp #top{background:linear-gradient(180deg,#d4d1cd,#bcb9b4);border-bottom:2px solid #8a8680;box-shadow:inset 0 1px 0 #ffffffb0;color:#2a2722}
+body.sk-lp #top::before,body.sk-lp #top::after{content:"";position:absolute;bottom:calc(var(--pv) + var(--bh)/2 - 3px);width:6px;height:6px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#f3dc96,#9c7416 72%);box-shadow:0 0 0 1px #5b4510;pointer-events:none}
+body.sk-lp #top::before{left:1px}body.sk-lp #top::after{right:1px}
+body.sk-lp #top #hm,body.sk-lp #top #gear,body.sk-lp #top #mu{background:linear-gradient(#4c453b,#2e2923);border:1px solid #15110d;color:#f8f1e6;box-shadow:0 2px 0 #0009,inset 0 1px 0 #ffffff2a;touch-action:manipulation}
+body.sk-lp #top #hm:active,body.sk-lp #top #gear:active,body.sk-lp #top #mu:active{transform:translateY(1px);box-shadow:0 1px 0 #0009}
+body.sk-lp #top #gear.on,body.sk-lp #top #mu.on{background:linear-gradient(#ffb445,#e48f13);color:#201300;border-color:#8a4f06}
+body.sk-lp #top #lk{background:linear-gradient(#171b25,#0b0e14);border:2px solid #4b463f;border-radius:9px;color:#ffe08a;box-shadow:inset 0 0 8px #000,0 1px 0 #ffffff88}
+body.sk-lp #top #ms{color:#3a362f}body.sk-lp #top #al{color:#a3140c}body.sk-lp #top #al.wn{color:#8a5a00}
+
+/* Corpuls3: carcasa gris azulada, teclas grises, display blanco con el código */
+body.mon.sk-co{background:#c3d0d4}
+body.sk-co #stage{box-shadow:inset 0 0 0 3px #9fb0b3,inset 0 2px 0 #ffffffaa,0 3px 12px #0003}
+body.sk-co #top{background:linear-gradient(180deg,#e6edef,#d2dde0);border-bottom:2px solid #9fb0b3;box-shadow:inset 0 1px 0 #fff;color:#10222a}
+body.sk-co #top #hm,body.sk-co #top #gear,body.sk-co #top #mu{background:linear-gradient(#5a6e74,#44575d);border:1px solid #2a393d;border-radius:7px;color:#fff;box-shadow:0 2px 0 #0005,inset 0 1px 0 #ffffff30;touch-action:manipulation}
+body.sk-co #top #hm:active,body.sk-co #top #gear:active,body.sk-co #top #mu:active{transform:translateY(1px);box-shadow:0 1px 0 #0005}
+body.sk-co #top #gear.on,body.sk-co #top #mu.on{background:#e0a800;color:#000;border-color:#9a7400}
+body.sk-co #top #lk{background:#fff;border:2px solid #2f3b40;border-radius:5px;color:#000;box-shadow:none}
+body.sk-co #top #ms{color:#37474f}body.sk-co #top #al{color:#c62828}body.sk-co #top #al.wn{color:#9a6a00}
+
+@media(max-width:560px){
+ body.sk-act #top #mu span{display:none}
+ body.sk-act #top #mu{width:var(--bh);padding:0;justify-content:center}
+ body.mon #top #cd{font-size:14px;letter-spacing:.12em}
+}
+/* en pantallas estrechas el mensaje de estado sale como aviso bajo la barra (antes quedaba oculto) */
+@media(max-width:760px){
+ body.mon #top{--pv:5px;--ph:8px;gap:6px}
+ body.mon #top #ms{flex:none;position:fixed;left:max(8px,env(safe-area-inset-left));right:max(8px,env(safe-area-inset-right));margin:0 auto;max-width:520px;
+  top:calc(env(safe-area-inset-top,0px) + var(--bh) + var(--pv)*2 + 6px);z-index:70;display:block;padding:8px 12px;border-radius:10px;background:#000d;color:#ffd23f;
+  border:1px solid #ffffff26;font-size:13px;line-height:1.3;white-space:normal;text-align:center;pointer-events:none;overflow:visible}
+ body.mon #top #ms:empty{display:none}
+}
+@media(max-height:520px){body.mon #top{--bh:30px;--pv:3px;--ph:8px}body.mon #top #cd{font-size:13px}}
+
+/* ===== menú de ajustes (engranaje) ===== */
+#gm{right:max(8px,env(safe-area-inset-right));width:min(300px,calc(100vw - 16px));max-height:calc(var(--vh,100dvh) - 70px);overflow:auto;-webkit-overflow-scrolling:touch}
+#gm [hidden]{display:none!important}
+#gm .gh{display:flex;align-items:center;gap:8px;margin:2px 4px 8px;font-size:12px;color:#8aa;font-weight:600;letter-spacing:.3px}
+#gm .gh b{display:block;font-weight:600}
+#gm .gh button{width:auto;margin:0;padding:2px 13px 5px;border-radius:9px;font-size:22px;line-height:1;background:#16252a;border:1px solid #2f444b}
+#gm .mi{min-height:60px;gap:12px}
+#gm .mi svg{width:28px;height:28px;border-radius:0;flex:0 0 auto;color:#9fd4e0}
+#gm .mi span{flex:1 1 auto}
+#gm .mi i{font-style:normal;color:#4a7480;font-size:24px;line-height:1}
+
+/* ===== menú "Conexión sin internet" en pantallas apaisadas: dos columnas ===== */
+@media(orientation:landscape) and (max-height:700px){
+ #pov{padding-top:0;padding-bottom:max(10px,env(safe-area-inset-bottom))}
+ .box.pr{max-width:none;margin:0;display:grid;grid-template-columns:minmax(170px,220px) minmax(0,1fr);column-gap:24px;align-content:start;align-items:start}
+ .pr .ovh{grid-column:1/-1;margin:0 0 8px;padding:8px 0;gap:10px}.pr .ovh h2{font-size:17px}
+ .pr .pr-st{grid-column:1;grid-row:2;flex-direction:column;gap:6px;margin:0}
+ .pr-st li{flex:none}
+ .pr-st button{flex-direction:row;justify-content:flex-start;gap:10px;border-top:0;border-left:3px solid #22333a;border-radius:2px;padding:9px 10px;text-align:left;font-size:13px}
+ .pr-st .on button{border-left-color:#4cc9f0}.pr-st .done button{border-left-color:#3ddc84}
+ .pr .pr-msg{grid-column:1;grid-row:3;margin:10px 0 0}
+ .pr .pr-pg.on{grid-column:2;grid-row:2/span 3;min-width:0}
+ .pr h3{font-size:18px;margin:0 0 4px}.pr-p{font-size:14px;margin:0 0 8px}
+ .pr-tabs{margin:0 0 8px;gap:6px}.pr-tabs button{flex-direction:row;justify-content:center;gap:8px;padding:8px 6px;font-size:12.5px}.pr-tabs svg{width:20px;height:20px}
+ .pr-card{padding:10px 12px;margin-bottom:10px}.pr-card li{font-size:13.5px;padding-bottom:8px;min-height:32px}
+ .pr-qr{flex-wrap:nowrap;gap:16px;margin:0 0 8px}
+ .pr-qr .qrw canvas{width:min(36vw,calc(var(--vh,100dvh)*.66),280px);height:auto}
+ .pr-qrside{flex:1 1 0}
+ .pr .pb{min-height:42px}.pr-acts{margin:4px 0 0}
+ .pr-st+.pr-msg:empty{display:none}
+}
+
+/* =====================================================================
+   PANTALLA DE INICIO: más aire en móviles verticales y sin barra borrosa en iPhone
+   ===================================================================== */
+html{background:#070d10}
+body.landing{background:radial-gradient(900px 560px at 50% 20%,#123a43 0,#0b1a1f 52%,#070d10 100%) no-repeat #070d10}
+body.landing::before{content:"";position:fixed;left:0;right:0;top:0;height:env(safe-area-inset-top,0px);background:#070d10;z-index:100;pointer-events:none}
+@media(max-width:599px){
+ .land{gap:16px;padding:max(24px,calc(env(safe-area-inset-top) + 16px)) max(18px,env(safe-area-inset-right)) max(28px,calc(env(safe-area-inset-bottom) + 16px)) max(18px,env(safe-area-inset-left))}
+ .lhead{gap:14px}.lhead img{width:60px;height:60px;border-radius:15px}
+ .lhead h1{font-size:22px;line-height:1.15}.lhead p{display:block;font-size:13.5px;margin-top:4px}
+ .lver{display:none}
+ .lcode{padding:14px;gap:10px 12px;border-radius:18px}
+ .lcode label{font-size:15px}.lcode label small{font-size:12.5px;margin-top:3px}
+ .lcode input{padding:14px 8px;font-size:24px}
+ .lq{width:42px;height:42px;font-size:19px}
+ .lhelp{font-size:13.5px;padding:10px 12px}
+ .lgrid{grid-auto-rows:minmax(104px,1fr);gap:14px}
+ .lc{padding:16px 16px;gap:16px;border-radius:20px}
+ .lc .ic{width:58px;height:58px;border-radius:17px}.lc .ic svg{width:33px;height:33px}
+ .lc .tg{font-size:12.5px;margin-bottom:4px}
+ .lc .tx b{font-size:18.5px;margin-bottom:4px}.lc .tx span{font-size:14px;line-height:1.38}
+}
 </style></head><body><script>
 const $=i=>document.getElementById(i),g=(x,m,s)=>Math.exp(-((x-m)**2)/(2*s*s)),hm=()=>new Date().toLocaleTimeString('es-ES');
 const ls=(k,v)=>{try{if(v===undefined)return localStorage.getItem(k);localStorage.setItem(k,v)}catch(_){}};
@@ -621,14 +744,14 @@ if(r<3)for(let c=0;c<4;c++){tr(LY[r][c],c*1250,(c+1)*1250,10+62.5*c,yb);lab(LDN[
 else{tr(1,0,N,10,yb);lab('II  (ritmo)',11,yb-9)}})}
 
 /* ---------- red: Firebase Realtime Database (REST + EventSource) y BroadcastChannel en el mismo navegador ---------- */
-let DC=null,BC=null,onmsg=()=>{},Q=Promise.resolve(),CODE='',MY='';const SEEN=new Set(),FB=(window.FB_URL||'').replace(/\/+$/,'');
+let DC=null,BC=null,onmsg=()=>{},Q=Promise.resolve(),CODE='',MY='';const NET={sse:0,put:0},SEEN=new Set(),FB=(window.FB_URL||'').replace(/\/+$/,'');
 function send(o){o.id=Math.random().toString(36).slice(2);if(BC)BC.postMessage(o);
 if(DC&&DC.readyState==='open')try{DC.send(JSON.stringify(o))}catch(_){}
-if(FB&&MY&&CODE!=='LOCAL')Q=Q.then(()=>fetch(FB+'/rooms/'+CODE+'/'+MY+'.json',{method:'PUT',body:JSON.stringify(o)})).catch(()=>{})}
+if(FB&&MY&&CODE!=='LOCAL')Q=Q.then(()=>fetch(FB+'/rooms/'+CODE+'/'+MY+'.json',{method:'PUT',body:JSON.stringify(o)}).then(r=>{NET.put=r.ok?1:-1},()=>{NET.put=-1})).catch(()=>{})}
 function recv(o){if(!o||SEEN.has(o.id))return;SEEN.add(o.id);if(SEEN.size>300)SEEN.delete(SEEN.values().next().value);onmsg(o)}
 function listen(node){let first=1;const es=new EventSource(FB+'/rooms/'+CODE+'/'+node+'.json');
-es.addEventListener('put',e=>{if(first){first=0;return}try{const d=JSON.parse(e.data).data;if(d&&d.id)recv(d)}catch(_){}});
-es.onerror=()=>{if(es.readyState===2)setTimeout(()=>listen(node),3000)}}
+es.onopen=()=>{NET.sse=1};es.addEventListener('put',e=>{if(first){first=0;return}try{const d=JSON.parse(e.data).data;if(d&&d.id)recv(d)}catch(_){}});
+es.onerror=()=>{NET.sse=es.readyState===2?-1:0;if(es.readyState===2)setTimeout(()=>listen(node),3000)}}
 function netInit(code,role){CODE=code;MY=role;BC=new BroadcastChannel('simmon-'+code);BC.onmessage=e=>recv(e.data);if(FB&&code!=='LOCAL')listen(role==='c'?'m':'c')}
 
 /* QRCode for JavaScript, Copyright (c) 2009 Kazuhiko Arase, licencia MIT. QR Code es marca registrada de DENSO WAVE. */
@@ -1776,7 +1899,7 @@ else if(md==='p'&&cdq&&cdq[0]==='O')control('LOCAL',{auto:cdq});
 else if(md==='p'&&cdq&&cdq[0]==='A')ansTab(cdq);else land();
 addEventListener('hashchange',()=>location.reload());
 
-function land(){document.body.className='landing';document.body.innerHTML=`<div class=land>
+function land(){document.body.className='landing';{const t=document.querySelector('meta[name=theme-color]');if(t)t.content='#070d10'}document.body.innerHTML=`<div class=land>
 <header class=lhead><img src="icon-192.png" alt="" width=68 height=68><div><h1>Simulador de monitor-desfibrilador</h1><p>Prácticas de emergencias: monitor, DESA y panel del instructor.</p></div><span class=lver>v12</span></header>
 ${FB?'':'<div class=lwarn>Falta configurar la base de datos: edita el archivo config.js siguiendo la guía.</div>'}
 <section class=lcode id=lcode><label for=cin>Código de sesión<small>Une monitor y panel</small></label><input id=cin maxlength=8 placeholder="AUTO" autocomplete=off autocapitalize=characters spellcheck=false value="${ls('cc')||''}"><button class=lq id=lq aria-label="¿Para qué sirve el código?" aria-expanded=false>?</button>
@@ -2146,7 +2269,7 @@ function monitor(code){
 try{const p=JSON.parse(ls('pre')||'null');if(p)Object.assign(S,p);else S.pw=1}catch(_){S.pw=1}S.free=0;
 history.replaceState(null,'','#monitor/'+code);
 document.body.className='mon sk-act';
-document.body.innerHTML=`<div id=top><button id=hm title="Volver a la pantalla de inicio" aria-label="Volver a la pantalla de inicio"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11.5 12 4l9 7.5"/><path d="M5.5 10v10h13V10"/><path d="M10 20v-6h4v6"/></svg><span>Inicio</span></button><b id=al></b><span id=ms>Toca la pantalla para activar el sonido</span><span id=cd>PANEL: ${code}</span><button id=pq>Sin internet</button><button id=mu>Silenciar alarma</button><button id=cf>Configurar</button><button id=gear title="Cambiar el aspecto del equipo" aria-label="Cambiar el aspecto del equipo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a9 9 0 1 0 0 18c1.1 0 1.8-.8 1.8-1.7 0-.5-.2-.9-.5-1.3-.3-.4-.4-.8-.4-1.2 0-1 .8-1.8 1.8-1.8H17a4 4 0 0 0 4-4c0-4.4-4-8-9-8z"/><circle cx="7.5" cy="11" r="1" fill="currentColor"/><circle cx="10" cy="7" r="1" fill="currentColor"/><circle cx="14.5" cy="7" r="1" fill="currentColor"/></svg><span>Aspecto</span></button></div><div id=gm><b>ASPECTO DEL EQUIPO</b><button data-sk=act><svg viewBox="0 0 96 58"><rect width="96" height="58" rx="5" fill="#080c0e" stroke="#243236"/><path d="M6 14h14l3-7 4 14 3-7h18" fill="none" stroke="#3ddc84" stroke-width="2"/><path d="M6 31h12c3-6 6 6 9 0s7 0 12 0h8" fill="none" stroke="#4cc9f0" stroke-width="2"/><path d="M6 47h44" stroke="#ffd23f" stroke-width="2"/><rect x="66" y="7" width="24" height="12" rx="2" fill="#3ddc84" opacity=".85"/><rect x="66" y="23" width="24" height="12" rx="2" fill="#4cc9f0" opacity=".85"/><rect x="66" y="39" width="24" height="12" rx="2" fill="#ffd23f" opacity=".85"/></svg><span>Actual<em>Monitor genérico</em></span></button><button data-sk=lp><svg viewBox="0 0 96 58"><rect width="96" height="58" rx="5" fill="#b4b1ad"/><rect x="4" y="4" width="58" height="50" rx="3" fill="#000"/><rect x="4" y="4" width="58" height="6" fill="#242a3a"/><rect x="7" y="14" width="14" height="8" rx="1" fill="#6be07a"/><rect x="7" y="26" width="14" height="8" rx="1" fill="#4d8dff"/><rect x="7" y="38" width="14" height="8" rx="1" fill="#ffa24d"/><path d="M26 22h8l3-6 3 12 3-6h14" fill="none" stroke="#6be07a" stroke-width="1.6"/><path d="M26 44h10c4-9 8-9 12 0h10" fill="none" stroke="#ffa24d" stroke-width="1.6"/><rect x="66" y="4" width="26" height="50" rx="4" fill="#4b4439"/><rect x="69" y="8" width="9" height="5" rx="2" fill="#2a251f"/><rect x="80" y="8" width="9" height="5" rx="2" fill="#f29a2a"/><circle cx="79" cy="25" r="6" fill="#e8571f"/><rect x="69" y="34" width="20" height="4" rx="2" fill="#2a251f"/><circle cx="79" cy="46" r="6" fill="#222226" stroke="#cfccc8"/></svg><span>Lifepak 15<em>Monitor-desfibrilador</em></span></button><button data-sk=co><svg viewBox="0 0 96 58"><rect width="96" height="58" rx="5" fill="#d2dce0"/><rect x="4" y="4" width="60" height="50" rx="2" fill="#fff" stroke="#2f3b40" stroke-width="1.5"/><rect x="7" y="7" width="12" height="7" fill="#c9d0d3"/><rect x="21" y="7" width="12" height="7" fill="#cfd8f2"/><rect x="35" y="7" width="12" height="7" fill="#f2cfcf"/><rect x="49" y="7" width="12" height="7" fill="#cfd8f2"/><path d="M8 24h8l3-5 3 10 3-5h12" fill="none" stroke="#111" stroke-width="1.4"/><path d="M8 38h10c4-7 8-7 12 0h10" fill="none" stroke="#1565c0" stroke-width="1.4"/><rect x="5" y="46" width="58" height="7" fill="#0a4fa8"/><rect x="68" y="6" width="12" height="7" rx="2" fill="#e3001b"/><rect x="82" y="6" width="10" height="7" rx="2" fill="#566a6f"/><circle cx="80" cy="21" r="5" fill="#e3001b"/><circle cx="80" cy="42" r="11" fill="#f3f5f5" stroke="#9fb0b3" stroke-width="1.5"/><circle cx="75" cy="43" r="3" fill="#c5cccd"/></svg><span>Corpuls3<em>Monitor-desfibrilador</em></span></button></div>
+document.body.innerHTML=`<div id=top><button id=hm title="Volver a la pantalla de inicio" aria-label="Volver a la pantalla de inicio"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11.5 12 4l9 7.5"/><path d="M5.5 10v10h13V10"/><path d="M10 20v-6h4v6"/></svg></button><button id=lk title="Estado de la sesión" aria-label="Estado de la sesión"><i id=ld data-s=warn></i><span id=cd></span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 9a14 14 0 0 1 19 0M6 12.8a9 9 0 0 1 12 0M9.4 16.4a4 4 0 0 1 5.2 0"/><circle cx="12" cy="19.5" r="1" fill="currentColor"/><path d="M3.5 3.5l17 17"/></svg></button><b id=al></b><span id=ms>Toca la pantalla para activar el sonido</span><button id=mu>Silenciar alarma</button><button id=gear title="Ajustes" aria-label="Ajustes" aria-haspopup=true aria-expanded=false><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></button></div><div id=gm><div class=gv id=gv0><b class=gh>AJUSTES</b><button class=mi data-a=look><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a9 9 0 1 0 0 18c1.1 0 1.8-.8 1.8-1.7 0-.5-.2-.9-.5-1.3-.3-.4-.4-.8-.4-1.2 0-1 .8-1.8 1.8-1.8H17a4 4 0 0 0 4-4c0-4.4-4-8-9-8z"/><circle cx="7.5" cy="11" r="1" fill="currentColor"/><circle cx="10" cy="7" r="1" fill="currentColor"/><circle cx="14.5" cy="7" r="1" fill="currentColor"/></svg><span>Apariencia<em id=gl>Monitor genérico</em></span><i>›</i></button><button class=mi data-a=net><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 9a14 14 0 0 1 19 0M6 12.8a9 9 0 0 1 12 0M9.4 16.4a4 4 0 0 1 5.2 0"/><circle cx="12" cy="19.5" r="1" fill="currentColor"/><path d="M3.5 3.5l17 17"/></svg><span>Conexión sin internet<em>Emparejar con el panel por QR</em></span><i>›</i></button><button class=mi data-a=cfg><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="13" rx="2.5"/><path d="M5.5 11h3l1.6-3 2.4 6 1.7-3h4.3"/><path d="M8.5 20.5h7"/></svg><span>Ajuste de parámetros<em>Ritmo, constantes y sensores</em></span><i>›</i></button></div><div class=gv id=gv1 hidden><div class=gh><button class=bk data-a=back aria-label="Volver a ajustes">‹</button><b>APARIENCIA</b></div><button data-sk=act><svg viewBox="0 0 96 58"><rect width="96" height="58" rx="5" fill="#080c0e" stroke="#243236"/><path d="M6 14h14l3-7 4 14 3-7h18" fill="none" stroke="#3ddc84" stroke-width="2"/><path d="M6 31h12c3-6 6 6 9 0s7 0 12 0h8" fill="none" stroke="#4cc9f0" stroke-width="2"/><path d="M6 47h44" stroke="#ffd23f" stroke-width="2"/><rect x="66" y="7" width="24" height="12" rx="2" fill="#3ddc84" opacity=".85"/><rect x="66" y="23" width="24" height="12" rx="2" fill="#4cc9f0" opacity=".85"/><rect x="66" y="39" width="24" height="12" rx="2" fill="#ffd23f" opacity=".85"/></svg><span>Actual<em>Monitor genérico</em></span></button><button data-sk=lp><svg viewBox="0 0 96 58"><rect width="96" height="58" rx="5" fill="#b4b1ad"/><rect x="4" y="4" width="58" height="50" rx="3" fill="#000"/><rect x="4" y="4" width="58" height="6" fill="#242a3a"/><rect x="7" y="14" width="14" height="8" rx="1" fill="#6be07a"/><rect x="7" y="26" width="14" height="8" rx="1" fill="#4d8dff"/><rect x="7" y="38" width="14" height="8" rx="1" fill="#ffa24d"/><path d="M26 22h8l3-6 3 12 3-6h14" fill="none" stroke="#6be07a" stroke-width="1.6"/><path d="M26 44h10c4-9 8-9 12 0h10" fill="none" stroke="#ffa24d" stroke-width="1.6"/><rect x="66" y="4" width="26" height="50" rx="4" fill="#4b4439"/><rect x="69" y="8" width="9" height="5" rx="2" fill="#2a251f"/><rect x="80" y="8" width="9" height="5" rx="2" fill="#f29a2a"/><circle cx="79" cy="25" r="6" fill="#e8571f"/><rect x="69" y="34" width="20" height="4" rx="2" fill="#2a251f"/><circle cx="79" cy="46" r="6" fill="#222226" stroke="#cfccc8"/></svg><span>Lifepak 15<em>Monitor-desfibrilador</em></span></button><button data-sk=co><svg viewBox="0 0 96 58"><rect width="96" height="58" rx="5" fill="#d2dce0"/><rect x="4" y="4" width="60" height="50" rx="2" fill="#fff" stroke="#2f3b40" stroke-width="1.5"/><rect x="7" y="7" width="12" height="7" fill="#c9d0d3"/><rect x="21" y="7" width="12" height="7" fill="#cfd8f2"/><rect x="35" y="7" width="12" height="7" fill="#f2cfcf"/><rect x="49" y="7" width="12" height="7" fill="#cfd8f2"/><path d="M8 24h8l3-5 3 10 3-5h12" fill="none" stroke="#111" stroke-width="1.4"/><path d="M8 38h10c4-7 8-7 12 0h10" fill="none" stroke="#1565c0" stroke-width="1.4"/><rect x="5" y="46" width="58" height="7" fill="#0a4fa8"/><rect x="68" y="6" width="12" height="7" rx="2" fill="#e3001b"/><rect x="82" y="6" width="10" height="7" rx="2" fill="#566a6f"/><circle cx="80" cy="21" r="5" fill="#e3001b"/><circle cx="80" cy="42" r="11" fill="#f3f5f5" stroke="#9fb0b3" stroke-width="1.5"/><circle cx="75" cy="43" r="3" fill="#c5cccd"/></svg><span>Corpuls3<em>Monitor-desfibrilador</em></span></button></div></div>
 <div id=fit><div id=stage><div id=mid><div id=hdr><span class=pid>ID Pac. n/d</span><b id=ht></b><span class=hrg><span class=bi>1</span><span class=bty><span style="height:30%;background:#e53935"></span></span><span class=bi>2</span><span class=bty><span style="height:90%"></span></span><b id=he></b></span></div><div id=nm><div class="n g" id=th><i>FC (lpm)</i><em class=lm>150<br>45</em><b id=nh>--</b></div><div class="n c" id=ts><i>SpO₂ (%)</i><em class=lm>--<br>90</em><b id=ns>--</b></div><div class="n w" id=tp><i>PNI (mmHg)</i><b id=np>---/---</b><small id=nq></small></div><div class="n y" id=te><i>EtCO₂ (mmHg)</i><b id=ne>--</b></div><div class="n w" id=tr><i>FR (rpm)</i><b id=nr>--</b></div><div class="n w" id=tt><i>Temp (°C)</i><b id=nt>--</b></div><div class="n r" id=ti><i>TAI (mmHg)</i><b id=ni>---/---</b><small id=nj></small></div></div><div id=wv><canvas id=cv></canvas><span class=dx id=dx1></span><span class=dx id=dx2></span><span class=dx id=dx3></span><span class="lb lb1"></span><span class="lb lb2"></span><span class="lb lb3"></span><span class="lb lb4"></span><div id=ibs><i class=ibl data-v=200></i><i class=ibl data-v=100></i><i class=ibl data-v=0></i></div></div></div>
 <div id=bt><div class=gp><h4>DESFIBRILADOR</h4><div class=rw><button id=em>−</button><b id=ev></b><button id=ep>+</button><button id=sy>SINCR.</button></div><div class=rw><button id=ch class=grn>Cargar</button><button id=sh class=red>Descargar</button><button id=ds>Desarmar</button></div><small id=dm></small></div>
 <div class=gp><h4>MARCAPASOS</h4><div class=rw><button id=pf>Activar</button><button id=rm>−</button><b id=rv></b><button id=rp>+</button></div><div class=rw><span>Intensidad</span><button id=am>−</button><b id=av></b><button id=ap>+</button></div></div>
@@ -2156,7 +2279,17 @@ const FS=200,cv=$('cv'),cx=cv.getContext('2d'),dpr=devicePixelRatio||1,PC={on:0,
 let acc=0,lt=performance.now(),mutedUntil=0,X=0,PY=null,AL={c:0,w:0},AC,rdy=0,nextAl=0;
 const log=x=>send({t:'log',m:x}),full=()=>send({t:'full',s:S}),say=m=>{$('ms').textContent=m;setTimeout(()=>{if($('ms').textContent===m)$('ms').textContent=''},4000)};
 document.addEventListener('pointerdown',()=>au(),true);
-let gotPanel=0,pwPrev=S.pw;
+let gotPanel=0,pwPrev=S.pw,lastPanel=0,CONNT='';
+/* estado de la sesión (punto de la barra): verde = panel conectado; naranja = a medias (conectando, esperando al panel, enlace parcial); rojo = sin conexión o panel perdido */
+function conn(){const lk=$('lk');if(!lk)return;const now=Date.now(),on=navigator.onLine!==false,direct=!!(DC&&DC.readyState==='open'),cloud=!!FB&&on&&NET.sse===1&&NET.put!==-1,alive=now-lastPanel<8000,sec=Math.round((now-lastPanel)/1000),ago=sec>=90?Math.round(sec/60)+' min':sec+' s';let s,t;
+if(alive){if(FB&&on&&!direct&&NET.sse===1&&NET.put===-1){s='warn';t='Recibo datos del panel, pero no consigo enviarle los míos'}else{s='ok';t=direct&&!cloud?'Panel conectado sin internet (conexión directa)':cloud?'Panel conectado':'Panel conectado en este dispositivo'}}
+else if(direct||cloud||!FB&&on){if(!lastPanel){s='warn';t='Esperando al panel del instructor (si no hay panel, el monitor funciona solo)'}else if(sec>20){s='bad';t='Panel desconectado: sin señal desde hace '+ago}else{s='warn';t='Sin señal del panel desde hace '+ago}}
+else if(on&&FB&&NET.sse===0){s='warn';t='Conectando con el servidor…'}
+else{s='bad';t=on?'Sin conexión con el servidor':'Sin internet. Usa Ajustes › Conexión sin internet para emparejar con el panel'}
+const d=$('ld');if(d.dataset.s!==s)d.dataset.s=s;CONNT='Sesión '+code+' · '+t;
+if(lk.title!==CONNT){lk.title=CONNT;lk.setAttribute('aria-label',CONNT)}
+lk.classList.toggle('nw',!on||(direct&&!cloud))}
+addEventListener('online',conn);addEventListener('offline',conn);
 const need=(k,n,msg)=>{if(S[k])return 1;if(S.free){S[k]=1;log('Alumno: '+n+' conectado');full();ui();return 1}say(msg);bp(330,.2,.14);return 0};
 const cm=$('cm'),cmo=v=>cm.classList.toggle('on',v);
 [['th','vE','Electrodos ECG'],['ts','vS','Pulsioxímetro'],['te','vC','Capnografía'],['tr','vC','Capnografía'],['tt','vT','Sonda de temperatura'],['dx1','vE','Electrodos ECG'],['dx2','vS','Pulsioxímetro'],['dx3','vC','Capnografía']].forEach(([i,k,n])=>$(i).addEventListener('click',()=>{if(S.free&&S.pw&&!S[k]){S[k]=1;log('Alumno: '+n+' conectado');full();ui()}}));
@@ -2175,7 +2308,7 @@ pc.querySelectorAll('.pct button').forEach(b=>b.onclick=()=>{S[b.dataset.k]=S[b.
 $('pc_s').onclick=()=>{ls('pre',JSON.stringify(Object.fromEntries(PK.map(k=>[k,S[k]]))));say('Configuración guardada: se usará al abrir sin panel')};
 $('pc_x').onclick=()=>{try{localStorage.removeItem('pre')}catch(_){}say('Configuración guardada borrada')};
 $('pc_c').onclick=()=>pc.classList.remove('on');
-$('cf').onclick=()=>{pc.classList.toggle('on');pcUi()};
+const cfgToggle=v=>{const o=v===undefined?!pc.classList.contains('on'):!!v;if(o)pc.style.top=Math.round($('top').getBoundingClientRect().bottom+6)+'px';pc.classList.toggle('on',o);if(o)pcUi()};
 /* audio */
 function au(){if(!AC)AC=new(window.AudioContext||window.webkitAudioContext)();if(AC.state==='suspended')AC.resume();if($('ms').textContent.startsWith('Toca'))$('ms').textContent=''}
 document.addEventListener('pointerdown',au);
@@ -2200,7 +2333,7 @@ function zap(){nz(.006,7000,.8,0,'highpass');nz(.12,1500,.6,.004,'highpass');nz(
 
 document.querySelectorAll('.mon button').forEach(b=>b.addEventListener('click',()=>bp(1200,.03,.04)));
 /* red */
-onmsg=o=>{if(o.t==='s'||o.t==='hello')gotPanel=1;if(o.t==='s'){const old=S.rhythm;Object.assign(S,o.s);S.free=0;if(old!==S.rhythm)G.reset()}if(o.t==='hello')full()};
+onmsg=o=>{lastPanel=Date.now();if(o.t==='s'||o.t==='hello')gotPanel=1;if(o.t==='s'){const old=S.rhythm;Object.assign(S,o.s);S.free=0;if(old!==S.rhythm)G.reset()}if(o.t==='hello')full()};
 netInit(code,'m');setInterval(()=>send({t:'hb'}),2500);
 /* dibujo */
 const SKN={act:{c:['#3ddc84','#4cc9f0','#ffd23f','#ff5252'],w:2,fill:0,l:['','','','ART']},lp:{c:['#6be07a','#4d8dff','#ffa24d','#ff6b6b'],w:2,fill:0,l:['II x1.0','SpO₂','CO₂','ART']},co:{c:['#111','#1565c0','#27208f','#c62828'],w:1.8,fill:1,l:['IIauto','Pleth','CO2','P1(ART)']}},T0=Date.now();
@@ -2231,8 +2364,9 @@ ORD.forEach(([r,c])=>r.append(...c));DMP.append($('dm'));$('top').insertBefore($
 const dp=$('dp');dp.innerHTML=DPL[v]||'';dp.querySelectorAll('[data-m]').forEach(ph=>ph.replaceWith($(ph.dataset.m)));
 [['em','▼','−'],['ep','▲','+'],['rm','▼','−'],['rp','▲','+'],['am','▼','−'],['ap','▲','+']].forEach(([i,a,n])=>$(i).textContent=v!=='act'?a:n);
 $('sh').innerHTML=SHK[v]||'Descargar';$('pn').textContent=v==='act'?'Medir PNI':'PNI';$('ib').textContent='TA invasiva';$('e12').textContent=v==='act'?'ECG 12 derivaciones':'ECG 12 deriv.';
-$('mu').innerHTML=v==='co'?IC.bell+'Silenciar':v==='lp'?'Alarmas':'Silenciar alarma';$('mu').classList.toggle('ic',v==='co');$('mu').title='Silenciar alarma';
-$('gm').querySelectorAll('button').forEach(x=>x.classList.toggle('on',x.dataset.sk===v));
+$('mu').innerHTML=v==='co'?IC.bell+'Silenciar':v==='lp'?'Alarmas':IC.bell+'<span>Silenciar alarma</span>';$('mu').classList.toggle('ic',v==='co');$('mu').title='Silenciar alarma';
+$('gm').querySelectorAll('[data-sk]').forEach(x=>x.classList.toggle('on',x.dataset.sk===v));const gl=$('gl');if(gl)gl.textContent={act:'Monitor genérico',lp:'Lifepak 15',co:'Corpuls3'}[v];
+const tc=document.querySelector('meta[name=theme-color]');if(tc)tc.content={act:'#0b1215',lp:'#cdc9c5',co:'#e2e9eb'}[v];
 fit();size();lay();pu();ds();clk()}
 setInterval(clk,1000);
 let SC=1,DC=0;
@@ -2300,12 +2434,12 @@ setTimeout(()=>{clearInterval(iv);nb=0;if(!G.B.some(b=>b.perf&&G.t-b.t<5)){$('np
 else{const sy=Math.round(S.sbp+Math.random()*6-3),di=Math.round(S.dbp+Math.random()*4-2);$('np').textContent=sy+'/'+di;$('nq').textContent='PAM '+Math.round((sy+2*di)/3)+' · '+hm();log(`PNI medida: ${sy}/${di} mmHg`);$('np').classList.add('red');bp(880,.12,.15);bp(1175,.22,.15,'sine',.16)}},TT*1000)};
 /* cifras y alarmas */
 function devUi(){document.body.classList.toggle('free',!!S.free);if(!pwPrev!==!S.pw){pwPrev=S.pw;X=0;PY=null;cx.clearRect(0,0,cv.width,cv.height);if(S.pw){G.reset();bp(660,.12,.12);bp(880,.16,.12,'sine',.14)}}
-$('offt').textContent=gotPanel?'Esperando a que el instructor lo encienda.':'Monitor apagado. Enciéndelo desde «Configurar».';
+$('offt').textContent=gotPanel?'Esperando a que el instructor lo encienda.':'Monitor apagado. Enciéndelo desde Ajustes › Ajuste de parámetros.';
 cm.querySelectorAll('button').forEach(b=>{const k=b.dataset.k;if(k==='free')return;const o=!!S[k];b.classList.toggle('on',o);b.querySelector('em').textContent=o?(k==='pw'?'ENCENDIDO':'CONECTADO'):(k==='pw'?'APAGADO':'SIN CONECTAR')});
-const o=$('off');if(o){o.classList.toggle('on',!S.pw);o.style.top=$('top').offsetHeight+'px'}const DXT={act:['SIN ELECTRODOS ECG','SIN SENSOR DE SpO₂','SIN CAPNOGRAFÍA'],lp:['ELECTRODOS ECG DESCONECTADOS','SENSOR SpO₂ DESCONECTADO','CO₂ DESCONECTADO'],co:['Electrodos desconectados','Sensor SpO2 desconectado','Sin sensor de CO2']}[skin]||[];
+const o=$('off');if(o){o.classList.toggle('on',!S.pw);o.style.top=Math.round($('top').getBoundingClientRect().bottom)+'px'}const DXT={act:['SIN ELECTRODOS ECG','SIN SENSOR DE SpO₂','SIN CAPNOGRAFÍA'],lp:['ELECTRODOS ECG DESCONECTADOS','SENSOR SpO₂ DESCONECTADO','CO₂ DESCONECTADO'],co:['Electrodos desconectados','Sensor SpO2 desconectado','Sin sensor de CO2']}[skin]||[];
 [['dx1',!(S.vE||S.vP)],['dx2',!S.vS],['dx3',!S.vC]].forEach(([i,m],k)=>{const e=$(i);if(e){e.classList.toggle('on',!!S.pw&&m);if(e.textContent!==DXT[k])e.textContent=DXT[k]}});
 if(!S.vP){if(PC.on){PC.on=0;pu();log('Parches retirados: marcapasos detenido')}if(D.st||D.wait)disarm(1)}}
-function ui(){devUi();ibUi();$('cd').textContent=(gotPanel?'PANEL: ':'SIN PANEL · ')+code;if(typeof pcUi==='function'&&$('pc').classList.contains('on'))pcUi();const kE=!!S.pw&&!!(S.vE||S.vP),kS=!!S.pw&&!!S.vS,kC=!!S.pw&&!!S.vC,kT=!!S.pw&&!!S.vT,src=kE?G.B:kS?G.B.filter(b=>b.perf):[],rc=src.slice(-6);let hr='--';if(rc.length>1&&G.t-rc[rc.length-1].t<4)hr=Math.round(60*(rc.length-1)/(rc[rc.length-1].t-rc[0].t));
+function ui(){devUi();ibUi();$('cd').textContent=code;conn();if(typeof pcUi==='function'&&$('pc').classList.contains('on'))pcUi();const kE=!!S.pw&&!!(S.vE||S.vP),kS=!!S.pw&&!!S.vS,kC=!!S.pw&&!!S.vC,kT=!!S.pw&&!!S.vT,src=kE?G.B:kS?G.B.filter(b=>b.perf):[],rc=src.slice(-6);let hr='--';if(rc.length>1&&G.t-rc[rc.length-1].t<4)hr=Math.round(60*(rc.length-1)/(rc[rc.length-1].t-rc[0].t));
 const pf=G.B.some(b=>b.perf&&G.t-b.t<5),r=G.eff();$('nh').textContent=hr;$('ns').textContent=kS&&pf?S.spo2:'--';$('ne').textContent=kC&&S.rr>0?S.co2:'--';$('nr').textContent=(kC||kE)&&S.rr?S.rr:'--';$('nt').textContent=kT?(+S.temp).toFixed(1):'--';
 let c=0,w=0,tx='';if(kE&&CRIT.includes(r)&&G.t>=G.blank){c=1;tx='ALARMA CRÍTICA'}else if(kS&&pf&&S.spo2<90){w=1;tx='SpO₂ BAJA'}else if(hr>150){w=1;tx='FC ALTA'}else if(hr!=='--'&&hr<45){w=1;tx='FC BAJA'}
 AL={c,w};$('al').textContent=Date.now()<mutedUntil&&tx?tx+' 🔕':tx;$('al').className=c&&Date.now()>=mutedUntil?'blink':w?'wn':'';$('mu').classList.toggle('on',Date.now()<mutedUntil)}
@@ -2321,6 +2455,8 @@ ov.innerHTML='<div class=eh><button id=e_b class=eb>‹ Volver</button><b>ECG de
 let gn=10,d=ecg12(S,PC);const hr=CONT.includes(S.rhythm)||!S.hr?'--':S.hr,ec=ov.querySelector('.ec');
 E12=()=>{const k=Math.max(3,Math.min((ec.clientWidth-24)/265,(ec.clientHeight-24)/150));draw12($('e_cv'),d,gn,k,hr);ov.querySelectorAll('[data-g]').forEach(b=>b.classList.toggle('on',+b.dataset.g===gn))};
 ov.querySelectorAll('[data-g]').forEach(b=>b.onclick=()=>{gn=+b.dataset.g;E12()});$('e_nw').onclick=()=>{d=ecg12(S,PC);E12()};$('e_b').onclick=()=>ovPop();E12();log('Alumno realiza ECG de 12 derivaciones')};
-ds();pu();setSkin(skin);const gmo=v=>{$('gm').classList.toggle('on',v);$('gear').classList.toggle('on',v)};$('gear').onclick=()=>gmo(!$('gm').classList.contains('on'));$('hm').onclick=()=>{if(confirm('¿Volver a la pantalla de inicio? Se cerrará el monitor.'))location.hash=''};document.addEventListener('pointerdown',e=>{if(!e.target.closest('#gm,#gear'))gmo(false);if(!e.target.closest('#cm,#cn'))cmo(false)});$('gm').querySelectorAll('button').forEach(x=>x.onclick=()=>{setSkin(x.dataset.sk);gmo(false)});$('pq').onclick=()=>openPair('m');
+ds();pu();setSkin(skin);const gv=n=>{$('gv0').hidden=n!==0;$('gv1').hidden=n!==1},gmo=v=>{const m=$('gm');if(v){gv(0);m.style.top=Math.round($('top').getBoundingClientRect().bottom+6)+'px'}m.classList.toggle('on',v);$('gear').classList.toggle('on',v);$('gear').setAttribute('aria-expanded',v?'true':'false')};$('gear').onclick=()=>gmo(!$('gm').classList.contains('on'));$('hm').onclick=()=>{if(confirm('¿Volver a la pantalla de inicio? Se cerrará el monitor.'))location.hash=''};document.addEventListener('pointerdown',e=>{if(!e.target.closest('#gm,#gear'))gmo(false);if(!e.target.closest('#cm,#cn'))cmo(false)});$('gm').querySelectorAll('[data-sk]').forEach(x=>x.onclick=()=>{setSkin(x.dataset.sk);gmo(false)});
+$('gm').querySelectorAll('[data-a]').forEach(x=>x.onclick=()=>{const a=x.dataset.a;if(a==='look')gv(1);else if(a==='back')gv(0);else if(a==='net'){gmo(false);openPair('m')}else if(a==='cfg'){gmo(false);cfgToggle(true)}});
+$('lk').onclick=()=>{au();say(CONNT)};conn();
 const pbc=new BroadcastChannel('simpair');pbc.onmessage=async e=>{if(e.data.t==='ans'&&PCx){try{await useAnswer(e.data.code);pbc.postMessage({t:'ack'})}catch(_){}}}}
 </script></body></html>

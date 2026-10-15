@@ -1,5 +1,5 @@
 // Guarda la app en el dispositivo para que abra sin internet. Con internet, siempre usa la versión más reciente.
-const C = 'simulador-v24';
+const C = 'simulador-v25';
 const FILES = ['./', 'index.html', 'config.js', 'manifest.webmanifest', 'icon-192.png', 'icon-512.png', 'icon-maskable-512.png', 'apple-touch-icon.png'];
 self.addEventListener('install', e => {
   e.waitUntil(caches.open(C).then(c => Promise.all(FILES.map(f => c.add(f).catch(() => {})))).then(() => self.skipWaiting()));

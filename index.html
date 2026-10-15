@@ -84,7 +84,6 @@ html{background:#070d10}body.landing{min-height:100%;height:auto;background:radi
 .lc .tx span{display:block;color:#9fb4b9;font-size:13.5px;line-height:1.4}
 .lc::after{content:"›";font-size:30px;color:#4a7480;line-height:1;margin-left:2px}
 .lc.main::after{color:#8fe3d6}
-.lver2{margin:2px 0 0;text-align:center;color:#4f666c;font-size:11px;letter-spacing:.05em}
 .lnote{margin:2px 0 0;text-align:center;color:#6f878d;font-size:13px}
 @media(max-width:640px){.lgrid{grid-template-columns:1fr}.lc{padding:14px}.lc .ic{width:48px;height:48px}.lc .tx b{font-size:17px}.lcode input{font-size:22px}}
 @media(max-height:520px) and (min-aspect-ratio:1/1){.lhead{padding-top:4px}.lhead img{width:48px;height:48px;margin-bottom:8px}.lhead p,.lecg{display:none}}
@@ -377,21 +376,64 @@ body.sk-act #bt{min-height:clamp(0px,calc(var(--vh,100dvh)*.19),300px)}
 #pc .pct button{display:flex;justify-content:space-between;align-items:center;gap:6px;padding:8px 10px;border-radius:10px;background:#0f181b;border:2px solid #22333a;color:#e8eeee;text-align:left;font-size:13px;min-height:44px}#pc .pct button em{font-style:normal;font-size:11px;font-weight:700;color:#e57373}#pc .pct button.on{border-color:#3ddc84;background:#10231c}#pc .pct button.on em{color:#3ddc84}
 .pca{display:flex;gap:6px;margin-top:10px;flex-wrap:wrap}.pca button{flex:1;min-width:90px}
 #dv_free{display:block;width:100%;margin-top:10px;padding:12px;border-radius:999px;border:1px solid #2a3a3f;background:#121c20;text-align:center}#dv_free.on{background:#0b6e78;border-color:#4cc9f0}
-
+/* ===== modo DESA ===== */
+body.desa{background:radial-gradient(900px 600px at 50% 0,#14323a 0,#0b1a1f 55%,#070d10 100%) no-repeat #070d10;height:100vh;height:var(--vh,100dvh);overflow:hidden;display:flex;flex-direction:column;color:#e8eeee}
+#dtop{display:flex;align-items:center;gap:10px;padding:max(8px,env(safe-area-inset-top)) 12px 6px}
+#dtop button{background:transparent;border:1px solid #2f4249;border-radius:10px;padding:6px 12px;color:#9fb4b9;min-height:36px}
+#dtop #dgear{border:0;font-size:24px;line-height:1;padding:0 8px;opacity:.7;margin-left:auto;color:#9fb4b9}#dtop #dgear:hover{opacity:1}
+#dst{color:#6fb9c4;font-size:13px;letter-spacing:.08em;text-transform:uppercase}
+#dstage{flex:1;min-height:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;padding:0 12px max(12px,env(safe-area-inset-bottom))}
+#aed{position:relative;--u:6px;width:min(92vw,calc((var(--vh,100vh) - 175px)*.92));aspect-ratio:.92;flex:0 0 auto;border-radius:calc(var(--u)*9);background:linear-gradient(160deg,#f4f8fb,#dbe6ed 55%,#c8d7e0);box-shadow:inset 0 0 0 calc(var(--u)*.3) #ffffffb0,inset 0 calc(var(--u)*-2.2) calc(var(--u)*2.4) #9fb3bf90,0 calc(var(--u)*1.6) calc(var(--u)*4) #000c,0 0 0 calc(var(--u)*.3) #aebfca}
+#aed .arim{position:absolute;left:0;right:0;bottom:0;height:11%;border-radius:0 0 calc(var(--u)*9) calc(var(--u)*9);background:linear-gradient(#cfdce5,#b9cad5);box-shadow:inset 0 calc(var(--u)*.4) 0 #ffffff90}
+#aed .atag{position:absolute;top:5.5%;left:0;right:0;text-align:center;font:700 calc(var(--u)*3)/1 var(--ui);letter-spacing:.14em;color:#5d6c76}
+#aled{position:absolute;left:63%;top:13.2%;width:calc(var(--u)*2);height:calc(var(--u)*2);margin-left:calc(var(--u)*-1);border-radius:50%;background:#1a2227;box-shadow:inset 0 0 0 calc(var(--u)*.2) #0008}
+#apw{position:absolute;left:63%;top:25%;width:15%;aspect-ratio:1;transform:translate(-50%,-50%);border:0;padding:0;border-radius:24%;background:linear-gradient(#3fcf78,#1f9d52);box-shadow:inset 0 0 0 calc(var(--u)*.45) #d9f7e6,0 calc(var(--u)*.5) calc(var(--u)*1) #0005;display:grid;place-items:center}
+#apw svg{width:56%;height:56%}
+#apw:active{filter:brightness(.9)}
+#afig{position:absolute;left:7%;top:11%;width:45%;height:62%}
+#afig .pad{cursor:pointer}#afig .hit{fill:transparent;pointer-events:all}
+#afig .padb{fill:#7d8b95;stroke:#4d5a63;stroke-width:1.6}#afig .ck{display:none;fill:none;stroke:#fff;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
+#afig .pad.on .padb{fill:#2faa60;stroke:#1c7a43}#afig .pad.on .ck{display:block}
+#afig .pad.hint .padb{animation:dpb 1s ease-in-out infinite}
+@keyframes dpb{50%{fill:#ffb74d;stroke:#e08a00}}
+#ash{position:absolute;left:63%;top:55%;width:24%;aspect-ratio:1.1;transform:translate(-50%,-50%);border:0;padding:0;background:none;filter:drop-shadow(0 calc(var(--u)*.5) calc(var(--u)*.6) #0005)}
+#ash svg{width:100%;height:100%;display:block}
+#ash:active{transform:translate(-50%,-50%) scale(.97)}
+#aed[data-s=ready] #ash{animation:dsh .6s ease-in-out infinite}
+@keyframes dsh{50%{filter:brightness(1.4) drop-shadow(0 0 calc(var(--u)*3) #ff8a4c)}}
+#aed .aspk{position:absolute;left:30%;right:30%;top:77%;height:9%;border-radius:calc(var(--u)*3);background-image:radial-gradient(circle,#8fa0ab 38%,transparent 42%);background-size:calc(var(--u)*1.7) calc(var(--u)*1.7);opacity:.85}
+#aed[data-s=off] #apw{filter:saturate(.55) brightness(.9)}
+#aed:not([data-s=off]) #apw{box-shadow:inset 0 0 0 calc(var(--u)*.45) #d9f7e6,0 0 calc(var(--u)*3) #2ee27a,0 calc(var(--u)*.5) calc(var(--u)*1) #0005}
+#aed:not([data-s=off]) #aled{background:#27d36b;animation:dled 1.6s ease-in-out infinite}
+#aed[data-s=analyze] #aled{background:#ff3b30;animation:dled .35s steps(2) infinite}
+#aed[data-s=ready] #aled,#aed[data-s=charge] #aled{background:#ff9f1a;animation:dled .5s steps(2) infinite}
+@keyframes dled{50%{opacity:.25}}
+#dsub{flex:0 0 auto;max-width:min(94vw,760px);min-height:70px;text-align:center}
+#dtx{display:block;font:600 clamp(18px,2.6vw,26px)/1.25 var(--num);color:#e8eeee}
+#dtm{display:block;color:#ffcf6b;font:700 22px var(--mono);margin-top:4px;min-height:26px}
+body.notx #dtx{visibility:hidden}
+#dpn{position:fixed;top:0;bottom:0;right:0;width:min(370px,94vw);z-index:40;background:#0f181b;border-left:1px solid #2a3a3f;box-shadow:-10px 0 30px #000a;overflow:auto;padding:max(12px,env(safe-area-inset-top)) 14px 24px;transform:translateX(105%);transition:transform .2s}
+#dpn.on{transform:none}
+#dpn header{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px}#dpn header b{font:700 17px var(--num)}
+#dpn button{background:#17252a;border:1px solid #2f4249;border-radius:10px;color:#e8eeee;padding:9px 12px;text-align:left}
+#dpn button.on{background:#0b6e78;border-color:#2fb5c2}
+#dpn section{border-top:1px solid #1d2a2d;padding:12px 0}#dpn h4{margin:0 0 8px;font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:#6fb9c4}
+.dl{display:flex;flex-direction:column;gap:8px}.dl b{display:block;font-size:15px}.dl small{display:block;color:#9fb4b9;font-size:12.5px;margin-top:2px}.dl button.on small{color:#d3f1f5}
+.dchips{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}.dchips .dchip{padding:8px 10px;font-size:13px}.dchips .dchip.S{border-color:#ff9f1a}.dchips .dchip.S.on{background:#a85a00}.dchips .dchip.N{border-color:#4a6b74}
+.dn{color:#9fb4b9;font-size:12.5px;line-height:1.45;margin:8px 0 0}
+.seg{display:flex;gap:6px}.seg button{flex:1;text-align:center!important}
+.dr{display:flex;align-items:center;gap:8px;margin-top:10px;color:#cfe0e3;font-size:14px}
+#dpn select{width:100%;background:#17252a;border:1px solid #2f4249;border-radius:10px;color:#e8eeee;padding:9px 10px;margin-bottom:8px}.dr select{width:auto;margin:0}
+#dpn .db{display:block;width:100%;margin-top:8px}
 /* ===== informe de debriefing ===== */
-#rpo{position:fixed;inset:0;z-index:90;background:#0b1215;display:none;flex-direction:column;color:#e8eeee}
-#rpo.on{display:flex}
-#rpo .rph{display:flex;flex-wrap:wrap;align-items:center;gap:8px;padding:10px 12px;padding-top:max(10px,env(safe-area-inset-top));padding-left:max(12px,env(safe-area-inset-left));padding-right:max(12px,env(safe-area-inset-right));background:#121c20;border-bottom:1px solid #2a3a3f}
-#rpo .rph b{font-size:17px;margin-right:auto}
-#rpo .rph button{padding:9px 14px;min-height:40px;border-radius:9px;border:1px solid #33454a;background:#16252a;color:#e8eeee;font-size:14px;font-weight:600}
-#rpo .rph button.main{background:#2e7d32;border-color:#43a047}
-#rpo .rph button.dng{color:#ff9e9e}
-#rpo iframe{flex:1 1 auto;width:100%;border:0;background:#fff;min-height:0}
-#rpo #rp_t{position:absolute;left:50%;bottom:calc(18px + env(safe-area-inset-bottom));transform:translateX(-50%);background:#e8eeee;color:#0b1215;padding:9px 16px;border-radius:999px;font-weight:600;font-size:14px;opacity:0;transition:opacity .2s;pointer-events:none}
-#rpo #rp_t.on{opacity:1}
-#pc .pca #pc_i{flex:1 1 100%;min-height:44px}
-@media(max-width:600px){#rpo .rph{gap:6px;padding-bottom:8px}#rpo .rph b{display:none}#rpo .rph button{padding:7px 10px;min-height:36px;font-size:13px}#rpo #rp_b{margin-right:auto}}
-#rpbtn{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:6px}#rpbtn .sm{margin-bottom:0}#rpbtn #rpt{background:#1f5f36;border-color:#2e8b57;font-weight:700}
+#rpt{padding:0 14px 28px;background:#05090b}
+.rptbar{position:sticky;top:0;z-index:2;display:flex;align-items:center;gap:12px;padding:12px 0;background:rgba(5,9,11,.97)}.rptbar b{font:700 18px var(--num)}.rptbar .sm{margin:0}
+.rptf{display:grid;gap:10px;grid-template-columns:1fr 1fr;margin-bottom:10px}.rptf label{display:block;font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:#6fb9c4}.rptf label.w2{grid-column:1/-1}
+.rptf input,.rptf textarea{display:block;width:100%;margin-top:5px;background:#0f181b;border:1px solid #2a3a3f;border-radius:10px;color:#e8eeee;padding:10px;font:15px var(--ui);text-transform:none;letter-spacing:0}
+.rpta{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px}.rpta .sm{margin:0}.rpta .main{background:#0b6e78;border-color:#2fb5c2}
+#r_fr{display:block;width:100%;min-height:70vh;border:0;border-radius:10px;background:#fff}
+@media(max-width:560px){.rptf{grid-template-columns:1fr}}
+.lbt{display:flex;flex-wrap:wrap;gap:8px}.lbt .sm{margin-bottom:8px}.lbt .main{background:#0b6e78;border-color:#2fb5c2}
 </style></head><body><script>
 const $=i=>document.getElementById(i),g=(x,m,s)=>Math.exp(-((x-m)**2)/(2*s*s)),hm=()=>new Date().toLocaleTimeString('es-ES');
 const ls=(k,v)=>{try{if(v===undefined)return localStorage.getItem(k);localStorage.setItem(k,v)}catch(_){}};
@@ -502,116 +544,6 @@ function listen(node){let first=1;const es=new EventSource(FB+'/rooms/'+CODE+'/'
 es.addEventListener('put',e=>{if(first){first=0;return}try{const d=JSON.parse(e.data).data;if(d&&d.id)recv(d)}catch(_){}});
 es.onerror=()=>{if(es.readyState===2)setTimeout(()=>listen(node),3000)}}
 function netInit(code,role){CODE=code;MY=role;BC=new BroadcastChannel('simmon-'+code);BC.onmessage=e=>recv(e.data);if(FB&&code!=='LOCAL')listen(role==='c'?'m':'c')}
-
-
-/* ---------- registro de eventos e informe de debriefing ---------- */
-const EVS={key:'',ev:[],ser:[],snap:null,prev:'',chT:0,iv:0,synced:0,onClear:null};
-const evEsc=t=>String(t).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
-const evFmt=ms=>{ms=Math.max(0,Math.round(ms/1000));const h=Math.floor(ms/3600),m=Math.floor(ms%3600/60),s=ms%60,p=n=>String(n).padStart(2,'0');return (h?h+':'+p(m):m)+':'+p(s)};
-function evSave(){try{ls(EVS.key,JSON.stringify({ev:EVS.ev.slice(-800),ser:EVS.ser.slice(-1500)}))}catch(_){}}
-const evSnap=()=>({r:S.rhythm,p:S.pulse?1:0,a:S.art?1:0,n:{hr:S.hr,spo2:S.spo2,sbp:S.sbp,dbp:S.dbp,rr:S.rr,co2:S.co2,temp:S.temp}});
-const evState=()=>`${RH[S.rhythm]?RH[S.rhythm][0]:S.rhythm}, ${S.pulse?'con pulso':'sin pulso'}, FC ${S.hr} lpm, SpO₂ ${S.spo2} %, TA ${S.sbp}/${S.dbp} mmHg`;
-function evAdd(m){EVS.ev.push({t:Date.now(),m:String(m),r:S.rhythm,p:S.pulse?1:0});evSave()}
-function evSer(){EVS.ser.push({t:Date.now(),hr:S.hr,sp:S.spo2,sy:S.sbp,di:S.dbp,r:S.rhythm,p:S.pulse?1:0});evSave()}
-function evBegin(){EVS.ev=[];EVS.ser=[];evAdd('Paciente: estado inicial · '+evState());evSer();EVS.snap=evSnap();EVS.prev=JSON.stringify(EVS.snap.n)}
-function evStart(code,role){EVS.key='evl_'+role+'_'+code;
-try{const d=JSON.parse(ls(EVS.key)||'null');if(d&&d.ev&&d.ev.length&&Date.now()-d.ev[d.ev.length-1].t<3*3600e3){EVS.ev=d.ev;EVS.ser=d.ser||[];EVS.synced=1}}catch(_){}
-EVS.snap=evSnap();EVS.prev=JSON.stringify(EVS.snap.n);if(!EVS.ev.length)evBegin();
-clearInterval(EVS.iv);EVS.iv=setInterval(evTick,400)}
-/* el panel recibe el estado real del monitor al conectar: se toma como estado inicial, sin ruido en el registro */
-function evSync(){if(EVS.synced)return;EVS.synced=1;if(EVS.ev.length<=1)evBegin()}
-function evClear(){evBegin();if(EVS.onClear)EVS.onClear()}
-function evTick(){const n=evSnap(),o=EVS.snap;if(!o){EVS.snap=n;return}
-if(n.r!==o.r){o.r=n.r;evAdd('Paciente: ritmo → '+(RH[n.r]?RH[n.r][0]:n.r));evSer()}
-if(n.p!==o.p){o.p=n.p;evAdd('Paciente: '+(n.p?'pulso presente':'sin pulso'));evSer()}
-if(n.a!==o.a){o.a=n.a;evAdd('Paciente: artefacto de RCP '+(n.a?'activado':'desactivado'))}
-const js=JSON.stringify(n.n);if(js!==EVS.prev){EVS.prev=js;EVS.chT=Date.now()}
-else if(js!==JSON.stringify(o.n)&&Date.now()-EVS.chT>1500){const L={hr:'FC',spo2:'SpO₂',sbp:'TA sist.',dbp:'TA diast.',rr:'FR',co2:'EtCO₂',temp:'Temp.'},ch=Object.keys(n.n).filter(k=>n.n[k]!==o.n[k]).map(k=>`${L[k]} ${o.n[k]}→${n.n[k]}`);o.n={...n.n};evAdd('Paciente: '+ch.join(', '));evSer()}}
-
-const SHOCKABLE=['vf','vff','torsades','vt','vtpol'];
-const evCls=m=>/^Instructor:/.test(m)?'ins':/^Paciente:/.test(m)?'pac':'alu';
-const evShock=m=>/^(Descarga|Cardioversi)/.test(m);
-function evAnalyze(){const E=EVS.ev;if(!E.length)return null;const t0=E[0].t,t1=E[E.length-1].t,rel=t=>t-t0,A={t0,t1,dur:t1-t0,obs:[]};
-const alu=E.filter(e=>evCls(e.m)==='alu');A.nAlu=alu.length;
-A.shocks=E.filter(e=>evShock(e.m)).map(e=>({t:e.t,m:e.m,sync:/^Cardioversi/.test(e.m),J:(e.m.match(/de (\d+) J/)||[])[1]||'?',ok:/→ efectiva/.test(e.m),none:/sin efecto/.test(e.m),low:/insuficiente/.test(e.m),warn:/aviso: descarga as/.test(e.m),r:e.r,p:e.p}));
-A.charges=E.filter(e=>/^Carga a/.test(e.m)).length;
-A.pni=E.filter(e=>/^PNI medida/.test(e.m)).length;A.e12=E.filter(e=>/^Alumno realiza ECG de 12/.test(e.m)).length;
-A.pace=E.filter(e=>/^Marcapasos activado/.test(e.m)).length;A.noCap=E.filter(e=>/^Pérdida de captura/.test(e.m)).length;
-A.errs=E.filter(e=>/^Intento|no se detecta pulso/.test(e.m));A.mutes=E.filter(e=>/^Alarmas silenciadas/.test(e.m)).length;
-/* mayor pausa entre acciones del alumno */
-A.gap=0;A.gapAt=0;for(let i=1;i<alu.length;i++){const g=alu[i].t-alu[i-1].t;if(g>A.gap){A.gap=g;A.gapAt=alu[i-1].t}}
-/* ritmo desfibrilable sin pulso -> primera descarga */
-const sh=E.find(e=>SHOCKABLE.includes(e.r)&&!e.p);A.shockableAt=sh?sh.t:0;
-const fs=A.shocks.find(x=>!sh||x.t>=sh.t);A.firstShock=A.shocks[0]?A.shocks[0].t:0;A.toShock=(sh&&fs)?fs.t-sh.t:null;
-const O=A.obs;
-if(sh&&!A.shocks.length)O.push(`Hubo ritmo desfibrilable sin pulso (${evFmt(rel(sh.t))}) y no se registró ninguna descarga.`);
-if(A.toShock!==null&&A.toShock>60000)O.push(`Pasaron ${evFmt(A.toShock)} desde que apareció el ritmo desfibrilable sin pulso hasta la primera descarga: conviene analizar qué retrasó la desfibrilación.`);
-A.shocks.forEach((x,i)=>{const n=`Descarga ${i+1} (${evFmt(rel(x.t))}, ${x.J} J)`;
-if(x.warn)O.push(`${n}: asíncrona sobre un ritmo con pulso (riesgo de R sobre T). ¿Se valoró la cardioversión sincronizada?`);
-if(!x.sync&&x.none)O.push(`${n}: ritmo no desfibrilable, sin efecto.`);
-if(x.sync&&x.none)O.push(`${n}: ritmo no indicado para cardioversión, sin efecto.`);
-if(x.low)O.push(`${n}: energía insuficiente para este caso; el ritmo no cambió.`)});
-const seen={};A.errs.forEach(e=>{const k=e.m;seen[k]=(seen[k]||0)+1});
-Object.keys(seen).forEach(k=>O.push(`${k}${seen[k]>1?' (×'+seen[k]+')':''}: ¿se comprobó el equipo antes de usarlo?`));
-if(A.noCap)O.push(`Pérdida de captura del marcapasos ${A.noCap} ${A.noCap>1?'veces':'vez'}: revisar intensidad y comprobación del pulso.`);
-if(A.gap>=60000&&alu.length>1)O.push(`Mayor pausa entre acciones del alumno: ${evFmt(A.gap)} (desde ${evFmt(rel(A.gapAt))}). ¿Qué se estaba haciendo o decidiendo en ese tiempo?`);
-if(!O.length)O.push('No se detectan incidencias automáticas en el registro.');
-return A}
-
-/* gráfica de evolución: FC / TA sistólica, SpO₂ y banda de ritmo, con las descargas marcadas */
-function evChart(A){const D=EVS.ser.filter(p=>p.t<=A.t1+1000);if(D.length<1)return '<p class=mu>Sin datos de evolución.</p>';
-const W=760,H=330,L=44,R=12,T0=8,x0=L,x1=W-R,span=Math.max(60000,A.dur),X=t=>x0+(t-A.t0)/span*(x1-x0);
-const pan=[{y0:T0,y1:T0+130,min:0,max:250,lab:'FC / TA sist. (lpm · mmHg)'},{y0:T0+160,y1:T0+240,min:50,max:100,lab:'SpO₂ (%)'}];
-const Y=(p,v)=>p.y1-(Math.max(p.min,Math.min(p.max,v))-p.min)/(p.max-p.min)*(p.y1-p.y0);
-const step=(p,key)=>{let d='',last=null;D.forEach((q,i)=>{const x=X(q.t),y=Y(p,q[key]);d+=i?`H${x.toFixed(1)}V${y.toFixed(1)}`:`M${x.toFixed(1)},${y.toFixed(1)}`;last=y});d+=`H${X(A.t0+span).toFixed(1)}`;return d};
-let g='';const tk=[15,30,60,120,300,600,900,1800].find(v=>span/1000/v<=8)||1800;
-for(let s=0;s<=span/1000;s+=tk){const x=X(A.t0+s*1000);g+=`<line x1="${x}" x2="${x}" y1="${T0}" y2="${T0+240}" stroke="#e3e8ea"/><text x="${x}" y="${T0+256}" font-size="11" text-anchor="middle" fill="#5b6b70">${evFmt(s*1000)}</text>`}
-pan.forEach(p=>{[0,.5,1].forEach(f=>{const v=p.min+(p.max-p.min)*f,y=Y(p,v);g+=`<line x1="${x0}" x2="${x1}" y1="${y}" y2="${y}" stroke="#e3e8ea"/><text x="${x0-5}" y="${y+4}" font-size="11" text-anchor="end" fill="#5b6b70">${Math.round(v)}</text>`});g+=`<text x="${x0+4}" y="${p.y0+12}" font-size="11" font-weight="700" fill="#33474d">${p.lab}</text>`});
-g+=`<path d="${step(pan[0],'hr')}" fill="none" stroke="#1b9e5a" stroke-width="2.2"/><path d="${step(pan[0],'sy')}" fill="none" stroke="#d9732b" stroke-width="2.2"/><path d="${step(pan[1],'sp')}" fill="none" stroke="#2677d4" stroke-width="2.2"/>`;
-/* banda de ritmo */
-const by=T0+270,bh=26;D.forEach((q,i)=>{const a=X(q.t),b=i<D.length-1?X(D[i+1].t):X(A.t0+span),w=b-a,sh=SHOCKABLE.includes(q.r)&&!q.p,np=!q.p,col=sh?'#f4b6b6':np?'#d3c2e6':'#bfe6cd',nm=RH[q.r]?RH[q.r][0].split(' (')[0]:q.r;
-g+=`<rect x="${a.toFixed(1)}" y="${by}" width="${Math.max(1,w).toFixed(1)}" height="${bh}" fill="${col}" stroke="#fff"/>`;if(w>nm.length*5.6+8)g+=`<text x="${(a+4).toFixed(1)}" y="${by+17}" font-size="11" fill="#1f2d31">${evEsc(nm)}</text>`});
-g+=`<text x="${x0-5}" y="${by+17}" font-size="11" text-anchor="end" fill="#5b6b70">Ritmo</text>`;
-/* descargas */
-A.shocks.forEach((x,i)=>{const px=X(x.t);g+=`<line x1="${px}" x2="${px}" y1="${T0}" y2="${by+bh}" stroke="#c62828" stroke-width="1.6" stroke-dasharray="4 3"/><text x="${px+3}" y="${T0+pan[0].y1-pan[0].y0-4}" font-size="11" font-weight="700" fill="#c62828">⚡${x.J} J</text>`});
-return `<svg viewBox="0 0 ${W} ${H}" width="100%" role="img" aria-label="Evolución del paciente"><rect width="${W}" height="${H}" fill="#fff"/>${g}</svg><div class=lg><span><i style="background:#1b9e5a"></i>FC</span><span><i style="background:#d9732b"></i>TA sistólica</span><span><i style="background:#2677d4"></i>SpO₂</span><span><i style="background:#c62828"></i>Descarga / cardioversión</span></div>`}
-
-function evBuild(){const A=evAnalyze();if(!A)return null;const rel=t=>evFmt(t-A.t0),code=EVS.key.split('_').slice(2).join('_')||'',role=EVS.key.split('_')[1]==='c'?'Panel del instructor':'Monitor',now=new Date();
-const J=A.shocks.map(x=>x.J+' J').join(', ');
-const cards=[['Duración',evFmt(A.dur)],['Acciones del alumno',A.nAlu],['Descargas / cardioversiones',A.shocks.length+(J?' ('+J+')':'')],['1.ª descarga',A.shocks.length?'a los '+rel(A.firstShock):'—'],['Ritmo desfibrilable → 1.ª descarga',A.toShock!==null?evFmt(A.toShock):(A.shockableAt?'sin descarga':'no hubo')],['Cargas del desfibrilador',A.charges],['Marcapasos activado',A.pace+(A.noCap?' · '+A.noCap+' pérd. captura':'')],['PNI medidas',A.pni],['ECG 12 derivaciones',A.e12],['Intentos sin equipo / errores',A.errs.length],['Alarmas silenciadas',A.mutes]];
-const rows=EVS.ev.map(e=>{const c=evCls(e.m),sh=evShock(e.m),er=/^Intento|no se detecta pulso|Pérdida de captura/.test(e.m);
-return `<tr class="${sh?'sh':er?'er':''}"><td>${new Date(e.t).toLocaleTimeString('es-ES')}</td><td class=el>${rel(e.t)}</td><td><span class="ch ${c}">${c==='alu'?'Alumno':c==='ins'?'Instructor':'Paciente'}</span></td><td>${evEsc(e.m.replace(/^(Instructor|Paciente|Alumno): /,''))}</td></tr>`}).join('');
-const sh2=A.shocks.length?`<table><tr><th>#</th><th>Tiempo</th><th>Tipo</th><th>Energía</th><th>Ritmo en ese momento</th><th>Resultado</th></tr>${A.shocks.map((x,i)=>`<tr><td>${i+1}</td><td class=el>${rel(x.t)}</td><td>${x.sync?'Cardioversión sincronizada':'Descarga asíncrona'}</td><td>${x.J} J</td><td>${evEsc(RH[x.r]?RH[x.r][0]:x.r)}${x.p?'':' · sin pulso'}</td><td>${x.ok?'Efectiva':x.low?'Energía insuficiente':x.none?'Sin efecto (ritmo no indicado)':'—'}${x.warn?' · aviso: asíncrona con pulso':''}</td></tr>`).join('')}</table>`:'<p class=mu>No se registraron descargas.</p>';
-const css=`*{box-sizing:border-box}body{margin:0;padding:22px;font:15px/1.5 system-ui,-apple-system,Segoe UI,Roboto,sans-serif;color:#1b2528;background:#fff}h1{margin:0 0 2px;font-size:25px}h2{margin:26px 0 8px;font-size:17px;border-bottom:2px solid #1b9e5a;padding-bottom:4px;color:#0f4d33}.sub{color:#5b6b70;font-size:13px}.meta{display:flex;flex-wrap:wrap;gap:6px 22px;margin:12px 0;font-size:14px}.meta b{color:#33474d}.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px}.card{border:1px solid #d9e1e3;border-radius:10px;padding:8px 10px;background:#f7fafa}.card small{display:block;color:#5b6b70;font-size:11.5px}.card b{font-size:19px}table{width:100%;border-collapse:collapse;font-size:13.5px;margin-top:4px}th{text-align:left;background:#eef3f4;color:#33474d;padding:6px 8px;font-size:12px}td{padding:6px 8px;border-bottom:1px solid #e6ecee;vertical-align:top}td.el{white-space:nowrap;font-variant-numeric:tabular-nums;color:#33474d;font-weight:600}tr.sh td{background:#fdecec}tr.er td{background:#fff6e0}.ch{display:inline-block;padding:1px 8px;border-radius:999px;font-size:11.5px;font-weight:700;color:#fff}.ch.alu{background:#2677d4}.ch.ins{background:#7b4bb7}.ch.pac{background:#1b9e5a}.lg{display:flex;flex-wrap:wrap;gap:4px 16px;font-size:12px;color:#33474d;margin-top:4px}.lg i{display:inline-block;width:14px;height:4px;margin-right:5px;vertical-align:middle;border-radius:2px}ul{margin:6px 0;padding-left:20px}li{margin:4px 0}.ed{min-height:84px;border:1.5px dashed #aab8bc;border-radius:10px;padding:10px;background:#fcfdfd;outline:none;white-space:pre-wrap}.ed:empty:before{content:attr(data-ph);color:#8a999e}.ed:focus{border-color:#1b9e5a;background:#fff}.mu{color:#6b7b80}.g2{display:grid;grid-template-columns:1fr 1fr;gap:12px}@media(max-width:640px){.g2{grid-template-columns:1fr}body{padding:14px}}@media print{body{padding:0}h2{break-after:avoid}tr,.card{break-inside:avoid}.ed{border-style:solid;min-height:110px}.ed:empty:before{content:''}svg{max-height:340px}}@page{margin:14mm}`;
-const html=`<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Informe de debriefing${code?' · '+evEsc(code):''}</title><style>${css}</style></head><body>
-<h1>Informe de debriefing</h1><div class=sub>Simulador de monitor-desfibrilador</div>
-<div class=meta><span><b>Fecha:</b> ${now.toLocaleDateString('es-ES',{weekday:'long',day:'numeric',month:'long',year:'numeric'})}</span><span><b>Inicio:</b> ${new Date(A.t0).toLocaleTimeString('es-ES')}</span><span><b>Sesión:</b> ${evEsc(code||'—')}</span><span><b>Origen del registro:</b> ${role}</span></div>
-<div class=g2><div><b>Escenario / caso</b><div class=ed contenteditable=true data-ph="Ej.: Parada cardiorrespiratoria en FV"></div></div><div><b>Participantes</b><div class=ed contenteditable=true data-ph="Nombres o grupo"></div></div></div>
-<h2>Resumen</h2><div class=cards>${cards.map(([a,b])=>`<div class=card><small>${a}</small><b>${evEsc(b)}</b></div>`).join('')}</div>
-<h2>Evolución del paciente</h2>${evChart(A)}
-<h2>Descargas y cardioversiones</h2>${sh2}
-<h2>Observaciones automáticas</h2><ul>${A.obs.map(o=>`<li>${evEsc(o)}</li>`).join('')}</ul><p class=sub>Son avisos generados a partir del registro, como punto de partida para la conversación; no sustituyen la valoración del instructor.</p>
-<h2>Cronología</h2><table><tr><th>Hora</th><th>Tiempo</th><th>Origen</th><th>Evento</th></tr>${rows}</table>
-<h2>Guion para el debriefing</h2><ul><li><b>Reacciones:</b> ¿Cómo os habéis sentido durante el caso?</li><li><b>Descripción:</b> ¿Qué ocurrió, según cada miembro del equipo?</li><li><b>Análisis:</b> ¿Qué decisiones se tomaron y por qué? ¿Qué os ayudó o dificultó?</li><li><b>Aplicación:</b> ¿Qué haréis igual y qué cambiaréis la próxima vez?</li></ul>
-<div class=g2><div><b>Puntos fuertes</b><div class=ed contenteditable=true data-ph="Lo que se hizo bien"></div></div><div><b>Aspectos a mejorar</b><div class=ed contenteditable=true data-ph="Lo que conviene trabajar"></div></div></div>
-<h2>Notas del instructor</h2><div class=ed contenteditable=true data-ph="Notas, acuerdos y tareas pendientes"></div>
-</body></html>`;
-const txt=()=>{const f=document.getElementById('rp_f'),ed=f&&f.contentDocument?[...f.contentDocument.querySelectorAll('.ed')].map(e=>e.innerText.trim()):[];
-let t=`INFORME DE DEBRIEFING · ${now.toLocaleDateString('es-ES')} · Sesión ${code||'—'}\nDuración ${evFmt(A.dur)} · Acciones del alumno ${A.nAlu}\n\nRESUMEN\n`+cards.map(([a,b])=>`- ${a}: ${b}`).join('\n')+`\n\nOBSERVACIONES AUTOMÁTICAS\n`+A.obs.map(o=>'- '+o).join('\n')+`\n\nCRONOLOGÍA\n`+EVS.ev.map(e=>`[${rel(e.t)}] ${e.m}`).join('\n');
-const lab=['Escenario','Participantes','Puntos fuertes','Aspectos a mejorar','Notas del instructor'];const N=lab.map((l,i)=>ed[i]?`${l}: ${ed[i]}`:'').filter(Boolean);if(N.length)t+='\n\nNOTAS\n'+N.join('\n');return t};
-return {html,txt,code,t0:A.t0}}
-
-function evOpen(){const B=evBuild();let ov=document.getElementById('rpo');if(!ov){ov=document.createElement('div');ov.id='rpo';document.body.append(ov)}
-if(!B){alert('Todavía no hay datos que mostrar. Vuelve a intentarlo cuando haya ocurrido algo en la simulación.');return}
-ov.innerHTML='<div class=rph><button id=rp_b>‹ Volver</button><b>Informe de debriefing</b><button id=rp_p class=main>Imprimir / PDF</button><button id=rp_d>Descargar</button><button id=rp_c>Copiar texto</button><button id=rp_x class=dng>Nueva simulación</button></div><iframe id=rp_f title="Informe de debriefing"></iframe><div id=rp_t></div>';
-ov.classList.add('on');ovPush(()=>ov.classList.remove('on'));const f=document.getElementById('rp_f');f.srcdoc=B.html;
-const toast=m=>{const t=document.getElementById('rp_t');t.textContent=m;t.classList.add('on');clearTimeout(toast.h);toast.h=setTimeout(()=>t.classList.remove('on'),2200)};
-document.getElementById('rp_b').onclick=()=>ovPop();
-document.getElementById('rp_p').onclick=()=>{try{f.contentWindow.focus();f.contentWindow.print()}catch(_){toast('No se pudo abrir la impresión: usa Descargar')}};
-document.getElementById('rp_d').onclick=()=>{try{const h='<!doctype html>\n'+f.contentDocument.documentElement.outerHTML.replace(/ contenteditable="true"/g,''),a=document.createElement('a'),d=new Date(B.t0),p=n=>String(n).padStart(2,'0');
-a.href=URL.createObjectURL(new Blob([h],{type:'text/html'}));a.download=`informe-debriefing${B.code?'-'+B.code:''}-${d.getFullYear()}${p(d.getMonth()+1)}${p(d.getDate())}-${p(d.getHours())}${p(d.getMinutes())}.html`;document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(a.href),5000);toast('Informe descargado')}catch(_){toast('No se pudo descargar')}};
-document.getElementById('rp_c').onclick=async()=>{const t=B.txt();try{await navigator.clipboard.writeText(t);toast('Texto copiado')}catch(_){const ta=document.createElement('textarea');ta.value=t;ta.style.cssText='position:fixed;opacity:0';document.body.append(ta);ta.select();let ok=0;try{ok=document.execCommand('copy')}catch(_){}ta.remove();toast(ok?'Texto copiado':'No se pudo copiar')}};
-document.getElementById('rp_x').onclick=()=>{if(confirm('¿Borrar el registro y empezar una nueva simulación? El informe actual se perderá (descárgalo antes si lo quieres conservar).')){evClear();ovPop()}}}
 
 /* QRCode for JavaScript, Copyright (c) 2009 Kazuhiko Arase, licencia MIT. QR Code es marca registrada de DENSO WAVE. */
 const QRLib=(()=>{const M={},R=n=>M[n.replace('./','')],D=(n,f)=>{const m={exports:{}};f(m,m.exports,R);M[n]=m.exports};
@@ -1723,13 +1655,14 @@ const cl=c=>(c||'').toUpperCase().replace(/[^A-Z0-9]/g,'').slice(0,8);
 if(md==='monitor')monitor(cl(cdq)||Array.from({length:4},()=>'ABCDEFGHJKMNPQRSTUVWXYZ23456789'[Math.random()*31|0]).join(''));
 else if(md==='control'&&cl(cdq))control(cl(cdq));
 else if(md==='panel')control('LOCAL',{pair:1});
+else if(md==='desa')desa();
 else if(md==='p'&&cdq&&cdq[0]==='O')control('LOCAL',{auto:cdq});
 else if(md==='p'&&cdq&&cdq[0]==='A')ansTab(cdq);else land();
 addEventListener('hashchange',()=>location.reload());
 
 function land(){document.body.className='landing';document.body.innerHTML=`<div class=land>
 <header class=lhead><img src="icon-192.png" alt="" width=72 height=72><h1>Simulador de monitor-desfibrilador</h1>
-<p>Monitor, desfibrilador, marcapasos y panel de instructor para prácticas de emergencias.</p>
+<p>Monitor, desfibrilador, marcapasos y panel de instructor para prácticas de emergencias.</p><span class=lver>Versión 12</span>
 <svg class=lecg viewBox="0 0 520 46" preserveAspectRatio="none" aria-hidden="true"><path d="M0 28H90l10-8 10 8h40l8 6 8-26 10 42 8-22h30l10-8 10 8h80l10-8 10 8h40l8 6 8-26 10 42 8-22H520"/></svg></header>
 ${FB?'':'<div class=lwarn>Falta configurar la base de datos: edita el archivo config.js siguiendo la guía.</div>'}
 <section class=lcode><label for=cin>CÓDIGO DE SESIÓN</label><input id=cin maxlength=8 placeholder="AUTO" autocomplete=off autocapitalize=characters spellcheck=false value="${ls('cc')||''}">
@@ -1738,12 +1671,149 @@ ${FB?'':'<div class=lwarn>Falta configurar la base de datos: edita el archivo co
 <button class="lc main" id=bm><span class=ic><svg viewBox="0 0 32 32" fill="none" stroke="#6ef0b0" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="26" height="19" rx="3"/><path d="M6 15h5l2-4 3 8 2-5h8"/><path d="M11 28h10"/></svg></span><span class=tx><em>Alumnos · tablet, portátil o proyector</em><b>Abrir el monitor</b><span>Ondas, constantes, desfibrilador, cardioversión, marcapasos, PNI, TA invasiva y ECG de 12 derivaciones.</span></span></button>
 <button class=lc id=cgo><span class=ic><svg viewBox="0 0 32 32" fill="none" stroke="#7bd8ff" stroke-width="2.2" stroke-linecap="round"><path d="M5 9h22M5 16h22M5 23h22"/><circle cx="12" cy="9" r="3" fill="#0a171b"/><circle cx="21" cy="16" r="3" fill="#0a171b"/><circle cx="10" cy="23" r="3" fill="#0a171b"/></svg></span><span class=tx><em>Instructor · móvil</em><b>Panel del instructor</b><span>Controla el ritmo y las constantes de esa sesión. Necesita el código del monitor.</span></span></button>
 <button class=lc id=cof><span class=ic><svg viewBox="0 0 32 32" fill="none" stroke="#ffcf6b" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12c7-6 19-6 26 0M8 17c5-4 11-4 16 0M13 22c2-1.5 4-1.5 6 0"/><circle cx="16" cy="26" r="1.4" fill="#ffcf6b"/><path d="M5 5l22 22"/></svg></span><span class=tx><em>Sin internet</em><b>Panel sin internet</b><span>Para controlar un monitor emparejado con QR, sin wifi con internet.</span></span></button>
+<button class="lc wide" id=bds><span class=ic><svg viewBox="0 0 32 32" fill="none" stroke="#ff9a5c" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 27C6 20 4 14 4 10.5A6.5 6.5 0 0 1 16 7a6.5 6.5 0 0 1 12 3.5C28 14 26 20 16 27z"/><path d="M17 11l-4 6h5l-3 5"/></svg></span><span class=tx><em>Alumnos · tablet</em><b>Modo DESA</b><span>Desfibrilador externo automático con voz en castellano: parches, análisis, descarga y RCP cada 2 minutos. Escenarios programables.</span></span></button>
 </div>
-<p class=lnote>Usa un código distinto en cada monitor: si dos monitores comparten código, recibirán las mismas órdenes.</p><p class=lver2 id=lv>Versión 20</p></div>`;
-try{caches.keys().then(k=>{const v=k.map(x=>(x.match(/^simulador-v(\d+)$/)||[])[1]).filter(Boolean).map(Number);if(v.length&&$('lv'))$('lv').textContent='Versión '+Math.max(...v)}).catch(()=>{})}catch(_){}
+<p class=lnote>Usa un código distinto en cada monitor: si dos monitores comparten código, recibirán las mismas órdenes.</p></div>`;
 $('bm').onclick=()=>{const c=cl($('cin').value);location.hash='#monitor'+(c?'/'+c:'')};
-$('cof').onclick=()=>{location.hash='#panel'};
+$('cof').onclick=()=>{location.hash='#panel'};$('bds').onclick=()=>{location.hash='#desa'};
 $('cgo').onclick=()=>{const c=cl($('cin').value);if(c){ls('cc',c);location.hash='#control/'+c}else{const i=$('cin');i.focus();i.classList.remove('err');void i.offsetWidth;i.classList.add('err');setTimeout(()=>i.classList.remove('err'),900)}}}
+
+/* ---------- modo DESA (desfibrilador externo automático) ---------- */
+function desa(){
+document.body.className='desa';
+const TS=window.DESA_TS||1,CAP={S:'DESCARGA',N:'SIN DESCARGA'},
+PRE=[['Desfibrilable','Primer análisis: descarga aconsejada','S'],['No desfibrilable','Primer análisis: no se aconseja descarga','N'],['2 no desfibrilables y a la 3.ª, descarga','Análisis 1 y 2 sin descarga; análisis 3 con descarga','NNS']],
+MALE=/jorge|pablo|[aá]lvaro|enrique|diego|juan|ra[uú]l|carlos|antonio|miguel|pedro|eddy|reed|rocko|jaime|andr[eé]s|alberto|luis|jos[eé]|male|hombre|masculin/i,
+FEM=/m[oó]nica|paulina|helena|laura|sabina|elvira|marisol|esperanza|luc[ií]a|isabela|camila|dalia|salom[eé]|female|mujer|google espa|\bflo\b|sandy|shelley|grandma|ximena|valentina|catalina|paloma|marta|in[eé]s|elena|sofia|sof[ií]a/i;
+let sq=(ls('dseq')||'S').replace(/[^SN]/g,'').slice(0,8)||'S',met=ls('dmet')!=='0',bpm=+ls('dbpm')||110,txt=ls('dtxt')!=='0',vsel=ls('dvz')||'auto',
+st='off',tok=0,pad=[0,0],nAn=0,nSh=0,cprEnd=0,padWake=null,shWake=null,shHit=0,ctx=null,metT=null,rdyT=null,chO=null,lastCx=0,VZ=[];
+class Cn{}
+document.body.innerHTML=`<div id=dtop><button id=dhm>‹ Inicio</button><span id=dst></span><button id=dgear aria-label="Panel del instructor" title="Panel del instructor">⚙</button></div>
+<div id=dstage><div id=aed data-s=off>
+<div class=atag>SOLO ENTRENAMIENTO</div><i id=aled></i>
+<button id=apw aria-label="Encender o apagar"><svg viewBox="0 0 40 40" fill=none stroke=#fff stroke-width=4 stroke-linecap=round><path d="M20 6v14"/><path d="M12.5 11.5a12 12 0 1 0 15 0"/></svg></button>
+<svg id=afig viewBox="0 0 120 200" aria-label="Colocación de los parches">
+<g fill="#eef4f7" stroke="#5c6770" stroke-width="2.2" stroke-linejoin="round"><circle cx=60 cy=26 r=15 /><rect x=54 y=38 width=12 height=12 rx=3 /><rect x=20 y=52 width=15 height=84 rx=7.5 transform="rotate(7 27 52)"/><rect x=85 y=52 width=15 height=84 rx=7.5 transform="rotate(-7 93 52)"/><rect x=38 y=128 width=19 height=68 rx=9 /><rect x=63 y=128 width=19 height=68 rx=9 /><rect x=36 y=46 width=48 height=86 rx=16 /></g>
+<g class=pad id=pd0><rect class=hit x=32 y=46 width=40 height=50 /><rect class=padb x=41 y=56 width=17 height=24 rx=4 transform="rotate(-12 49 68)"/><path class=ck d="M43 68l4.5 4.5 8-10"/></g>
+<g class=pad id=pd1><rect class=hit x=56 y=82 width=40 height=50 /><rect class=padb x=64 y=92 width=17 height=24 rx=4 transform="rotate(12 72 104)"/><path class=ck d="M66 104l4.5 4.5 8-10"/></g>
+</svg>
+<button id=ash aria-label="Botón de descarga"><svg viewBox="0 0 100 90"><path d="M50 10 90 80H10Z" fill=#f26b3a stroke=#f26b3a stroke-width=12 stroke-linejoin=round /><path d="M55 32 39 55h11l-4 19 17-27H52z" fill=#fff /></svg></button>
+<div class=aspk></div><div class=arim></div></div>
+<div id=dsub><b id=dtx></b><span id=dtm></span></div></div>
+<aside id=dpn>
+<header><b>Panel del instructor · DESA</b><button id=dpx aria-label="Cerrar">✕</button></header>
+<section><h4>Escenario</h4><div id=dsc class=dl></div><p class=dn>Toca cada análisis para cambiar su resultado. Si hay más análisis que los programados, se repite el último.</p><div id=dsq class=dchips></div></section>
+<section><h4>RCP</h4><div class=seg id=dmet><button data-v=1>Con metrónomo</button><button data-v=0>Sin metrónomo</button></div><label class=dr>Ritmo del metrónomo <select id=dbpm><option>100</option><option>110</option><option>120</option></select> /min</label></section>
+<section><h4>Voz</h4><select id=dvz></select><button id=dtest class=db>Probar voz</button><p class=dn id=dvn hidden>Este dispositivo no tiene ninguna voz en español. Instálala en los ajustes del sistema (texto a voz) y descárgala para usarla sin internet.</p><p class=dn>Sube el volumen de la tablet al máximo para que se oiga bien en el aula.</p></section>
+<section><h4>Pantalla</h4><div class=seg id=dtxs><button data-v=1>Mostrar texto</button><button data-v=0>Solo voz</button></div></section>
+<section><h4>Controles</h4><button id=dpads class=db>Pegar los parches (simulado)</button><button id=drst class=db>Apagar y reiniciar</button></section>
+<section><h4>Estado</h4><div id=dinfo class=dn></div></section></aside>`;
+/* ---- utilidades ---- */
+const sleep=(ms,my)=>new Promise((res,rej)=>setTimeout(()=>my===tok?res():rej(new Cn),ms*TS)),
+sub=t=>{$('dtx').textContent=t},
+fmt=ms=>{const s=Math.max(0,Math.ceil(ms/1000));return Math.floor(s/60)+':'+String(s%60).padStart(2,'0')};
+function cancelSp(){try{speechSynthesis.cancel()}catch(_){}lastCx=Date.now()}
+function loadV(){VZ=(window.speechSynthesis?speechSynthesis.getVoices():[]).filter(v=>/^es/i.test(v.lang));const s=$('dvz');if(!s)return;
+s.innerHTML='<option value=auto>Automática (castellano, masculina)</option>'+VZ.map(v=>`<option value="${(v.name+'|'+v.lang).replace(/"/g,'&quot;')}">${v.name} · ${v.lang}</option>`).join('');
+s.value=VZ.some(v=>v.name+'|'+v.lang===vsel)?vsel:'auto';$('dvn').hidden=VZ.length>0}
+function pickV(){if(!VZ.length)return{v:null,m:0};let v=vsel!=='auto'?VZ.find(x=>x.name+'|'+x.lang===vsel):null;
+if(!v){const on=navigator.onLine!==false,sc=x=>(/^es[-_]es$/i.test(x.lang)?6:2)+(MALE.test(x.name)?10:0)-(FEM.test(x.name)?10:0)+(x.localService?(on?2:6):(on?0:-6));v=[...VZ].sort((a,b)=>sc(b)-sc(a))[0]}
+return{v,m:MALE.test(v.name)&&!FEM.test(v.name)}}
+function speak(t){return new Promise(res=>{
+if(!window.speechSynthesis||!window.SpeechSynthesisUtterance){setTimeout(res,Math.max(1200,t.length*65)*TS);return}
+const pv=pickV(),u=new SpeechSynthesisUtterance(t);u.lang=pv.v?pv.v.lang:'es-ES';if(pv.v)u.voice=pv.v;u.volume=1;u.rate=.95;u.pitch=pv.m||vsel!=='auto'?1:.8;
+let d=0,tm;const fin=()=>{if(d)return;d=1;clearTimeout(tm);res()};u.onend=fin;u.onerror=fin;
+tm=setTimeout(fin,(Math.max(3000,t.length*105)+2000)*TS);
+const go=()=>{try{speechSynthesis.speak(u)}catch(_){fin()}};Date.now()-lastCx<150?setTimeout(go,160):go()})}
+async function say(t,my){if(my!==tok)throw new Cn;sub(t);await speak(t);if(my!==tok)throw new Cn}
+function audio(){if(!ctx)ctx=new(window.AudioContext||window.webkitAudioContext)();if(ctx.state==='suspended')ctx.resume();return ctx}
+function beep(f,d,v,ty){try{const a=audio(),o=a.createOscillator(),g=a.createGain(),t=a.currentTime;o.type=ty||'sine';o.frequency.value=f;g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(v,t+.006);g.gain.exponentialRampToValueAtTime(.0008,t+d);o.connect(g);g.connect(a.destination);o.start(t);o.stop(t+d+.03)}catch(_){}}
+function thump(){try{const a=audio(),t=a.currentTime,b=a.createBuffer(1,Math.floor(a.sampleRate*.25),a.sampleRate),d=b.getChannelData(0);for(let i=0;i<d.length;i++)d[i]=(Math.random()*2-1)*Math.pow(1-i/d.length,3);
+const s=a.createBufferSource(),g=a.createGain();s.buffer=b;g.gain.value=.5;s.connect(g);g.connect(a.destination);s.start(t);
+const o=a.createOscillator(),g2=a.createGain();o.frequency.setValueAtTime(110,t);o.frequency.exponentialRampToValueAtTime(40,t+.25);g2.gain.setValueAtTime(.6,t);g2.gain.exponentialRampToValueAtTime(.001,t+.3);o.connect(g2);g2.connect(a.destination);o.start(t);o.stop(t+.32)}catch(_){}}
+async function charge(my){try{const a=audio(),o=a.createOscillator(),g=a.createGain(),t=a.currentTime,d=2.8;o.type='sawtooth';o.frequency.setValueAtTime(260,t);o.frequency.exponentialRampToValueAtTime(1500,t+d);
+g.gain.setValueAtTime(.0001,t);g.gain.linearRampToValueAtTime(.1,t+.2);g.gain.setValueAtTime(.1,t+d);g.gain.linearRampToValueAtTime(.0001,t+d+.08);o.connect(g);g.connect(a.destination);o.start(t);o.stop(t+d+.1);chO=o}catch(_){}await sleep(2900,my)}
+function metCtl(){if(metT){clearTimeout(metT);metT=null}if(st==='cpr'&&met){const my=tok;(function tk(){if(my!==tok||st!=='cpr'||!met){metT=null;return}beep(1000,.07,.4,'square');metT=setTimeout(tk,60000/bpm*TS)})()}}
+function stopAll(){if(metT){clearTimeout(metT);metT=null}if(rdyT){clearInterval(rdyT);rdyT=null}try{chO&&chO.stop()}catch(_){}chO=null;cancelSp();padWake=null;shWake=null}
+function tmr(){ui()}
+function ui(){const a=$('aed');a.dataset.s=st;$('dtm').textContent=st==='cpr'?'RCP · '+fmt((cprEnd-Date.now())/TS):'';
+[0,1].forEach(i=>{const p=$('pd'+i);p.classList.toggle('on',!!pad[i]);p.classList.toggle('hint',(st==='pads'||st==='on')&&!pad[i])});
+const T={off:'Apagado',on:'Encendido',pads:'Esperando los parches',analyze:'Analizando el ritmo',charge:'Cargando',ready:'Descarga lista',shock:'Descarga administrada',cpr:'RCP en curso'}[st];
+$('dst').textContent='DESA · '+T;
+$('dinfo').innerHTML=`${T}${st==='cpr'?' · '+fmt((cprEnd-Date.now())/TS):''}<br>Análisis realizados: ${nAn} · Descargas: ${nSh}<br>Parches: ${pad[0]+pad[1]}/2 pegados`}
+/* ---- flujo de un DESA real ---- */
+async function pads(my,again){if(pad[0]&&pad[1])return;st='pads';ui();let k=0;
+while(!(pad[0]&&pad[1])){
+const t=k===0&&again?'Compruebe los parches. Péguelos firmemente según el dibujo.':pad[0]!==pad[1]?'Pegue el otro parche, según el dibujo.':k===0?'Pegue los parches adhesivos en el pecho desnudo del paciente, según indica el dibujo.':'Pegue los parches firmemente en el pecho desnudo del paciente, según el dibujo.';
+k++;await say(t,my);
+if(!(pad[0]&&pad[1]))await new Promise(r=>{padWake=r;setTimeout(r,9000*TS)});
+if(my!==tok)throw new Cn}}
+async function analyze(my){st='analyze';ui();await say('Analizando el ritmo cardíaco. No toque al paciente.',my);await sleep(3500,my);
+const r=sq[Math.min(nAn,sq.length-1)];nAn++;ui();return r}
+async function shockPh(my){
+await say('Descarga aconsejada. Aléjese del paciente.',my);
+st='charge';ui();await charge(my);
+st='ready';ui();shHit=0;const t0=Date.now();let k=0;
+rdyT=setInterval(()=>beep(1250,.12,.3),1100*TS);
+while(!shHit&&Date.now()-t0<30000*TS){
+await say(k++?'Pulse el botón naranja intermitente ahora. No toque al paciente.':'Asegúrese de que nadie toca al paciente. Pulse el botón naranja intermitente.',my);
+if(!shHit)await new Promise(r=>{shWake=r;setTimeout(r,3500*TS)});
+if(my!==tok)throw new Cn}
+clearInterval(rdyT);rdyT=null;
+if(shHit){st='shock';thump();nSh++;ui();await sleep(700,my);await say('Descarga administrada.',my);return 1}
+await say('Descarga cancelada.',my);return 0}
+async function cprPh(my,sh){
+st='cpr';cprEnd=Date.now()+120000*TS;ui();
+const f=sh?'Inicie la reanimación cardiopulmonar. Comience las compresiones torácicas. Treinta compresiones y dos ventilaciones.':'Compruebe si el paciente respira. Si no respira, inicie la reanimación cardiopulmonar. Comience las compresiones torácicas.';
+sub(f);speak(f);metCtl();let s1=0,s2=0;
+while(Date.now()<cprEnd){await sleep(250,my);tmr();const rem=(cprEnd-Date.now())/TS;
+if(!s1&&rem<=60000){s1=1;const t='Continúe con la RCP.';sub(t);speak(t)}
+if(!s2&&rem<=30000){s2=1;const t='Siga comprimiendo fuerte y rápido, en el centro del pecho.';sub(t);speak(t)}}
+if(metT){clearTimeout(metT);metT=null}
+await say('Deje de hacer la RCP.',my)}
+async function run(my,resume){try{
+if(!resume){await say('Equipo encendido.',my);await say('Llame al uno uno dos, si aún no lo ha hecho.',my);await say('Descubra el pecho del paciente.',my)}
+let again=!!resume;
+for(;;){await pads(my,again);again=true;
+const r=await analyze(my);let sh=0;
+if(r==='S')sh=await shockPh(my);else await say('No se aconseja descarga.',my);
+await cprPh(my,sh)}
+}catch(e){if(!(e instanceof Cn))throw e}}
+/* ---- acciones ---- */
+function powerOn(){audio();try{const u=new SpeechSynthesisUtterance(' ');u.volume=0;speechSynthesis.speak(u)}catch(_){}
+nAn=0;nSh=0;st='on';ui();pn(false);run(++tok,0)}
+function off(){++tok;stopAll();st='off';nAn=0;nSh=0;sub('');$('dtm').textContent='';ui()}
+function restartPads(){stopAll();st='pads';ui();run(++tok,1)}
+function setPad(i,v){pad[i]=v===undefined?pad[i]^1:v;ui();
+if(st==='off'||st==='on')return;
+if(st==='pads'){if(pad[0]&&pad[1])cancelSp();if(padWake){const w=padWake;padWake=null;w()}}
+else if(!(pad[0]&&pad[1]))restartPads()}
+function shock(){if(st!=='ready'||shHit)return;shHit=1;cancelSp();if(shWake){const w=shWake;shWake=null;w()}}
+const pn=v=>{$('dpn').classList.toggle('on',v);$('dgear').classList.toggle('on',v)};
+$('apw').onclick=()=>st==='off'?powerOn():off();
+$('pd0').onclick=()=>setPad(0);$('pd1').onclick=()=>setPad(1);$('ash').onclick=shock;
+$('dgear').onclick=()=>pn(!$('dpn').classList.contains('on'));$('dpx').onclick=()=>pn(false);
+$('dhm').onclick=()=>{if(st!=='off'&&!confirm('¿Volver al inicio? Se apagará el DESA.'))return;off();location.hash=''};
+$('dpads').onclick=()=>{setPad(0,1);setPad(1,1)};$('drst').onclick=()=>{off();pad=[0,0];ui()};
+/* ---- panel del instructor ---- */
+const save=()=>{ls('dseq',sq);ls('dmet',met?1:0);ls('dbpm',bpm);ls('dtxt',txt?1:0)};
+function drawSc(){const i=PRE.findIndex(p=>p[2]===sq);
+$('dsc').innerHTML=PRE.map((p,k)=>`<button data-k=${k} class="${k===i?'on':''}"><b>${p[0]}</b><small>${p[1]}</small></button>`).join('');
+$('dsq').innerHTML=[...sq].map((c,k)=>`<button class="dchip ${c}" data-i=${k}>${k+1} · ${CAP[c]}</button>`).join('')+(sq.length<8?'<button class=dchip data-a=1 aria-label="Añadir análisis">＋</button>':'')+(sq.length>1?'<button class=dchip data-r=1 aria-label="Quitar análisis">－</button>':'')}
+function segs(){$('dmet').querySelectorAll('button').forEach(b=>b.classList.toggle('on',(b.dataset.v==='1')===met));$('dtxs').querySelectorAll('button').forEach(b=>b.classList.toggle('on',(b.dataset.v==='1')===txt));$('dbpm').value=bpm;document.body.classList.toggle('notx',!txt)}
+$('dsc').onclick=e=>{const b=e.target.closest('button');if(!b)return;sq=PRE[+b.dataset.k][2];save();drawSc()};
+$('dsq').onclick=e=>{const b=e.target.closest('button');if(!b)return;
+if(b.dataset.a)sq+=sq.slice(-1);else if(b.dataset.r)sq=sq.slice(0,-1);else{const i=+b.dataset.i;sq=sq.slice(0,i)+(sq[i]==='S'?'N':'S')+sq.slice(i+1)}save();drawSc()};
+$('dmet').onclick=e=>{const b=e.target.closest('button');if(!b)return;met=b.dataset.v==='1';save();segs();metCtl()};
+$('dtxs').onclick=e=>{const b=e.target.closest('button');if(!b)return;txt=b.dataset.v==='1';save();segs()};
+$('dbpm').onchange=()=>{bpm=+$('dbpm').value;save();metCtl()};
+$('dvz').onchange=()=>{vsel=$('dvz').value;ls('dvz',vsel)};
+$('dtest').onclick=()=>{cancelSp();const t='Analizando el ritmo cardíaco. No toque al paciente.';sub(t);speak(t)};
+if(window.speechSynthesis){speechSynthesis.onvoiceschanged=loadV}
+loadV();drawSc();segs();ui();pn(true);
+const fit=()=>{const a=$('aed');if(a)a.style.setProperty('--u',a.clientWidth/100+'px')};
+addEventListener('resize',fit);addEventListener('orientationchange',()=>setTimeout(fit,350));if(window.ResizeObserver)new ResizeObserver(fit).observe($('aed'));fit();setTimeout(fit,300);
+}
 
 /* ---------- panel del instructor ---------- */
 function control(code,opts){
@@ -1771,7 +1841,7 @@ document.body.innerHTML=`<div id=hd><button class="pb hbk" id=hb title="Volver a
 <div class=pg id=p2><div class=tl><h4>Desfibrilación (sin SYNC)</h4><small>Sobre FV (gruesa y fina), TV monomorfa, TV polimorfa y torsades. Energía mínima para que sea eficaz:</small><div class=sr><input type=range id=r_eD min=30 max=360 step=10><output id=o_eD></output></div><small>Ritmo tras descarga eficaz</small><select id=s_oD></select></div>
 <div class=tl><h4>Cardioversión (con SYNC)</h4><small>Sobre TV con pulso, TSV, FA y flutter. Energía mínima para que sea eficaz:</small><div class=sr><input type=range id=r_eC min=30 max=360 step=10><output id=o_eC></output></div><small>Ritmo tras cardioversión eficaz</small><select id=s_oC></select></div>
 <div class=tl><h4>Marcapasos transcutáneo</h4><small>Intensidad mínima para conseguir captura:</small><div class=sr><input type=range id=r_thr min=20 max=200 step=5><output id=o_thr></output></div></div></div>
-<div class=pg id=p3><div id=rpbtn><button class=sm id=rpt>Generar informe de debriefing</button><button class=sm id=lc>Borrar registro</button></div><div id=lgl><p class=mu>Aquí aparecerán las acciones del alumno.</p></div></div>
+<div class=pg id=p3><div class=lbt><button class="sm main" id=lr>Generar informe</button><button class=sm id=lc>Borrar registro</button></div><div id=lgl><p class=mu>Aquí aparecerán las acciones del alumno.</p></div></div>
 <div class="pg on" id=p4><button class=pwb id=dv_pw><span class=pwi>⏻</span><span><b>Monitor-desfibrilador</b><em></em><small>El alumno lo ve apagado hasta que lo enciendas.</small></span></button>
 
 <h3>Sensores y accesorios</h3><div class=dvg id=dvg></div>
@@ -1788,14 +1858,87 @@ function mini(cv,r){const dp=devicePixelRatio||1;cv.width=cv.clientWidth*dp;cv.h
 x.strokeStyle='#3ddc84';x.lineWidth=1.6*dp;x.beginPath();const n=400;for(let i=0;i<n;i++){const e=G.step(.01).e,X=i/n*cv.width,Y=cv.height*.62-e*cv.height*.42;i?x.lineTo(X,Y):x.moveTo(X,Y)}x.stroke()}
 const MINI=[];let MD=0;const GR=[['Sinusales y morfología',['sinus','sbrad','stach','stemi','stdep','hiperk','bbb']],['Supraventriculares',['svt','af','flutter','junc']],['Bloqueos AV',['avb1','wenck','mob2','avb21','bav3']],['Ectopia y marcapasos',['pvc','bigem','trigem','paced']],['Ventriculares',['aivr','idiov','vt','vtpol','torsades']],['Parada',['vf','vff','agon','asys']]];
 GR.forEach(([n,ks])=>{const h=document.createElement('h3');h.textContent=n;const gd=document.createElement('div');gd.className='rg';$('rgw').append(h,gd);
-ks.forEach(k=>{const b=document.createElement('button');b.className='rc';b.dataset.k=k;b.innerHTML=`<canvas></canvas><span>${RH[k][0]}</span>`;b.onclick=()=>{S.rhythm=k;S.hr=RH[k][1];S.pulse=RH[k][2];ui();sync()};gd.append(b);MINI.push([b.firstChild,k]);mini(b.firstChild,k)})});
+ks.forEach(k=>{const b=document.createElement('button');b.className='rc';b.dataset.k=k;b.innerHTML=`<canvas></canvas><span>${RH[k][0]}</span>`;b.onclick=()=>{S.rhythm=k;S.hr=RH[k][1];S.pulse=RH[k][2];addLog('Instructor: ritmo cambiado a '+RH[k][0],{r:k,p:RH[k][2]});ui();sync()};gd.append(b);MINI.push([b.firstChild,k]);mini(b.firstChild,k)})});
 for(const k in RH)['s_oD','s_oC'].forEach(i=>$(i).append(new Option(RH[k][0],k)));
-SC.forEach(([n,d,p])=>{const b=document.createElement('button');b.className='sc';b.innerHTML=`<b>${n}</b><small>${d}</small>`;b.onclick=()=>{Object.assign(S,DP,p);ui();sync();tabTo(0)};$('p1').append(b)});
+SC.forEach(([n,d,p])=>{const b=document.createElement('button');b.className='sc';b.innerHTML=`<b>${n}</b><small>${d}</small>`;b.onclick=()=>{Object.assign(S,DP,p);addLog('Instructor: caso «'+n+'» cargado',{r:S.rhythm,p:S.pulse});ui();sync();tabTo(0)};$('p1').append(b)});
 ['eD','eC','thr'].forEach(k=>$('r_'+k).oninput=e=>{S[k]=+e.target.value;ui();sync()});['oD','oC'].forEach(k=>$('s_'+k).onchange=e=>{S[k]=e.target.value;sync()});
-$('cp').onclick=()=>{S.pulse=S.pulse?0:1;ui();sync()};$('ca').onclick=()=>{S.art=S.art?0:1;ui();sync()};
+$('cp').onclick=()=>{S.pulse=S.pulse?0:1;addLog('Instructor: pulso '+(S.pulse?'presente':'ausente'),{p:S.pulse});ui();sync()};$('ca').onclick=()=>{S.art=S.art?0:1;addLog('Instructor: artefacto RCP '+(S.art?'activado':'desactivado'));ui();sync()};
 function tabTo(i){tab=i;document.querySelectorAll('#tb button').forEach(b=>b.classList.toggle('on',+b.dataset.p===i));for(let j=0;j<5;j++)$('p'+j).classList.toggle('on',j===i);if(i===3){nlog=0;$('bd').style.display='none'}if(i===0&&!MD){MD=1;MINI.forEach(([c,k])=>mini(c,k))}}
 document.querySelectorAll('#tb button').forEach(b=>b.onclick=()=>tabTo(+b.dataset.p));
-function addLog(m){const l=$('lgl');if(l.firstChild&&l.firstChild.tagName==='P')l.innerHTML='';const x=document.createElement('div');x.innerHTML=`<b>${hm()}</b> ${m}`;l.prepend(x);evAdd(m)}
+/* ---- registro estructurado e informe de debriefing ---- */
+const hx=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])),LK='lg_'+code;
+let LOGS=[];
+const lgT=t=>new Date(t).toLocaleTimeString('es-ES',{hour:'2-digit',minute:'2-digit',second:'2-digit'}),lgD=ms=>{const s=Math.max(0,Math.round(ms/1000));return Math.floor(s/60)+':'+String(s%60).padStart(2,'0')};
+function drawLog(e){const l=$('lgl');if(l.firstChild&&l.firstChild.tagName==='P')l.innerHTML='';const x=document.createElement('div'),b=document.createElement('b');b.textContent=lgT(e.t);x.append(b,' '+e.m);l.prepend(x)}
+function pushLog(m,w,x){const e={t:Date.now(),m,w};if(x)e.x=x;LOGS.push(e);if(LOGS.length>600)LOGS.shift();ls(LK,JSON.stringify(LOGS));drawLog(e)}
+function addLog(m,x){pushLog(m,'i',x)}
+function loadLogs(){try{LOGS=JSON.parse(ls(LK)||'[]')}catch(_){LOGS=[]}if(!Array.isArray(LOGS))LOGS=[];LOGS.forEach(drawLog)}
+loadLogs();
+const KD=[[/^Instructor: (ritmo|caso|pulso)/,'ic'],[/^Instructor:/,'i'],[/^Carga a (\d+) J iniciada/,'charge'],[/^(Cardioversión sincronizada|Descarga NO sincronizada) de/,'shock'],[/^Desfibrilador desarmado/,'disarm'],[/^Modo SINCRONIZADO/,'sync'],[/^Intento de/,'fail'],[/^PNI iniciada/,'pni'],[/^PNI medida/,'pnio'],[/^PNI: no se detecta/,'pnie'],[/^Marcapasos activado/,'pace'],[/^Marcapasos pausado|^Intensidad del marcapasos/,'pace2'],[/^Captura/,'cap'],[/^Pérdida de captura/,'capl'],[/^Parches retirados/,'warn'],[/^Alumno realiza ECG/,'ecg'],[/^Alarmas silenciadas/,'alarm'],[/^TA invasiva/,'tai'],[/^Alumno:/,'join']];
+function analyse(L){
+const R={n:L.length,t0:L.length?L[0].t:0,t1:L.length?L[L.length-1].t:0,c:{charge:0,shock:0,ok:0,no:0,fail:0,pnio:0,pace:0,ecg:0,alarm:0,sync:0},first:{},flags:[],rows:[]};
+let lastC=null,cur={r:'sinus',p:1},win=null;
+const closeWin=()=>{if(win&&!win.hit)R.flags.push([win.t,`Ritmo «${win.name}» (${win.need}): no se registró ninguna ${win.need} antes del siguiente cambio de ritmo.`]);win=null};
+L.forEach(e=>{const m=e.m;let k='o';
+if(e.w==='i'){k=/^Instructor: (ritmo|caso|pulso)/.test(m)?'ic':'i'}else{for(const[re,kk]of KD){if(re.test(m)){k=kk;break}}}
+const row={e,k,rel:e.t-R.t0,dch:lastC?e.t-lastC.t:null,cls:''};
+if(k==='ic'){if(e.x){if(e.x.r!==undefined){closeWin();cur.r=e.x.r}if(e.x.p!==undefined)cur.p=e.x.p;
+if(e.x.r!==undefined&&LD.includes(cur.r)){win={t:e.t,hit:0,name:(RH[cur.r]||[cur.r])[0],need:(cur.r==='vt'&&cur.p)?'cardioversión sincronizada':'descarga'}}}
+lastC=e}
+if(k==='charge'){R.c.charge++;if(!R.first.charge)R.first.charge=row}
+if(k==='shock'){R.c.shock++;if(!R.first.shock)R.first.shock=row;if(win)win.hit=1;
+const[a,b]=m.split(' → '),av=/\(aviso: ([^)]*)\)/.exec(a),ry=a.replace(/^.*? sobre /,'').replace(/ \(aviso:.*$/,'');row.sh={sy:/^Cardio/.test(a),E:(/ de (\d+) J/.exec(a)||[])[1],ry,av:av&&av[1],res:b||''};
+if(/^efectiva/.test(row.sh.res)){R.c.ok++;row.cls='o';if(!R.first.ok)R.first.ok=row}
+else{R.c.no++;row.cls='w';R.flags.push([e.t,`Descarga de ${row.sh.E} J sobre ${ry}: ${row.sh.res.replace(/^./,c=>c.toLowerCase())||'sin resultado registrado'}.`])}
+if(av){row.cls='w';R.flags.push([e.t,`Aviso en la descarga de ${row.sh.E} J: ${av[1]}.`])}}
+if(k==='fail'){R.c.fail++;row.cls='w';R.flags.push([e.t,m+'.'])}
+if(k==='pnio'){R.c.pnio++;if(!R.first.pnio)R.first.pnio=row;row.cls='o'}
+if(k==='pnie'||k==='warn'||k==='capl'){row.cls='w';R.flags.push([e.t,m+'.'])}
+if(k==='pace'&&/activado/.test(m)){R.c.pace++;if(!R.first.pace)R.first.pace=row}
+if(k==='cap')row.cls='o';
+if(k==='ecg'){R.c.ecg++;if(!R.first.ecg)R.first.ecg=row}
+if(k==='alarm')R.c.alarm++;
+if(k==='sync'&&/activado/.test(m))R.c.sync++;
+if(k==='i'||k==='ic')row.cls='i';
+R.rows.push(row)});
+closeWin();R.flags.sort((a,b)=>a[0]-b[0]);return R}
+const KT=[['charge','Primera carga del desfibrilador'],['shock','Primera descarga / cardioversión'],['ok','Primera descarga eficaz'],['pace','Marcapasos activado'],['pnio','Primera medida de PNI'],['ecg','ECG de 12 derivaciones']];
+function buildReport(meta){
+const R=analyse(LOGS),f=new Date(R.t0||Date.now()),fecha=f.toLocaleDateString('es-ES',{weekday:'long',day:'numeric',month:'long',year:'numeric'}),dur=lgD(R.t1-R.t0),ses=code==='LOCAL'?'sin internet':code,c=R.c;
+const kp=[[R.n,'eventos registrados'],[dur,'duración (min:s)'],[c.charge,'cargas iniciadas'],[c.shock,'descargas / cardioversiones'],[c.ok,'eficaces'],[c.no,'sin efecto o insuficientes'],[c.fail,'intentos sin equipo conectado'],[c.pnio,'medidas de PNI'],[c.pace,'activaciones de marcapasos'],[c.ecg,'ECG de 12 derivaciones']];
+const kt=KT.filter(([k])=>R.first[k]).map(([k,n])=>{const r=R.first[k];return `<tr><td>${n}</td><td>${lgT(r.e.t)}</td><td>${lgD(r.rel)}</td><td>${r.dch===null?'—':lgD(r.dch)}</td></tr>`}).join('');
+const fl=R.flags.map(([t,x])=>`<li><b>${lgT(t)}</b> · ${hx(x)}</li>`).join('');
+const tl=R.rows.map(r=>`<tr class="${r.cls}"><td>${lgT(r.e.t)}</td><td>${lgD(r.rel)}</td><td>${r.e.w==='i'?'Instructor':'Alumno'}</td><td>${hx(r.e.m.replace(/^Instructor: /,''))}</td></tr>`).join('');
+const css=`body{font:14px/1.45 system-ui,"Segoe UI",Roboto,Arial,sans-serif;color:#17252a;margin:0;padding:24px;background:#fff}h1{font-size:23px;margin:0 0 4px}h2{font-size:16px;margin:22px 0 8px;border-bottom:2px solid #0b6e78;padding-bottom:3px;color:#0b4f58}.meta{color:#46606a;font-size:13px;line-height:1.6}.meta b{color:#17252a}.g{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px}.k{border:1px solid #d3dde1;border-radius:8px;padding:8px 10px}.k b{display:block;font-size:22px}.k span{font-size:12px;color:#46606a}table{border-collapse:collapse;width:100%;font-size:13px}th,td{border:1px solid #d3dde1;padding:5px 8px;text-align:left;vertical-align:top}th{background:#eef4f6}tr.i td{background:#f3f7fa;color:#46606a}tr.w td{background:#fff4e5}tr.o td{background:#e9f8ef}ul{margin:6px 0;padding-left:20px}li{margin:4px 0}.nt{white-space:pre-wrap;border:1px solid #d3dde1;border-radius:8px;padding:10px;min-height:40px}footer{margin-top:26px;color:#6b7f87;font-size:12px}@page{size:A4;margin:14mm}@media print{body{padding:0}tr,.k,li{break-inside:avoid}h2{break-after:avoid}}`;
+const body=`<h1>Informe de debriefing</h1><div class=meta><b>Fecha:</b> ${hx(fecha)} · <b>Sesión:</b> ${hx(ses)}<br><b>Alumno o grupo:</b> ${hx(meta.al||'—')} · <b>Caso:</b> ${hx(meta.ca||'—')}<br><b>Registro:</b> de ${lgT(R.t0)} a ${lgT(R.t1)}</div>
+<h2>Resumen</h2><div class=g>${kp.map(([v,l])=>`<div class=k><b>${v}</b><span>${l}</span></div>`).join('')}</div>
+<h2>Tiempos clave</h2>${kt?`<table><tr><th>Acción del alumno</th><th>Hora</th><th>Desde el inicio</th><th>Desde el último cambio clínico</th></tr>${kt}</table><p class=meta>«Último cambio clínico» es la última vez que el instructor cambió el ritmo, cargó un caso o cambió el pulso antes de la acción.</p>`:'<p class=meta>Sin acciones registradas.</p>'}
+<h2>Puntos para comentar</h2>${fl?`<ul>${fl}</ul>`:'<p class=meta>No se han detectado incidencias en el registro.</p>'}
+<h2>Notas del instructor</h2><div class=nt>${hx(meta.nt||'')}</div>
+<h2>Línea de tiempo</h2><table><tr><th>Hora</th><th>Tiempo</th><th>Quién</th><th>Evento</th></tr>${tl}</table>
+<footer>Informe generado automáticamente por el simulador de monitor-desfibrilador a partir del registro de la sesión. Revisa los datos antes de usarlos en una evaluación.</footer>`;
+const tx=[`INFORME DE DEBRIEFING`,`${fecha} · Sesión: ${ses}`,`Alumno o grupo: ${meta.al||'—'} · Caso: ${meta.ca||'—'}`,`Registro: ${lgT(R.t0)} – ${lgT(R.t1)} (${dur})`,'','RESUMEN',...kp.map(([v,l])=>`- ${l}: ${v}`),'','TIEMPOS CLAVE',...KT.filter(([k])=>R.first[k]).map(([k,n])=>{const r=R.first[k];return `- ${n}: ${lgT(r.e.t)} (+${lgD(r.rel)}${r.dch===null?'':', '+lgD(r.dch)+' desde el último cambio clínico'})`}),'','PUNTOS PARA COMENTAR',...(R.flags.length?R.flags.map(([t,x])=>`- ${lgT(t)} · ${x}`):['- Sin incidencias detectadas']),...(meta.nt?['','NOTAS DEL INSTRUCTOR',meta.nt]:[]),'','LÍNEA DE TIEMPO',...R.rows.map(r=>`${lgT(r.e.t)} (+${lgD(r.rel)}) ${r.e.w==='i'?'[Instructor]':'[Alumno]'} ${r.e.m.replace(/^Instructor: /,'')}`)].join('\n');
+return{html:`<!DOCTYPE html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Informe de debriefing</title><style>${css}</style></head><body>${body}</body></html>`,text:tx,fecha:f}}
+function openReport(){
+if(!LOGS.length){alert('Todavía no hay eventos en el registro.');return}
+let ov=$('rpt');if(!ov){ov=document.createElement('div');ov.id='rpt';ov.className='ov';document.body.append(ov)}
+const lastCase=[...LOGS].reverse().map(e=>/caso «(.*)» cargado/.exec(e.m)).find(Boolean);
+ov.innerHTML=`<div class=rptbar><button class=sm id=rx>‹ Volver</button><b>Informe de debriefing</b></div>
+<div class=rptf><label>Alumno o grupo<input id=r_al placeholder="Ej. Grupo 1" value="${hx(ls('rp_al')||'')}"></label><label>Caso o escenario<input id=r_ca value="${hx(lastCase?lastCase[1]:'')}"></label><label class=w2>Notas del instructor<textarea id=r_nt rows=3 placeholder="Aspectos a comentar, puntos fuertes, cosas a mejorar…"></textarea></label></div>
+<div class=rpta><button class="sm main" id=r_pr>Imprimir / guardar PDF</button><button class=sm id=r_dl>Descargar</button><button class=sm id=r_sh>Compartir</button><button class=sm id=r_cp>Copiar texto</button></div>
+<iframe id=r_fr title="Vista previa del informe"></iframe>`;
+ov.classList.add('on');ovPush(()=>ov.classList.remove('on'));
+const fr=$('r_fr'),meta=()=>({al:$('r_al').value.trim(),ca:$('r_ca').value.trim(),nt:$('r_nt').value.trim()});let rp;
+const rend=()=>{const m=meta();ls('rp_al',m.al);rp=buildReport(m);fr.srcdoc=rp.html};
+fr.onload=()=>{try{fr.style.height=fr.contentDocument.documentElement.scrollHeight+12+'px'}catch(_){}};
+let tm;['r_al','r_ca','r_nt'].forEach(i=>$(i).oninput=()=>{clearTimeout(tm);tm=setTimeout(rend,500)});
+const file=()=>{const d=rp.fecha,p=n=>String(n).padStart(2,'0');return`informe-debriefing-${d.getFullYear()}${p(d.getMonth()+1)}${p(d.getDate())}-${p(d.getHours())}${p(d.getMinutes())}.html`};
+$('rx').onclick=()=>ovPop();
+$('r_pr').onclick=()=>{rend();setTimeout(()=>{try{fr.contentWindow.focus();fr.contentWindow.print()}catch(_){alert('No se pudo abrir la impresión. Usa «Descargar» y ábrelo desde el navegador.')}},400)};
+$('r_dl').onclick=()=>{rend();const b=new Blob([rp.html],{type:'text/html'}),a=document.createElement('a');a.href=URL.createObjectURL(b);a.download=file();document.body.append(a);a.click();setTimeout(()=>{a.remove();URL.revokeObjectURL(a.href)},1500)};
+if(navigator.share&&navigator.canShare){$('r_sh').onclick=async()=>{rend();const f=new File([rp.html],file(),{type:'text/html'});try{if(navigator.canShare({files:[f]}))await navigator.share({files:[f],title:'Informe de debriefing'});else await navigator.share({title:'Informe de debriefing',text:rp.text})}catch(_){}}}else $('r_sh').style.display='none';
+$('r_cp').onclick=async()=>{rend();try{await navigator.clipboard.writeText(rp.text)}catch(_){const t=document.createElement('textarea');t.value=rp.text;document.body.append(t);t.select();try{document.execCommand('copy')}catch(__){}t.remove()}$('r_cp').textContent='¡Copiado!';setTimeout(()=>$('r_cp').textContent='Copiar texto',1500)};
+rend()}
 function devUi(){$('dv_pw').classList.toggle('on',!!S.pw);$('dv_pw').querySelector('em').textContent=S.pw?'ENCENDIDO':'APAGADO';document.querySelectorAll('.dv').forEach(b=>{const o=!!S[b.dataset.k];b.classList.toggle('on',o);b.querySelector('em').textContent=o?'CONECTADO':'SIN CONECTAR'})}
 function devSet(k,v){S[k]=v;const n=k==='pw'?'Monitor':(DEVS.find(x=>x[0]===k)||[0,k])[1];addLog(`Instructor: ${n} ${k==='pw'?(v?'encendido':'apagado'):(v?'conectado':'retirado')}`);ui();sync()}
 DEVS.forEach(([k,n,d])=>{const b=document.createElement('button');b.className='dv';b.dataset.k=k;b.innerHTML=`<b>${n}</b><em></em><small>${d}</small>`;b.onclick=()=>devSet(k,S[k]?0:1);$('dvg').append(b)});
@@ -1803,20 +1946,20 @@ $('dv_pw').onclick=()=>devSet('pw',S.pw?0:1);
 $('dv_on').onclick=()=>{DEVS.forEach(([k])=>S[k]=1);S.pw=1;addLog('Instructor: monitor encendido y todos los accesorios conectados');ui();sync()};
 $('dv_off').onclick=()=>{DEVS.forEach(([k])=>S[k]=0);addLog('Instructor: todos los accesorios retirados');ui();sync()};
 $('hb').onclick=()=>{location.hash=''};
-$('lc').onclick=()=>{if(confirm('¿Borrar el registro y empezar una nueva simulación? El informe se perderá.'))evClear()};$('rpt').onclick=()=>evOpen();EVS.onClear=()=>{$('lgl').innerHTML='<p class=mu>Registro vacío.</p>'};
+$('lc').onclick=()=>{if(LOGS.length&&!confirm('¿Borrar el registro? No se podrá generar el informe de esta sesión.'))return;LOGS=[];ls(LK,'[]');$('lgl').innerHTML='<p class=mu>Registro vacío.</p>'};$('lr').onclick=openReport;
 function ui(){devUi();$('ia').classList.toggle('on',!!S.ia);$('il').classList.toggle('on',!!S.ilink);$('vti').style.display=S.ilink?'none':'';$('s_is').value=S.isite;VT.concat(VI).forEach(([k])=>$('v_'+k).textContent=k==='temp'?(+S[k]).toFixed(1):S[k]);$('cp').classList.toggle('on',!!S.pulse);$('ca').classList.toggle('on',!!S.art);
 document.querySelectorAll('.rc').forEach(b=>b.classList.toggle('on',b.dataset.k===S.rhythm));
 ['eD','eC','thr'].forEach(k=>{$('r_'+k).value=S[k];$('o_'+k).textContent=S[k]+(k==='thr'?' mA':' J')});$('s_oD').value=S.oD;$('s_oC').value=S.oC;
 $('lvn').innerHTML=`FC ${S.hr} · SpO₂ ${S.spo2}<br>TA ${S.sbp}/${S.dbp}${S.ia?' · TAI '+(S.ilink?S.sbp+'/'+S.dbp:S.isbp+'/'+S.idbp):''}`}
-onmsg=o=>{if(o.t==='hb')lastHb=Date.now();if(o.t==='full'){Object.assign(S,o.s);ui();evSync()}
-if(o.t==='log'){evAdd(o.m);const l=$('lgl');if(l.firstChild&&l.firstChild.tagName==='P')l.innerHTML='';const x=document.createElement('div');x.innerHTML=`<b>${hm()}</b> ${o.m}`;l.prepend(x);if(tab!==3){nlog++;$('bd').textContent=nlog;$('bd').style.display='block'}if(navigator.vibrate)navigator.vibrate(60)}};
+onmsg=o=>{if(o.t==='hb')lastHb=Date.now();if(o.t==='full'){Object.assign(S,o.s);ui()}
+if(o.t==='log'){pushLog(o.m,'a');if(tab!==3){nlog++;$('bd').textContent=nlog;$('bd').style.display='block'}if(navigator.vibrate)navigator.vibrate(60)}};
 setInterval(()=>{const on=Date.now()-lastHb<7000;$('dt').classList.toggle('on',on);$('ls').textContent=on?'Conectado':'Buscando…';if(on&&!was)send({t:'hello'});was=on},1000);
 /* tira de ECG en vivo */
 const lv=$('lv'),lx=lv.getContext('2d'),dp=devicePixelRatio||1,L=new Gen(S);let LX=0,LY=null,acc=0,lt=performance.now();
 function lsz(){lv.width=lv.clientWidth*dp;lv.height=lv.clientHeight*dp;lx.lineWidth=2*dp;lx.strokeStyle='#3ddc84';LX=0;LY=null}addEventListener('resize',lsz);lsz();
 (function f(n){acc=Math.min(.25,acc+(n-lt)/1000);lt=n;while(acc>=.01){acc-=.01;const o=L.step(.01),st=lv.width/600;LX+=st;if(LX>=lv.width){LX=0;LY=null}
 lx.clearRect(LX,0,14*dp,lv.height);const y=lv.height*.62-o.e*lv.height*.4;if(LY!==null){lx.beginPath();lx.moveTo(LX-st,LY);lx.lineTo(LX,y);lx.stroke()}LY=y}requestAnimationFrame(f)})(lt);
-netInit(code,'c');evStart(code,'c');if(code!=='LOCAL')ls('cc',code);ui();$('pq').onclick=()=>openPair('c');if(opts&&opts.pair)openPair('c',null,1);if(opts&&opts.auto)openPair('c',opts.auto)}
+netInit(code,'c');if(code!=='LOCAL')ls('cc',code);ui();$('pq').onclick=()=>openPair('c');if(opts&&opts.pair)openPair('c',null,1);if(opts&&opts.auto)openPair('c',opts.auto)}
 
 /* ---------- monitor del alumno ---------- */
 function monitor(code){
@@ -1831,7 +1974,7 @@ document.body.innerHTML=`<div id=top><button id=hm title="Volver a la pantalla d
 <div class=gp><h4>ECG</h4><div class=rw><button id=e12>ECG 12 derivaciones</button></div><small>Registro completo a 25 mm/s del ritmo actual.</small></div></div><div id=dp></div></div></div><div id=cm></div><div id=off><b>MONITOR APAGADO</b><span id=offt>Esperando a que el instructor lo encienda.</span></div>`;
 const FS=200,cv=$('cv'),cx=cv.getContext('2d'),dpr=devicePixelRatio||1,PC={on:0,rate:70,mA:0},D={i:5,sync:0,st:0,wait:0,aed:0,rot:0,ib:0},G=new Gen(S,PC);
 let acc=0,lt=performance.now(),mutedUntil=0,X=0,PY=null,AL={c:0,w:0},AC,rdy=0,nextAl=0;
-const log=x=>{evAdd(x);send({t:'log',m:x})},full=()=>send({t:'full',s:S}),say=m=>{$('ms').textContent=m;setTimeout(()=>{if($('ms').textContent===m)$('ms').textContent=''},4000)};
+const log=x=>send({t:'log',m:x}),full=()=>send({t:'full',s:S}),say=m=>{$('ms').textContent=m;setTimeout(()=>{if($('ms').textContent===m)$('ms').textContent=''},4000)};
 document.addEventListener('pointerdown',()=>au(),true);
 let gotPanel=0,pwPrev=S.pw;
 const need=(k,n,msg)=>{if(S[k])return 1;if(S.free){S[k]=1;log('Alumno: '+n+' conectado');full();ui();return 1}say(msg);bp(330,.2,.14);return 0};
@@ -1842,7 +1985,7 @@ const PK=[...Object.keys(DP),...Object.keys(DR)].filter(k=>k!=='free'),
 NUMF=[['hr','FC','lpm',0,250,1],['spo2','SpO₂','%',0,100,1],['sbp','TA sist.','mmHg',0,260,1],['dbp','TA diast.','mmHg',0,160,1],['rr','FR','rpm',0,40,1],['co2','EtCO₂','mmHg',0,80,1],['temp','Temp.','°C',30,42,.1]],
 TG=[['pw','Monitor encendido'],['pulse','Pulso presente'],['vE','Electrodos ECG'],['vS','Pulsioxímetro'],['vN','Manguito de PNI'],['vC','Capnografía'],['vT','Sonda de temperatura'],['vP','Parches / palas'],['v12','Electrodos 12 deriv.'],['ia','Catéter arterial']];
 const pc=document.createElement('div');pc.id='pc';
-pc.innerHTML=`<b>CONFIGURAR MONITOR</b><small>Lo que dejes aquí se muestra al abrir el monitor sin panel. Si conectas un panel, el panel manda.</small><label class=pcr>Ritmo<select id=pc_r>${Object.keys(RH).map(k=>`<option value=${k}>${RH[k][0]}</option>`).join('')}</select></label><div class=pcn>${NUMF.map(([k,n,u,a,b,st])=>`<label>${n} <i>${u}</i><input type=number inputmode=decimal id=pc_${k} min=${a} max=${b} step=${st}></label>`).join('')}</div><div class=pct>${TG.map(([k,n])=>`<button data-k=${k}><span>${n}</span><em></em></button>`).join('')}</div><div class=pca><button id=pc_i class=grn>Informe de debriefing</button><button id=pc_s>Guardar como inicio</button><button id=pc_x>Borrar guardado</button><button id=pc_c>Cerrar</button></div>`;
+pc.innerHTML=`<b>CONFIGURAR MONITOR</b><small>Lo que dejes aquí se muestra al abrir el monitor sin panel. Si conectas un panel, el panel manda.</small><label class=pcr>Ritmo<select id=pc_r>${Object.keys(RH).map(k=>`<option value=${k}>${RH[k][0]}</option>`).join('')}</select></label><div class=pcn>${NUMF.map(([k,n,u,a,b,st])=>`<label>${n} <i>${u}</i><input type=number inputmode=decimal id=pc_${k} min=${a} max=${b} step=${st}></label>`).join('')}</div><div class=pct>${TG.map(([k,n])=>`<button data-k=${k}><span>${n}</span><em></em></button>`).join('')}</div><div class=pca><button id=pc_s class=grn>Guardar como inicio</button><button id=pc_x>Borrar guardado</button><button id=pc_c>Cerrar</button></div>`;
 document.body.append(pc);
 const pcSync=()=>{if(gotPanel)full();ui();pcUi()};
 function pcUi(){$('pc_r').value=S.rhythm;NUMF.forEach(([k])=>{const e=$('pc_'+k);if(document.activeElement!==e)e.value=S[k]});pc.querySelectorAll('.pct button').forEach(b=>{const o=!!S[b.dataset.k];b.classList.toggle('on',o);b.querySelector('em').textContent=o?'SÍ':'NO'})}
@@ -1851,7 +1994,7 @@ NUMF.forEach(([k])=>$('pc_'+k).addEventListener('input',e=>{const v=parseFloat(e
 pc.querySelectorAll('.pct button').forEach(b=>b.onclick=()=>{S[b.dataset.k]=S[b.dataset.k]?0:1;pcSync()});
 $('pc_s').onclick=()=>{ls('pre',JSON.stringify(Object.fromEntries(PK.map(k=>[k,S[k]]))));say('Configuración guardada: se usará al abrir sin panel')};
 $('pc_x').onclick=()=>{try{localStorage.removeItem('pre')}catch(_){}say('Configuración guardada borrada')};
-$('pc_c').onclick=()=>pc.classList.remove('on');$('pc_i').onclick=()=>{pc.classList.remove('on');evOpen()};
+$('pc_c').onclick=()=>pc.classList.remove('on');
 $('cf').onclick=()=>{pc.classList.toggle('on');pcUi()};
 /* audio */
 function au(){if(!AC)AC=new(window.AudioContext||window.webkitAudioContext)();if(AC.state==='suspended')AC.resume();if($('ms').textContent.startsWith('Toca'))$('ms').textContent=''}
@@ -1878,7 +2021,7 @@ function zap(){nz(.006,7000,.8,0,'highpass');nz(.12,1500,.6,.004,'highpass');nz(
 document.querySelectorAll('.mon button').forEach(b=>b.addEventListener('click',()=>bp(1200,.03,.04)));
 /* red */
 onmsg=o=>{if(o.t==='s'||o.t==='hello')gotPanel=1;if(o.t==='s'){const old=S.rhythm;Object.assign(S,o.s);S.free=0;if(old!==S.rhythm)G.reset()}if(o.t==='hello')full()};
-netInit(code,'m');evStart(code,'m');setInterval(()=>send({t:'hb'}),2500);
+netInit(code,'m');setInterval(()=>send({t:'hb'}),2500);
 /* dibujo */
 const SKN={act:{c:['#3ddc84','#4cc9f0','#ffd23f','#ff5252'],w:2,fill:0,l:['','','','ART']},lp:{c:['#6be07a','#4d8dff','#ffa24d','#ff6b6b'],w:2,fill:0,l:['II x1.0','SpO₂','CO₂','ART']},co:{c:['#111','#1565c0','#27208f','#c62828'],w:1.8,fill:1,l:['IIauto','Pleth','CO2','P1(ART)']}},T0=Date.now();
 let skin=SKN[ls('skin')]?ls('skin'):'act',K=SKN[skin];

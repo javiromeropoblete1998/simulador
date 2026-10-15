@@ -437,6 +437,20 @@ body.desa{position:fixed;left:0;right:0;top:0;height:100vh;height:100dvh;height:
 #r_fr{display:block;width:100%;min-height:70vh;border:0;border-radius:10px;background:#fff}
 @media(max-width:560px){.rptf{grid-template-columns:1fr}}
 .lbt{display:flex;flex-wrap:wrap;gap:8px}.lbt .sm{margin-bottom:8px}.lbt .main{background:#0b6e78;border-color:#2fb5c2}
+
+/* ===== DESA: sesión y panel remoto ===== */
+#acode{position:absolute;top:calc(max(10px,env(safe-area-inset-top)) + clamp(22px,4vh,34px));left:0;right:0;text-align:center;font:600 clamp(11px,2vw,15px) var(--ui);color:#7e909a;letter-spacing:.14em;pointer-events:none;transition:opacity .4s}
+.dcode{font:800 34px/1 var(--mono);letter-spacing:.3em;text-align:center;color:#ffcf6b;padding:10px 0 4px}
+body.dctl{position:static;height:auto;min-height:100%;overflow:auto;display:block;background:#0b1215;color:#e8eeee}
+#dch{position:sticky;top:0;z-index:5;display:flex;align-items:center;gap:10px;padding:10px 12px;padding-top:max(10px,env(safe-area-inset-top));background:#121c20;border-bottom:1px solid #2a3a3f}
+#dch .pb{margin:0;padding:8px 12px}#dch b{font-size:16px}
+.dcn{margin-left:auto;padding:5px 12px;border-radius:999px;font-size:12.5px;font-weight:700;background:#3a2020;color:#ff9e9e;white-space:nowrap}.dcn.on{background:#173a26;color:#7ee2a8}
+body.dctl #dpn{position:static;transform:none;visibility:visible;box-shadow:none;width:auto;max-width:640px;margin:0 auto;border:0;overflow:visible;background:transparent;padding:6px 16px 40px}
+#dlv{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+#dlv .st{grid-column:1/-1;padding:12px 14px;border-radius:12px;background:#0f2a30;border:1px solid #1f5560;font:700 20px/1.2 var(--num)}
+#dlv .st small{display:block;margin-top:3px;font:500 13px var(--ui);color:#9fb4b9}
+#dlv .kv{padding:9px 12px;border-radius:10px;background:#142126;border:1px solid #243a41}#dlv .kv small{display:block;color:#8aa3a9;font-size:11.5px;letter-spacing:.05em;text-transform:uppercase}#dlv .kv b{font-size:19px}
+.dchips .dchip.done{opacity:.45}.dchips .dchip.next{box-shadow:0 0 0 2px #4cc9f0}
 </style></head><body><script>
 const $=i=>document.getElementById(i),g=(x,m,s)=>Math.exp(-((x-m)**2)/(2*s*s)),hm=()=>new Date().toLocaleTimeString('es-ES');
 const ls=(k,v)=>{try{if(v===undefined)return localStorage.getItem(k);localStorage.setItem(k,v)}catch(_){}};
@@ -1658,7 +1672,8 @@ const cl=c=>(c||'').toUpperCase().replace(/[^A-Z0-9]/g,'').slice(0,8);
 if(md==='monitor')monitor(cl(cdq)||Array.from({length:4},()=>'ABCDEFGHJKMNPQRSTUVWXYZ23456789'[Math.random()*31|0]).join(''));
 else if(md==='control'&&cl(cdq))control(cl(cdq));
 else if(md==='panel')control('LOCAL',{pair:1});
-else if(md==='desa')desa();
+else if(md==='desa')desa(cl(cdq)||Array.from({length:4},()=>'ABCDEFGHJKMNPQRSTUVWXYZ23456789'[Math.random()*31|0]).join(''));
+else if(md==='desactl'&&cl(cdq))desaCtl(cl(cdq));
 else if(md==='p'&&cdq&&cdq[0]==='O')control('LOCAL',{auto:cdq});
 else if(md==='p'&&cdq&&cdq[0]==='A')ansTab(cdq);else land();
 addEventListener('hashchange',()=>location.reload());
@@ -1674,26 +1689,27 @@ ${FB?'':'<div class=lwarn>Falta configurar la base de datos: edita el archivo co
 <button class="lc main" id=bm><span class=ic><svg viewBox="0 0 32 32" fill="none" stroke="#6ef0b0" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="26" height="19" rx="3"/><path d="M6 15h5l2-4 3 8 2-5h8"/><path d="M11 28h10"/></svg></span><span class=tx><em>Alumnos · tablet, portátil o proyector</em><b>Abrir el monitor</b><span>Ondas, constantes, desfibrilador, cardioversión, marcapasos, PNI, TA invasiva y ECG de 12 derivaciones.</span></span></button>
 <button class=lc id=cgo><span class=ic><svg viewBox="0 0 32 32" fill="none" stroke="#7bd8ff" stroke-width="2.2" stroke-linecap="round"><path d="M5 9h22M5 16h22M5 23h22"/><circle cx="12" cy="9" r="3" fill="#0a171b"/><circle cx="21" cy="16" r="3" fill="#0a171b"/><circle cx="10" cy="23" r="3" fill="#0a171b"/></svg></span><span class=tx><em>Instructor · móvil</em><b>Panel del instructor</b><span>Controla el ritmo y las constantes de esa sesión. Necesita el código del monitor.</span></span></button>
 <button class=lc id=cof><span class=ic><svg viewBox="0 0 32 32" fill="none" stroke="#ffcf6b" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12c7-6 19-6 26 0M8 17c5-4 11-4 16 0M13 22c2-1.5 4-1.5 6 0"/><circle cx="16" cy="26" r="1.4" fill="#ffcf6b"/><path d="M5 5l22 22"/></svg></span><span class=tx><em>Sin internet</em><b>Panel sin internet</b><span>Para controlar un monitor emparejado con QR, sin wifi con internet.</span></span></button>
-<button class="lc wide" id=bds><span class=ic><svg viewBox="0 0 32 32" fill="none" stroke="#ff9a5c" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 27C6 20 4 14 4 10.5A6.5 6.5 0 0 1 16 7a6.5 6.5 0 0 1 12 3.5C28 14 26 20 16 27z"/><path d="M17 11l-4 6h5l-3 5"/></svg></span><span class=tx><em>Alumnos · tablet</em><b>Modo DESA</b><span>Desfibrilador externo automático con voz en castellano: parches, análisis, descarga y RCP cada 2 minutos. Escenarios programables.</span></span></button>
+<button class="lc wide" id=bds><span class=ic><svg viewBox="0 0 32 32" fill="none" stroke="#ff9a5c" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 27C6 20 4 14 4 10.5A6.5 6.5 0 0 1 16 7a6.5 6.5 0 0 1 12 3.5C28 14 26 20 16 27z"/><path d="M17 11l-4 6h5l-3 5"/></svg></span><span class=tx><em>Alumnos · tablet</em><b>Modo DESA</b><span>Desfibrilador externo automático con voz en castellano: parches, análisis, descarga y RCP cada 2 minutos. Escenarios programables, controlables desde otro dispositivo con el código de sesión.</span></span></button>
 </div>
 <p class=lnote>Usa un código distinto en cada monitor: si dos monitores comparten código, recibirán las mismas órdenes.</p></div>`;
 $('bm').onclick=()=>{const c=cl($('cin').value);location.hash='#monitor'+(c?'/'+c:'')};
-$('cof').onclick=()=>{location.hash='#panel'};$('bds').onclick=()=>{location.hash='#desa'};
+$('cof').onclick=()=>{location.hash='#panel'};$('bds').onclick=()=>{const c=cl($('cin').value);if(c)ls('cc',c);location.hash='#desa'+(c?'/'+c:'')};
 $('cgo').onclick=()=>{const c=cl($('cin').value);if(c){ls('cc',c);location.hash='#control/'+c}else{const i=$('cin');i.focus();i.classList.remove('err');void i.offsetWidth;i.classList.add('err');setTimeout(()=>i.classList.remove('err'),900)}}}
 
 /* ---------- modo DESA (desfibrilador externo automático) ---------- */
-function desa(){
+function desa(code){
+history.replaceState(null,'','#desa/'+code);
 document.body.className='desa';
 const TS=window.DESA_TS||1,CAP={S:'DESCARGA',N:'SIN DESCARGA'},
 PRE=[['Desfibrilable','Primer análisis: descarga aconsejada','S'],['No desfibrilable','Primer análisis: no se aconseja descarga','N'],['2 no desfibrilables y a la 3.ª, descarga','Análisis 1 y 2 sin descarga; análisis 3 con descarga','NNS']],
 MALE=/jorge|pablo|[aá]lvaro|enrique|diego|juan|ra[uú]l|carlos|antonio|miguel|pedro|eddy|reed|rocko|jaime|andr[eé]s|alberto|luis|jos[eé]|male|hombre|masculin/i,
 FEM=/m[oó]nica|paulina|helena|laura|sabina|elvira|marisol|esperanza|luc[ií]a|isabela|camila|dalia|salom[eé]|female|mujer|google espa|\bflo\b|sandy|shelley|grandma|ximena|valentina|catalina|paloma|marta|in[eé]s|elena|sofia|sof[ií]a/i;
 let sq=(ls('dseq')||'S').replace(/[^SN]/g,'').slice(0,8)||'S',met=ls('dmet')!=='0',bpm=+ls('dbpm')||110,vrate=+ls('drate')||.8,grave=ls('dgr')!=='0',vsel=ls('dvz')||'auto',
-st='off',tok=0,pad=[0,0],nAn=0,nSh=0,cprEnd=0,padWake=null,shWake=null,shHit=0,ctx=null,metT=null,rdyT=null,chO=null,lastCx=0,VZ=[];
+lastSig='',lastCtl=0,st='off',tok=0,pad=[0,0],nAn=0,nSh=0,cprEnd=0,padWake=null,shWake=null,shHit=0,ctx=null,metT=null,rdyT=null,chO=null,lastCx=0,VZ=[];
 class Cn{}
 document.body.innerHTML=`<div id=aed data-s=off>
 <button class=dfl id=dhm aria-label="Volver al inicio" title="Volver al inicio">‹</button><button class=dfl id=dgear aria-label="Panel del instructor" title="Panel del instructor">⚙</button>
-<div class=atag>SOLO ENTRENAMIENTO</div>
+<div class=atag>SOLO ENTRENAMIENTO</div><div id=acode>PANEL · CÓDIGO ${code}</div>
 <div id=afw><svg id=afig viewBox="0 0 120 210" preserveAspectRatio="xMidYMid meet" aria-label="Colocación de los parches">
 <g fill="#eef4f7" stroke="#5c6770" stroke-width="2.2" stroke-linejoin="round"><circle cx=60 cy=26 r=15 /><rect x=54 y=38 width=12 height=12 rx=3 /><rect x=20 y=52 width=15 height=84 rx=7.5 transform="rotate(7 27 52)"/><rect x=85 y=52 width=15 height=84 rx=7.5 transform="rotate(-7 93 52)"/><rect x=38 y=128 width=19 height=68 rx=9 /><rect x=63 y=128 width=19 height=68 rx=9 /><rect x=36 y=46 width=48 height=86 rx=16 /></g>
 <g class=pad id=pd0><rect class=hit x=28 y=44 width=44 height=54 /><path class=wire d="M42 82C28 112 22 160 32 208"/><g transform="rotate(-12 49 68)"><rect class=padb x=37 y=52 width=24 height=32 rx=5 /><path class=ck d="M43 68l5 5 9-11"/></g></g>
@@ -1707,6 +1723,7 @@ document.body.innerHTML=`<div id=aed data-s=off>
 <div class=aspk></div></div>
 <aside id=dpn>
 <header><b>Panel del instructor · DESA</b><button id=dpx aria-label="Cerrar">✕</button></header>
+<section><h4>Panel en otro dispositivo</h4><div class=dcode>${code}</div><p class=dn id=dnet></p><p class=dn>En el otro dispositivo abre la app → «Panel del instructor» y escribe este código. Desde allí se controla el DESA.</p><button id=dpair class=db>Emparejar sin internet</button></section>
 <section><h4>Escenario</h4><div id=dsc class=dl></div><p class=dn>Toca cada análisis para cambiar su resultado. Si hay más análisis que los programados, se repite el último.</p><div id=dsq class=dchips></div></section>
 <section><h4>RCP</h4><div class=seg id=dmet><button data-v=1>Con metrónomo</button><button data-v=0>Sin metrónomo</button></div><label class=dr>Ritmo del metrónomo <select id=dbpm><option>100</option><option>110</option><option>120</option></select> /min</label></section>
 <section><h4>Voz</h4><select id=dvz></select><button id=dtest class=db>Probar voz</button><div class=dn style="margin-top:12px">Velocidad de la voz</div><div class=seg id=dspd><button data-v=".7">Muy lenta</button><button data-v=".8">Lenta</button><button data-v=".95">Normal</button></div><div class=dn style="margin-top:12px">Tono</div><div class=seg id=dtone><button data-v=1>Grave (masculino)</button><button data-v=0>Natural</button></div><p class=dn id=dvn hidden>Este dispositivo no tiene ninguna voz en español. Instálala en los ajustes del sistema (texto a voz) y descárgala para usarla sin internet.</p><p class=dn>Sube el volumen de la tablet al máximo para que se oiga bien en el aula.</p></section>
@@ -1740,7 +1757,7 @@ g.gain.setValueAtTime(.0001,t);g.gain.linearRampToValueAtTime(.1,t+.2);g.gain.se
 function metCtl(){if(metT){clearTimeout(metT);metT=null}if(st==='cpr'&&met){const my=tok;(function tk(){if(my!==tok||st!=='cpr'||!met){metT=null;return}beep(1000,.07,.4,'square');metT=setTimeout(tk,60000/bpm*TS)})()}}
 function stopAll(){if(metT){clearTimeout(metT);metT=null}if(rdyT){clearInterval(rdyT);rdyT=null}try{chO&&chO.stop()}catch(_){}chO=null;cancelSp();padWake=null;shWake=null}
 function tmr(){ui()}
-function ui(){const a=$('aed');a.dataset.s=st;
+function ui(){const a=$('aed');a.dataset.s=st;const conn=Date.now()-lastCtl<8000;$('acode').style.opacity=conn?0:1;$('dnet').textContent=conn?'✓ Panel del instructor conectado.':'Esperando al panel del instructor…';dsync();
 [0,1].forEach(i=>{const p=$('pd'+i);p.classList.toggle('on',!!pad[i]);p.classList.toggle('hint',(st==='pads'||st==='on')&&!pad[i])});
 const ap=$('apd');ap.hidden=!!(pad[0]&&pad[1]);ap.classList.toggle('ask',st==='pads'||st==='on');
 const T={off:'Apagado',on:'Encendido',pads:'Esperando los parches',analyze:'Analizando el ritmo',charge:'Cargando',ready:'Descarga lista',shock:'Descarga administrada',cpr:'RCP en curso'}[st];
@@ -1818,10 +1835,69 @@ $('dbpm').onchange=()=>{bpm=+$('dbpm').value;save();metCtl()};
 $('dvz').onchange=()=>{vsel=$('dvz').value;ls('dvz',vsel)};
 $('dtest').onclick=()=>{cancelSp();speak('Analizando el ritmo cardíaco. No toque al paciente.')};
 if(window.speechSynthesis){speechSynthesis.onvoiceschanged=loadV}
+/* ---- sincronización con el panel del instructor (otro dispositivo) ---- */
+function dsync(force){const o={t:'dstate',st,nAn,nSh,pad:[pad[0],pad[1]],sq,met,bpm,rate:vrate,grave,vsel,vz:VZ.map(v=>v.name+'|'+v.lang)},sg=JSON.stringify(o);
+if(!force&&sg===lastSig)return;lastSig=sg;o.cpr=st==='cpr'?Math.max(0,Math.round((cprEnd-Date.now())/TS/1000)):0;send(o)}
+onmsg=o=>{lastCtl=Date.now();if(o.t==='hello'){dsync(1);ui();return}
+if(o.t!=='dcmd')return;
+if(o.k==='cfg'){if(typeof o.sq==='string'&&/^[SN]{1,8}$/.test(o.sq))sq=o.sq;if(o.met!==undefined)met=!!o.met;if([100,110,120].includes(+o.bpm))bpm=+o.bpm;if([.7,.8,.95].includes(+o.rate))vrate=+o.rate;if(o.grave!==undefined)grave=!!o.grave;if(typeof o.vsel==='string'){vsel=o.vsel;ls('dvz',vsel);loadV()}save();drawSc();segs();metCtl()}
+else if(o.k==='pads'){if(o.v)padsAll();else{setPad(0,0,1);setPad(1,0)}}
+else if(o.k==='reset'){off();pad=[0,0];ui()}
+else if(o.k==='test'){cancelSp();speak('Analizando el ritmo cardíaco. No toque al paciente.')}
+dsync(1);ui()};
+netInit(code,'m');setInterval(()=>{send({t:'hb'});dsync(1);ui()},2500);
+$('dpair').onclick=()=>{pn(false);openPair('m')};
 loadV();drawSc();segs();ui();pn(true);
 const fit=()=>{const a=$('aed');if(a)a.style.setProperty('--u',a.clientWidth/100+'px')};
 addEventListener('resize',fit);addEventListener('orientationchange',()=>setTimeout(fit,350));if(window.ResizeObserver)new ResizeObserver(fit).observe($('aed'));fit();setTimeout(fit,300);
 }
+
+
+/* ---------- panel del instructor para el DESA (en otro dispositivo) ---------- */
+function desaCtl(code,keep){
+{const h=setTimeout(()=>{},0);for(let i=0;i<=h;i++){clearTimeout(i);clearInterval(i)}}
+history.replaceState(null,'','#desactl/'+code);ls('cc',code);
+document.body.className='dctl';
+const PRE=[['Desfibrilable','Primer análisis: descarga aconsejada','S'],['No desfibrilable','Primer análisis: no se aconseja descarga','N'],['2 no desfibrilables y a la 3.ª, descarga','Análisis 1 y 2 sin descarga; análisis 3 con descarga','NNS']],CAP={S:'DESCARGA',N:'SIN DESCARGA'},
+TXT={off:'DESA apagado',on:'Encendido',pads:'Esperando los parches',analyze:'Analizando el ritmo',charge:'Cargando',ready:'Descarga lista: esperando que pulsen',shock:'Descarga administrada',cpr:'RCP en curso'};
+let R={st:'off',nAn:0,nSh:0,pad:[0,0],sq:'S',met:true,bpm:110,rate:.8,grave:true,vsel:'auto',vz:[],cpr:0},last=0;
+document.body.innerHTML=`<div id=dch><button class=pb id=dh>‹ Inicio</button><b>DESA · ${code}</b><span class=dcn id=dcn>Buscando…</span></div>
+<aside id=dpn class=on>
+<section><h4>En vivo</h4><div id=dlv></div></section>
+<section><h4>Escenario</h4><div id=dsc class=dl></div><p class=dn>Toca cada análisis para cambiar su resultado, también durante la simulación. Si hay más análisis que los programados, se repite el último.</p><div id=dsq class=dchips></div></section>
+<section><h4>RCP</h4><div class=seg id=dmet><button data-v=1>Con metrónomo</button><button data-v=0>Sin metrónomo</button></div><label class=dr>Ritmo del metrónomo <select id=dbpm><option>100</option><option>110</option><option>120</option></select> /min</label></section>
+<section><h4>Voz del DESA</h4><select id=dvz></select><button id=dtest class=db>Probar voz en el DESA</button><div class=dn style="margin-top:12px">Velocidad de la voz</div><div class=seg id=dspd><button data-v=".7">Muy lenta</button><button data-v=".8">Lenta</button><button data-v=".95">Normal</button></div><div class=dn style="margin-top:12px">Tono</div><div class=seg id=dtone><button data-v=1>Grave (masculino)</button><button data-v=0>Natural</button></div></section>
+<section><h4>Controles</h4><button id=dpads class=db>Pegar los parches (simulado)</button><button id=dunp class=db>Quitar los parches</button><button id=drst class=db>Apagar y reiniciar el DESA</button><p class=dn>El DESA se enciende con su botón verde, como en un equipo real.</p></section>
+</aside>`;
+const send2=o=>send({t:'dcmd',...o}),cfg=o=>{Object.assign(R,o);draw();send2({k:'cfg',...o})};
+function stat(){const on=Date.now()-last<8000;$('dcn').classList.toggle('on',on);$('dcn').textContent=on?'Conectado':'Buscando el DESA…'}
+function draw(){
+const nx=Math.min(R.nAn,R.sq.length-1);
+$('dlv').innerHTML=`<div class=st>${TXT[R.st]||R.st}<small>${R.st==='cpr'&&R.cpr?'Quedan '+Math.floor(R.cpr/60)+':'+String(R.cpr%60).padStart(2,'0')+' de RCP · ':''}Próximo análisis: nº ${R.nAn+1} → ${CAP[R.sq[nx]]}</small></div><div class=kv><small>Análisis</small><b>${R.nAn}</b></div><div class=kv><small>Descargas</small><b>${R.nSh}</b></div><div class=kv style="grid-column:1/-1"><small>Parches</small><b>${R.pad[0]+R.pad[1]}/2 pegados</b></div>`;
+const i=PRE.findIndex(p=>p[2]===R.sq);
+$('dsc').innerHTML=PRE.map((p,k)=>`<button data-k=${k} class="${k===i?'on':''}"><b>${p[0]}</b><small>${p[1]}</small></button>`).join('');
+$('dsq').innerHTML=[...R.sq].map((c,k)=>`<button class="dchip ${c}${k<R.nAn?' done':''}${k===nx&&R.st!=='off'?' next':''}" data-i=${k}>${k+1} · ${CAP[c]}</button>`).join('')+(R.sq.length<8?'<button class=dchip data-a=1 aria-label="Añadir análisis">＋</button>':'')+(R.sq.length>1?'<button class=dchip data-r=1 aria-label="Quitar análisis">－</button>':'');
+$('dmet').querySelectorAll('button').forEach(b=>b.classList.toggle('on',(b.dataset.v==='1')===!!R.met));
+$('dspd').querySelectorAll('button').forEach(b=>b.classList.toggle('on',+b.dataset.v===R.rate));
+$('dtone').querySelectorAll('button').forEach(b=>b.classList.toggle('on',(b.dataset.v==='1')===!!R.grave));
+$('dbpm').value=R.bpm;
+const vs=$('dvz');if(document.activeElement!==vs){vs.innerHTML='<option value=auto>Automática (castellano, masculina)</option>'+(R.vz||[]).map(v=>`<option value="${v.replace(/"/g,'&quot;')}">${v.replace('|',' · ')}</option>`).join('');vs.value=(R.vz||[]).includes(R.vsel)?R.vsel:'auto'}}
+$('dsc').onclick=e=>{const b=e.target.closest('button');if(!b)return;cfg({sq:PRE[+b.dataset.k][2]})};
+$('dsq').onclick=e=>{const b=e.target.closest('button');if(!b)return;let q=R.sq;
+if(b.dataset.a)q+=q.slice(-1);else if(b.dataset.r)q=q.slice(0,-1);else{const i=+b.dataset.i;q=q.slice(0,i)+(q[i]==='S'?'N':'S')+q.slice(i+1)}cfg({sq:q})};
+$('dmet').onclick=e=>{const b=e.target.closest('button');if(b)cfg({met:b.dataset.v==='1'})};
+$('dbpm').onchange=()=>cfg({bpm:+$('dbpm').value});
+$('dspd').onclick=e=>{const b=e.target.closest('button');if(b)cfg({rate:+b.dataset.v})};
+$('dtone').onclick=e=>{const b=e.target.closest('button');if(b)cfg({grave:b.dataset.v==='1'})};
+$('dvz').onchange=()=>cfg({vsel:$('dvz').value});
+$('dtest').onclick=()=>send2({k:'test'});
+$('dpads').onclick=()=>send2({k:'pads',v:1});$('dunp').onclick=()=>send2({k:'pads',v:0});
+$('drst').onclick=()=>{if(confirm('¿Apagar y reiniciar el DESA? Se quitarán los parches y se pondrán a cero los análisis.'))send2({k:'reset'})};
+$('dh').onclick=()=>{location.hash=''};
+if(!keep)netInit(code,'c');
+onmsg=o=>{if(o.t==='dstate'){R=o;last=Date.now();draw();stat()}else if(o.t==='hb'){last=Date.now();stat()}};
+setInterval(()=>{send({t:'hb'});stat()},2500);setInterval(stat,1000);
+send({t:'hello'});draw();stat()}
 
 /* ---------- panel del instructor ---------- */
 function control(code,opts){
@@ -1959,7 +2035,7 @@ function ui(){devUi();$('ia').classList.toggle('on',!!S.ia);$('il').classList.to
 document.querySelectorAll('.rc').forEach(b=>b.classList.toggle('on',b.dataset.k===S.rhythm));
 ['eD','eC','thr'].forEach(k=>{$('r_'+k).value=S[k];$('o_'+k).textContent=S[k]+(k==='thr'?' mA':' J')});$('s_oD').value=S.oD;$('s_oC').value=S.oC;
 $('lvn').innerHTML=`FC ${S.hr} · SpO₂ ${S.spo2}<br>TA ${S.sbp}/${S.dbp}${S.ia?' · TAI '+(S.ilink?S.sbp+'/'+S.dbp:S.isbp+'/'+S.idbp):''}`}
-onmsg=o=>{if(o.t==='hb')lastHb=Date.now();if(o.t==='full'){Object.assign(S,o.s);ui()}
+onmsg=o=>{if(o.t==='dstate'){desaCtl(CODE,1);return}if(o.t==='hb')lastHb=Date.now();if(o.t==='full'){Object.assign(S,o.s);ui()}
 if(o.t==='log'){pushLog(o.m,'a');if(tab!==3){nlog++;$('bd').textContent=nlog;$('bd').style.display='block'}if(navigator.vibrate)navigator.vibrate(60)}};
 setInterval(()=>{const on=Date.now()-lastHb<7000;$('dt').classList.toggle('on',on);$('ls').textContent=on?'Conectado':'Buscando…';if(on&&!was)send({t:'hello'});was=on},1000);
 /* tira de ECG en vivo */

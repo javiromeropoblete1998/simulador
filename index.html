@@ -50,43 +50,66 @@ body.mon{background:#080c0e;display:grid;grid-template-columns:minmax(0,1fr);gri
 #hm{display:inline-flex;align-items:center;gap:6px;line-height:1;padding:0 12px 0 9px!important}#hm svg{width:19px;height:19px}
 @media(max-width:560px){#hm span{display:none}#hm{padding:0 9px!important}}
 
-/* ===== pantalla de inicio ===== */
-html{background:#070d10}body.landing{min-height:100%;height:auto;background:radial-gradient(1100px 600px at 50% -10%,#12363c 0,#0b1a1f 45%,#070d10 100%) no-repeat #070d10;color:#e8eeee}
-.land{max-width:920px;margin:0 auto;padding:max(22px,env(safe-area-inset-top)) 18px max(28px,env(safe-area-inset-bottom));display:flex;flex-direction:column;gap:18px}
-.lhead{position:relative;text-align:center;padding:18px 8px 6px}
-.lhead img{width:72px;height:72px;border-radius:18px;box-shadow:0 8px 28px #000a,0 0 0 1px #2a4249;display:block;margin:0 auto 14px}
-.lhead h1{margin:0;font:800 clamp(26px,5.4vw,40px)/1.1 var(--num);letter-spacing:-.02em;background:linear-gradient(90deg,#d9fbe6,#7be7ff 60%,#9af2c0);-webkit-background-clip:text;background-clip:text;color:transparent}
-.lhead p{margin:10px auto 0;max-width:560px;color:#9fb4b9;font-size:15px}
-.lver{display:inline-block;margin-top:12px;padding:3px 11px;border-radius:999px;border:1px solid #2a4249;background:#0e1d22;color:#7fb7c2;font-size:12px;letter-spacing:.06em}
-.lecg{display:block;width:100%;max-width:520px;height:46px;margin:14px auto 0;opacity:.9;-webkit-mask-image:linear-gradient(90deg,transparent,#000 15%,#000 85%,transparent);mask-image:linear-gradient(90deg,transparent,#000 15%,#000 85%,transparent)}
-.lecg path{fill:none;stroke:#3ddc84;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:520;stroke-dashoffset:520;animation:lecg 3.4s linear infinite;filter:drop-shadow(0 0 4px #3ddc8488)}
-@keyframes lecg{0%{stroke-dashoffset:520}70%,100%{stroke-dashoffset:0}}
-.lwarn{padding:12px 14px;border:1px solid #6b2b2b;background:#2a1414;color:#ffb4b4;border-radius:12px;font-size:14px}
-.lcode{background:#0f1c21cc;border:1px solid #243a41;border-radius:18px;padding:16px;display:flex;flex-direction:column;gap:10px;backdrop-filter:blur(6px)}
-.lcode label{font-size:12px;letter-spacing:.14em;color:#7fb7c2;font-weight:700}
-.lcode input{width:100%;padding:14px;border-radius:12px;border:1px solid #2a4249;background:#09141800;background:#081216;color:#fff;font:700 26px/1 var(--mono);letter-spacing:.35em;text-transform:uppercase;text-align:center;outline:none;transition:border-color .15s,box-shadow .15s}
-.lcode input::placeholder{color:#3f5a61;letter-spacing:.2em;font-size:18px}
-.lcode input:focus,.lcode input.err{border-color:#4cc9f0;box-shadow:0 0 0 3px #4cc9f033}
+/* ===== pantalla de inicio (cabe sin deslizar) ===== */
+html{background:#070d10;overflow-x:hidden}
+body.landing{margin:0;min-height:var(--vh,100dvh);height:auto;background:radial-gradient(1100px 620px at 50% -12%,#14414a 0,#0b1a1f 48%,#070d10 100%) no-repeat #070d10;color:#e8eeee}
+.land{width:100%;max-width:1000px;min-height:var(--vh,100dvh);margin:0 auto;display:flex;flex-direction:column;gap:clamp(8px,1.8vh,16px);
+ padding:max(12px,env(safe-area-inset-top)) max(14px,env(safe-area-inset-right)) max(14px,env(safe-area-inset-bottom)) max(14px,env(safe-area-inset-left))}
+.land *{min-width:0}
+.lhead{display:flex;align-items:center;gap:14px}
+.lhead img{width:clamp(48px,9vh,68px);height:clamp(48px,9vh,68px);border-radius:16px;box-shadow:0 6px 22px #000a,0 0 0 1px #2a4249;flex:0 0 auto}
+.lhead h1{margin:0;font:800 clamp(20px,3.6vw,32px)/1.1 var(--num);letter-spacing:-.015em;color:#eafcf3}
+.lhead p{margin:3px 0 0;color:#8fb0b6;font-size:clamp(12.5px,1.9vw,15px);line-height:1.3}
+.lver{margin-left:auto;align-self:flex-start;padding:3px 10px;border-radius:999px;border:1px solid #2a4249;background:#0e1d22;color:#7fb7c2;font-size:11.5px;white-space:nowrap}
+.lwarn{padding:10px 12px;border:1px solid #6b2b2b;background:#2a1414;color:#ffb4b4;border-radius:12px;font-size:13.5px}
+.lcode{background:#0f1c21cc;border:1px solid #243a41;border-radius:16px;padding:10px 12px;display:grid;grid-template-columns:auto minmax(0,1fr) auto;align-items:center;gap:6px 12px}
+.lcode label{font-size:14px;font-weight:700;color:#bfe9f5;line-height:1.2}.lcode label small{display:block;font-weight:400;color:#7f9aa1;font-size:12px;margin-top:2px}
+.lcode input{width:100%;padding:11px 8px;border-radius:12px;border:1px solid #2a4249;background:#081216;color:#fff;font:700 clamp(20px,3.4vw,26px)/1 var(--mono);letter-spacing:.3em;text-transform:uppercase;text-align:center;outline:none;transition:border-color .15s,box-shadow .15s}
+.lcode input::placeholder{color:#3f5a61;letter-spacing:.2em;font-size:16px}
+.lcode input:focus{border-color:#4cc9f0;box-shadow:0 0 0 3px #4cc9f033}
 .lcode input.err{border-color:#ff6b6b;box-shadow:0 0 0 3px #ff6b6b33;animation:lshk .3s}
 @keyframes lshk{25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}
-.lcode p{margin:0;color:#8aa3a9;font-size:13.5px;line-height:1.45}
-.lgrid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
-.lc{display:flex;align-items:center;gap:14px;text-align:left;width:100%;padding:16px;border-radius:18px;border:1px solid #243a41;background:linear-gradient(180deg,#132429,#0e1b20);color:#e8eeee;position:relative;overflow:hidden;transition:transform .12s,border-color .15s,box-shadow .15s;-webkit-tap-highlight-color:transparent}
+.lq{width:38px;height:38px;border-radius:50%;border:1px solid #2f4850;background:#122128;color:#9fd4e0;font:700 18px/1 var(--ui)}
+.lq.on{background:#0b6e78;border-color:#4cc9f0;color:#fff}
+.lhelp{grid-column:1/-1;margin:0;padding:8px 10px;border-radius:10px;background:#0a171b;color:#9fb4b9;font-size:13px;line-height:1.45;display:none}
+.lcode.open .lhelp{display:block}
+.lgrid{flex:1 1 auto;display:grid;grid-template-columns:minmax(0,1fr);grid-auto-rows:minmax(78px,1fr);gap:clamp(8px,1.6vh,14px)}
+.lc{display:flex;align-items:center;gap:14px;text-align:left;width:100%;height:100%;padding:12px 14px;border-radius:18px;border:1px solid #243a41;background:linear-gradient(180deg,#132429,#0e1b20);color:#e8eeee;position:relative;overflow:hidden;transition:transform .12s,border-color .15s,box-shadow .15s;-webkit-tap-highlight-color:transparent;font:inherit}
 .lc:hover{border-color:#3d6b75;box-shadow:0 8px 24px #0008}.lc:active{transform:scale(.985)}
-.lc.main{grid-column:1/-1;background:linear-gradient(135deg,#0f4f4a,#0d3a44 60%,#0e2c38);border-color:#2f7f78}
-.lc.wide{grid-column:1/-1}
-.lc .ic{flex:0 0 auto;width:54px;height:54px;border-radius:15px;display:grid;place-items:center;background:#0a171b;border:1px solid #2a4249}
-.lc.main .ic{background:#0b2e31;border-color:#3b9a8f}
+.lc:focus-visible,.lq:focus-visible{outline:3px solid #4cc9f0;outline-offset:2px}
+.lc.main{background:linear-gradient(135deg,#0f524c,#0d3d47 60%,#0e2e3a);border-color:#2f8a80}
+.lc .ic{flex:0 0 auto;width:52px;height:52px;border-radius:15px;display:grid;place-items:center;background:var(--bg,#0a171b);border:1px solid var(--bd,#2a4249)}
 .lc .ic svg{width:30px;height:30px}
-.lc .tx{min-width:0;flex:1}
-.lc .tx em{display:block;font-style:normal;font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;color:#6fb9c4;font-weight:700;margin-bottom:3px}
-.lc .tx b{display:block;font:700 19px/1.2 var(--num);margin-bottom:4px}
-.lc .tx span{display:block;color:#9fb4b9;font-size:13.5px;line-height:1.4}
-.lc::after{content:"›";font-size:30px;color:#4a7480;line-height:1;margin-left:2px}
+.lc .tx{flex:1}
+.lc .tg{font-style:normal;display:inline-flex;align-items:center;gap:6px;font-size:12px;color:var(--c,#6fb9c4);font-weight:600;margin-bottom:3px}
+.lc .tg::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--c,#6fb9c4)}
+.lc .tx b{display:block;font:700 clamp(17px,2.6vw,20px)/1.15 var(--num);margin-bottom:3px}
+.lc .tx span{display:block;color:#a3b9be;font-size:clamp(13px,1.9vw,14.5px);line-height:1.35}
+.lc::after{content:"›";font-size:28px;color:#4a7480;line-height:1}
 .lc.main::after{color:#8fe3d6}
-.lnote{margin:2px 0 0;text-align:center;color:#6f878d;font-size:13px}
-@media(max-width:640px){.lgrid{grid-template-columns:1fr}.lc{padding:14px}.lc .ic{width:48px;height:48px}.lc .tx b{font-size:17px}.lcode input{font-size:22px}}
-@media(max-height:520px) and (min-aspect-ratio:1/1){.lhead{padding-top:4px}.lhead img{width:48px;height:48px;margin-bottom:8px}.lhead p,.lecg{display:none}}
+@media(min-width:600px){
+ .lgrid{grid-template-columns:repeat(2,minmax(0,1fr));grid-auto-rows:minmax(150px,230px);align-content:center}
+ .lc .tx b{font-size:clamp(19px,2.4vw,23px)}.lc .tx span{font-size:clamp(14px,1.8vw,16px)}
+ .lc{flex-direction:column;align-items:flex-start;justify-content:center;gap:12px;padding:18px}
+ .lc::after{position:absolute;right:16px;top:14px}
+ .lc .ic{width:58px;height:58px}.lc .ic svg{width:34px;height:34px}
+}
+@media(max-height:700px) and (max-width:599px){
+ .land{gap:8px}.lhead p{display:none}.lhead img{width:46px;height:46px;border-radius:12px}
+ .lcode{padding:8px 10px}.lcode input{padding:9px 6px}.lq{width:34px;height:34px}
+ .lgrid{grid-auto-rows:minmax(64px,1fr);gap:8px}.lc{padding:9px 12px;gap:12px}.lc .ic{width:46px;height:46px}.lc .ic svg{width:27px;height:27px}
+ .lc .tx b{margin-bottom:2px}.lc .tg{margin-bottom:1px}
+}
+@media(min-aspect-ratio:3/2) and (max-height:560px){
+ .land{gap:8px;padding-top:max(8px,env(safe-area-inset-top));padding-bottom:max(8px,env(safe-area-inset-bottom))}
+ .lhead p{display:none}.lhead img{width:42px;height:42px;border-radius:11px}.lhead h1{font-size:20px}
+ .lcode{padding:6px 10px}.lcode input{padding:7px 6px;font-size:20px}.lq{width:32px;height:32px}
+ .lgrid{grid-template-columns:repeat(2,minmax(0,1fr));grid-auto-rows:minmax(0,1fr);gap:8px}
+ .lc{flex-direction:row;align-items:center;gap:12px;padding:8px 12px;border-radius:14px}.lc::after{position:static}
+ .lc .ic{width:44px;height:44px;border-radius:12px}.lc .ic svg{width:26px;height:26px}
+ .lc .tx b{font-size:16px;margin-bottom:1px}.lc .tx span{font-size:12.5px;line-height:1.25}.lc .tg{font-size:11.5px;margin-bottom:1px}
+}
+@media(max-width:380px){.lcode{grid-template-columns:minmax(0,1fr) auto}.lcode label{grid-column:1/-1}.lcode label small{display:inline;margin-left:6px}}
 #gear{display:inline-flex;align-items:center;gap:7px;background:#1a2529;border:1px solid #3d555c;border-radius:999px;color:#bfe9f5;font-size:13px;line-height:1;min-height:36px;padding:0 13px 0 9px;margin-left:auto;box-shadow:0 1px 4px #0006}
 #gear svg{width:21px;height:21px;flex:0 0 auto}#gear:hover,#gear.on{background:#0b6e78;border-color:#4cc9f0;color:#fff}
 @media(max-width:560px){#gear span{display:none}#gear{padding:0 9px}}
@@ -451,6 +474,52 @@ body.dctl #dpn{position:static;transform:none;visibility:visible;box-shadow:none
 #dlv .st small{display:block;margin-top:3px;font:500 13px var(--ui);color:#9fb4b9}
 #dlv .kv{padding:9px 12px;border-radius:10px;background:#142126;border:1px solid #243a41}#dlv .kv small{display:block;color:#8aa3a9;font-size:11.5px;letter-spacing:.05em;text-transform:uppercase}#dlv .kv b{font-size:19px}
 .dchips .dchip.done{opacity:.45}.dchips .dchip.next{box-shadow:0 0 0 2px #4cc9f0}
+
+/* ===== panel sin internet ===== */
+#pov{background:#070d10;padding:0 max(16px,env(safe-area-inset-right)) max(24px,env(safe-area-inset-bottom)) max(16px,env(safe-area-inset-left));overflow-x:hidden}
+.box.pr{width:100%;max-width:640px}.box.pr *{min-width:0}
+.pr h3{margin:4px 0 6px;font:700 20px/1.2 var(--num);color:#f1fbf7}
+.pr-p{margin:0 0 12px;color:#a3b9be;font-size:15px;line-height:1.45}.pr .pr-p b,.pr-card b{color:#e8f6f3}
+.pr-st{list-style:none;display:flex;gap:6px;margin:10px 0 14px;padding:0}
+.pr-st li{flex:1}
+.pr-st button{width:100%;display:flex;flex-direction:column;align-items:center;gap:5px;background:none;border:0;color:#6f878d;font:600 12.5px var(--ui);padding:4px 2px;border-top:3px solid #22333a;border-radius:2px}
+.pr-st i{font-style:normal;display:grid;place-items:center;width:26px;height:26px;border-radius:50%;background:#16252a;border:1px solid #2f444b;font-size:13px}
+.pr-st .on button{color:#e8f6f3;border-top-color:#4cc9f0}.pr-st .on i{background:#0b6e78;border-color:#4cc9f0;color:#fff}
+.pr-st .done button{color:#9fd8c0;border-top-color:#3ddc84}.pr-st .done i{background:#123b2a;border-color:#3ddc84;color:#3ddc84}
+.pr-msg{margin:0 0 10px;padding:10px 12px;border-radius:10px;background:#2a2410;border:1px solid #6b5a1f;color:#ffd23f;font-size:14px;line-height:1.4}.pr-msg:empty{display:none}
+.pr-pg{display:none}.pr-pg.on{display:block}
+.pr-tabs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin:0 0 12px}
+.pr-tabs button{display:flex;flex-direction:column;align-items:center;gap:6px;padding:10px 4px;border-radius:14px;border:1px solid #2a4249;background:#0f1c21;color:#9fb4b9;font:600 13px/1.2 var(--ui);text-align:center}
+.pr-tabs svg{width:26px;height:26px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.pr-tabs button.on{background:#10323a;border-color:#4cc9f0;color:#fff}
+.pr-card{padding:14px;border-radius:16px;background:#0f1c21;border:1px solid #243a41;margin-bottom:14px}
+.pr-card>b{display:block;font:700 16px var(--num);margin-bottom:8px}
+.pr-card ol{margin:0;padding:0;list-style:none;counter-reset:s}
+.pr-card li{counter-increment:s;position:relative;padding:0 0 10px 34px;color:#b5c8cc;font-size:14.5px;line-height:1.45}
+.pr-card li::before{content:counter(s);position:absolute;left:0;top:0;width:24px;height:24px;border-radius:50%;background:#16323a;border:1px solid #2f5560;color:#bfe9f5;display:grid;place-items:center;font:700 12.5px var(--ui)}
+.pr-path{display:inline-block;padding:1px 8px;border-radius:7px;background:#16252a;border:1px solid #2f444b;color:#d6f2f8;font-size:13.5px;line-height:1.5}
+.pr-tip{margin:6px 0 0;color:#8fa8ae;font-size:13px;line-height:1.4}
+.pr-warn{margin:10px 0 0;padding:9px 11px;border-radius:10px;background:#2a1a10;border:1px solid #6b4a2b;color:#ffcf9b;font-size:13.5px;line-height:1.4}
+.pr-acts{display:flex;flex-wrap:wrap;gap:8px;margin:6px 0 0}
+.pr .pb{margin:0;min-height:46px;border-radius:12px;font-size:15px;font-weight:600}
+.pr .pr-main{background:#0b6e78;border-color:#4cc9f0;color:#fff;flex:1 1 200px}
+.pr .pr-sec{background:#16252a}
+.pr .pr-set{background:#2a2410;border-color:#6b5a1f;color:#ffd98a;flex:1 1 200px}
+.pr-go{display:block;width:100%;margin-top:6px!important}
+.pr-qr{display:flex;flex-wrap:wrap;gap:14px;align-items:flex-start;margin:0 0 12px}
+.pr-qr .qrw{padding:8px;border-radius:12px;flex:0 0 auto}.pr-qr .qrw canvas{width:min(70vw,calc(var(--vh,100dvh)*.38),300px);height:auto}
+.pr-qrside{flex:1 1 180px}.pr-qrside .pr-tip{margin:0 0 8px}.pr-qrside textarea{height:64px;margin:8px 0 0}
+.pr-paste{margin:10px 0}.pr-paste summary{color:#9fd4e0;font-size:14px;padding:6px 0;cursor:pointer}
+.pr-foot{display:none}
+.pr .pr-acts .pr-sec{flex:1 1 200px}
+@media(min-aspect-ratio:3/2) and (max-height:520px){.pr-qr .qrw canvas{width:min(46vw,calc(var(--vh,100dvh)*.62))}.pr-st{margin:6px 0 8px}}
+/* ===== evitar cortes por el lado derecho (muescas, pantalla completa, contenido ancho) ===== */
+html{overflow-x:hidden}
+body.ctl{grid-template-columns:minmax(0,1fr);padding-left:env(safe-area-inset-left,0px);padding-right:env(safe-area-inset-right,0px)}
+body.ctl>*{min-width:0}
+body.mon{padding-left:env(safe-area-inset-left,0px);padding-right:env(safe-area-inset-right,0px)}
+.ov{padding-left:max(16px,env(safe-area-inset-left));padding-right:max(16px,env(safe-area-inset-right));overflow-x:hidden}
+#dpn{max-width:100vw}
 </style></head><body><script>
 const $=i=>document.getElementById(i),g=(x,m,s)=>Math.exp(-((x-m)**2)/(2*s*s)),hm=()=>new Date().toLocaleTimeString('es-ES');
 const ls=(k,v)=>{try{if(v===undefined)return localStorage.getItem(k);localStorage.setItem(k,v)}catch(_){}};
@@ -1645,23 +1714,52 @@ async function qrFromFile(f,cb){pmsg('Leyendo la foto…');try{const bm=await cr
 let raw=qrFromCanvas(cv);if(!raw&&'BarcodeDetector' in window){try{const r=await new BarcodeDetector({formats:['qr_code']}).detect(cv);if(r.length)raw=r[0].rawValue}catch(_){}}
 if(raw){pmsg('');cb(raw)}else pmsg('No he encontrado ningún QR en la foto. Acércate más, que el QR llene la foto y salga enfocado, y vuelve a intentarlo.')}catch(e){pmsg('No se pudo leer la foto: '+e.message)}}
 async function doAnswer(c){if(!c||c[0]!=='A'){pmsg('Ese código no es la respuesta del panel (debe empezar por A).');return}try{pmsg('Conectando…');await useAnswer(c)}catch(e){pmsg('Código no válido: '+e.message)}}
-async function doOffer(c){if(!c||c[0]!=='O'){pmsg('Ese código no es del monitor (debe empezar por O).');return}try{pmsg('Preparando respuesta…');const a=await mkAnswer(c);document.getElementById('p_ans').style.display='block';showQR(a);pmsg('Ahora enseña el QR de abajo al monitor.')}catch(e){pmsg('Código no válido: '+e.message)}}
-function openPair(role,auto,home){let ov=document.getElementById('pov');if(!ov){ov=document.createElement('div');ov.id='pov';ov.className='ov';document.body.append(ov)}ov.classList.add('on');ovPush(()=>{stopScan();ov.classList.remove('on')});
-const qrblock='<div class=qrw title="Toca para ampliar"><canvas id=p_qr></canvas></div><p class=mu style="margin:4px 0">Toca el QR para ampliarlo y que se lea mejor.</p><textarea id=p_out readonly></textarea><button class=pb id=p_cp>Copiar código</button>';
-ov.innerHTML=`<div class=box><div class=ovh><button class=pb id=p_b>‹ Volver</button><h2>Emparejar sin internet</h2></div><p>Los dos dispositivos deben estar en la misma wifi o en el punto de acceso del móvil. No hace falta internet.</p><p id=p_st style="color:#ffd23f"></p>
-${role==='m'?'<h3>1. Enseña este QR al panel</h3>'+qrblock+'<h3>2. Lee el QR de respuesta del panel</h3>':'<h3>1. Lee el QR del monitor</h3>'}
-<button class=pb id=p_sc>Escanear con la cámara</button><button class=pb id=p_ph>Hacer foto del QR</button><input id=p_f type=file accept="image/*" capture=environment hidden><div id=p_vid></div><textarea id=p_in placeholder="O pega aquí el código"></textarea><button class=pb id=p_go>${role==='m'?'Conectar':'Continuar'}</button>
-${role==='c'?'<div id=p_ans style="display:none"><h3>2. Enseña este QR al monitor</h3>'+qrblock+'</div>':''}
-<div><button class=pb id=p_x>Cerrar</button></div></div>`;
+async function doOffer(c){if(!c||c[0]!=='O'){pmsg('Ese código no es del monitor (debe empezar por O).');return}try{pmsg('Preparando respuesta…');const a=await mkAnswer(c);showQR(a);pmsg('');if(window.PAIRGO)window.PAIRGO(2)}catch(e){pmsg('Código no válido: '+e.message)}}
+const IS_AND=/Android/i.test(navigator.userAgent),IS_IOS=/iPhone|iPad|iPod/i.test(navigator.userAgent)||(navigator.platform==='MacIntel'&&navigator.maxTouchPoints>1);
+/* Abre una pantalla de ajustes de Android (si el navegador lo permite). Si no se abre, avisa y deja la ruta a mano. */
+function openSetting(act,path){const msg=document.getElementById('p_hint');let left=0;const f=()=>{if(document.hidden)left=1};document.addEventListener('visibilitychange',f);
+try{location.href='intent:#Intent;action='+act+';end'}catch(_){}
+setTimeout(()=>{document.removeEventListener('visibilitychange',f);if(!left&&msg){msg.textContent='Tu navegador no ha dejado abrir los ajustes. Ábrelos a mano: '+path+'.';msg.style.display='block'}},1600)}
+const PRI={
+ wifi:{t:'Wifi del aula o de casa',s:['Conecta el monitor y el panel a <b>la misma wifi</b>. Da igual que tenga internet o no.','Si la wifi es de invitados o pública, puede bloquear la conexión entre dispositivos. En ese caso usa un punto de acceso.'],path:'Ajustes › Wifi',and:['android.settings.WIFI_SETTINGS','Ajustes › Wifi','Abrir ajustes de wifi']},
+ and:{t:'Punto de acceso Android',s:['En <b>el móvil que crea la red</b> abre <span class=pr-path>Ajustes › Conexiones › Punto de acceso</span> (en algunos móviles: <span class=pr-path>Red e internet › Zona wifi</span>) y actívalo.','Mira el nombre de la red y la contraseña.','En <b>el otro dispositivo</b> abre los ajustes de wifi, elige esa red y escribe la contraseña.'],and:['android.settings.TETHER_SETTINGS','Ajustes › Conexiones › Punto de acceso','Abrir punto de acceso'],and2:['android.settings.WIFI_SETTINGS','Ajustes › Wifi','Abrir ajustes de wifi']},
+ ios:{t:'Punto de acceso iPhone',s:['En <b>el iPhone o iPad con datos móviles</b> abre <span class=pr-path>Ajustes › Punto de acceso personal</span> y activa «Permitir a otros conectarse».','Deja esa pantalla abierta mientras el otro dispositivo se conecta. Si no ve la red, activa «Maximizar compatibilidad».','En <b>el otro dispositivo</b> abre <span class=pr-path>Ajustes › Wifi</span>, elige la red del iPhone y escribe la contraseña.'],note:'Apple no permite abrir Ajustes desde una web, así que sigue la ruta indicada.'}};
+function openPair(role,auto,home){let ov=document.getElementById('pov');if(!ov){ov=document.createElement('div');ov.id='pov';ov.className='ov';document.body.append(ov)}ov.classList.add('on');ov.scrollTop=0;ovPush(()=>{stopScan();ov.classList.remove('on')});
+const M=role==='m';
+const qrblock='<div class=pr-qr><div class=qrw title="Toca para ampliar"><canvas id=p_qr></canvas></div><div class=pr-qrside><p class=pr-tip>Toca el QR para ampliarlo y que se lea mejor.</p><button class="pb pr-sec" id=p_cp>Copiar código</button><textarea id=p_out readonly aria-label="Código del QR"></textarea></div></div>';
+const scanblock=`<div class=pr-acts><button class="pb pr-main" id=p_sc>Escanear con la cámara</button><button class="pb pr-sec" id=p_ph>Hacer foto del QR</button></div><input id=p_f type=file accept="image/*" capture=environment hidden><div id=p_vid></div><details class=pr-paste><summary>O pega el código a mano</summary><textarea id=p_in placeholder="Pega aquí el código"></textarea></details><button class="pb pr-main pr-go" id=p_go>${M?'Conectar':'Continuar'}</button>`;
+const tabs=[['wifi','Wifi','<svg viewBox="0 0 24 24"><path d="M2.5 9a14 14 0 0 1 19 0M6 12.8a9 9 0 0 1 12 0M9.4 16.4a4 4 0 0 1 5.2 0"/><circle cx=12 cy=19.5 r=1 fill=currentColor /></svg>'],['and','Android','<svg viewBox="0 0 24 24"><rect x=6.5 y=2.5 width=11 height=19 rx=2.5 /><path d="M10.5 18.5h3"/></svg>'],['ios','iPhone / iPad','<svg viewBox="0 0 24 24"><rect x=5 y=3 width=14 height=18 rx=3 /><circle cx=12 cy=18 r=.9 fill=currentColor /></svg>']];
+const pg1=M?`<h3>Enseña este QR al panel</h3><p class=pr-p>En el dispositivo del instructor abre la app, pulsa <b>Panel sin internet</b> y escanea este código.</p>${qrblock}<button class="pb pr-main pr-go" data-go=2>Ya lo ha leído: siguiente ›</button>`:`<h3>Lee el QR del monitor</h3><p class=pr-p>En el monitor pulsa <b>Sin internet</b>: saldrá un QR. Escanéalo con este dispositivo.</p>${scanblock}`;
+const pg2=M?`<h3>Lee la respuesta del panel</h3><p class=pr-p>El panel mostrará otro QR. Escanéalo aquí con la cámara para terminar de conectar.</p>${scanblock}`:`<h3>Enseña este QR al monitor</h3><p class=pr-p>En el monitor, pulsa <b>Escanear con la cámara</b> y apunta a este código. Al leerlo, queda conectado.</p>${qrblock}`;
+ov.innerHTML=`<div class="box pr"><div class=ovh><button class=pb id=p_b>‹ Volver</button><h2>Conectar sin internet</h2></div>
+<ol class=pr-st><li><button data-go=0><i>1</i><span>Red</span></button></li><li><button data-go=1><i>2</i><span>${M?'Mostrar QR':'Leer QR'}</span></button></li><li><button data-go=2><i>3</i><span>${M?'Leer respuesta':'Mostrar QR'}</span></button></li></ol>
+<p id=p_st class=pr-msg role=status></p>
+<section class="pr-pg on" data-p=0><h3>Conecta los dos dispositivos a la misma red</h3><p class=pr-p>No hace falta que la red tenga internet. ¿Cómo la vas a crear?</p>
+<div class=pr-tabs role=tablist>${tabs.map(t=>`<button role=tab data-t=${t[0]}>${t[2]}<span>${t[1]}</span></button>`).join('')}</div><div id=pr_body></div>
+<button class="pb pr-main pr-go" data-go=1>Ya están conectados ›</button></section>
+<section class=pr-pg data-p=1>${pg1}</section>
+<section class=pr-pg data-p=2>${pg2}</section>
+<div class=pr-foot><button class="pb pr-sec" id=p_x>Cerrar</button></div></div>`;
 const $$=i=>document.getElementById(i);
+let cur=0;const pages=[...ov.querySelectorAll('.pr-pg')],dots=[...ov.querySelectorAll('.pr-st button')];
+function go(n){cur=n;pages.forEach((p,i)=>p.classList.toggle('on',i===n));dots.forEach((d,i)=>{d.parentNode.className=i===n?'on':i<n?'done':''});if(n!==(M?2:1))stopScan();ov.scrollTop=0}
+window.PAIRGO=go;ov.querySelectorAll('[data-go]').forEach(b=>b.onclick=()=>go(+b.dataset.go));go(0);
+function tab(k){ov.querySelectorAll('.pr-tabs button').forEach(b=>b.classList.toggle('on',b.dataset.t===k));const d=PRI[k];
+let html=`<div class=pr-card><b>${d.t}</b><ol>${d.s.map(x=>`<li>${x}</li>`).join('')}</ol>`;
+if(IS_AND&&d.and)html+=`<div class=pr-acts><button class="pb pr-set" id=p_s1>${d.and[2]}</button>${d.and2?`<button class="pb pr-set" id=p_s2>${d.and2[2]}</button>`:''}</div>`;
+else if(d.path&&k==='wifi')html+=`<p class=pr-tip>Ruta: <span class=pr-path>${d.path}</span></p>`;
+if(d.note)html+=`<p class=pr-tip>${d.note}</p>`;
+html+='<p class=pr-warn id=p_hint style="display:none"></p></div>';$$('pr_body').innerHTML=html;
+if($$('p_s1'))$$('p_s1').onclick=()=>openSetting(d.and[0],d.and[1]);if($$('p_s2'))$$('p_s2').onclick=()=>openSetting(d.and2[0],d.and2[1])}
+ov.querySelectorAll('.pr-tabs button').forEach(b=>b.onclick=()=>tab(b.dataset.t));tab(IS_AND?'and':IS_IOS?'ios':'wifi');
 $$('p_x').onclick=()=>ovPop();$$('p_b').onclick=()=>{if(home){location.hash=''}else ovPop()};
-ov.querySelectorAll('#p_cp').forEach(b=>b.onclick=()=>{const t=$$('p_out');t.select();try{navigator.clipboard.writeText(t.value)}catch(_){document.execCommand('copy')}});
+ov.querySelectorAll('#p_cp').forEach(b=>b.onclick=()=>{const t=$$('p_out');t.select();try{navigator.clipboard.writeText(t.value)}catch(_){document.execCommand('copy')}b.textContent='¡Copiado!';setTimeout(()=>b.textContent='Copiar código',1500)});
 $$('p_sc').onclick=()=>scanQR(raw=>{$$('p_in').value=norm(raw);$$('p_go').click()});
 $$('p_ph').onclick=()=>{stopScan();$$('p_f').value='';$$('p_f').click()};$$('p_f').onchange=e=>{const f=e.target.files[0];if(f)qrFromFile(f,raw=>{$$('p_in').value=norm(raw);$$('p_go').click()})};
 ov.querySelectorAll('.qrw').forEach(q=>q.onclick=()=>q.classList.toggle('big'));
-$$('p_go').onclick=()=>{const c=norm($$('p_in').value);role==='m'?doAnswer(c):doOffer(c)};
-if(role==='m'){pmsg('Generando código…');mkOffer().then(c=>{showQR(c);pmsg('')}).catch(e=>pmsg('Este navegador no permite emparejar sin internet: '+e.message))}
-else if(auto){$$('p_in').value=auto;doOffer(norm(auto))}}
+$$('p_go').onclick=()=>{const c=norm($$('p_in').value);if(!c){pmsg('Primero escanea el QR o pega el código.');return}M?doAnswer(c):doOffer(c)};
+if(M){pmsg('Generando código…');mkOffer().then(c=>{showQR(c);pmsg('')}).catch(e=>pmsg('Este navegador no permite emparejar sin internet: '+e.message))}
+else if(auto){go(1);$$('p_in').value=auto;doOffer(norm(auto))}}
 function ansTab(code){document.body.className='';document.body.innerHTML='<div class=lp><p><button class=pb id=ab>‹ Volver al inicio</button></p><h1>Enviando respuesta al monitor…</h1><p id=am class=mu></p><textarea id=ac readonly style="width:100%;height:90px"></textarea></div>';
 document.getElementById('ac').value=code;document.getElementById('ab').onclick=()=>{location.hash=''};const am=document.getElementById('am'),b=new BroadcastChannel('simpair');b.onmessage=e=>{if(e.data.t==='ack')am.textContent='✓ El monitor ha recibido la respuesta. Ya puedes cerrar esta pestaña.'};b.postMessage({t:'ans',code});
 setTimeout(()=>{if(!am.textContent)am.textContent='No encuentro el monitor en este navegador. En el monitor pulsa «Sin internet», pega este código en el paso 2 y pulsa Conectar.'},2500)}
@@ -1679,19 +1777,17 @@ else if(md==='p'&&cdq&&cdq[0]==='A')ansTab(cdq);else land();
 addEventListener('hashchange',()=>location.reload());
 
 function land(){document.body.className='landing';document.body.innerHTML=`<div class=land>
-<header class=lhead><img src="icon-192.png" alt="" width=72 height=72><h1>Simulador de monitor-desfibrilador</h1>
-<p>Monitor, desfibrilador, marcapasos y panel de instructor para prácticas de emergencias.</p><span class=lver>Versión 12</span>
-<svg class=lecg viewBox="0 0 520 46" preserveAspectRatio="none" aria-hidden="true"><path d="M0 28H90l10-8 10 8h40l8 6 8-26 10 42 8-22h30l10-8 10 8h80l10-8 10 8h40l8 6 8-26 10 42 8-22H520"/></svg></header>
+<header class=lhead><img src="icon-192.png" alt="" width=68 height=68><div><h1>Simulador de monitor-desfibrilador</h1><p>Prácticas de emergencias: monitor, DESA y panel del instructor.</p></div><span class=lver>v12</span></header>
 ${FB?'':'<div class=lwarn>Falta configurar la base de datos: edita el archivo config.js siguiendo la guía.</div>'}
-<section class=lcode><label for=cin>CÓDIGO DE SESIÓN</label><input id=cin maxlength=8 placeholder="AUTO" autocomplete=off autocapitalize=characters spellcheck=false value="${ls('cc')||''}">
-<p>Cada pareja de monitor y panel con el mismo código es una sesión independiente; puedes tener varias a la vez. Escribe uno propio (por ejemplo GRUPO1) o déjalo vacío para que el monitor genere uno al azar, que verás arriba a la derecha.</p></section>
+<section class=lcode id=lcode><label for=cin>Código de sesión<small>Une monitor y panel</small></label><input id=cin maxlength=8 placeholder="AUTO" autocomplete=off autocapitalize=characters spellcheck=false value="${ls('cc')||''}"><button class=lq id=lq aria-label="¿Para qué sirve el código?" aria-expanded=false>?</button>
+<p class=lhelp>Cada monitor y panel con el mismo código forman una sesión independiente, y puedes tener varias a la vez. Escribe uno propio (por ejemplo GRUPO1) o déjalo vacío al abrir el monitor: generará uno al azar que verás arriba a la derecha. Usa un código distinto en cada monitor: si dos comparten código, recibirán las mismas órdenes.</p></section>
 <div class=lgrid>
-<button class="lc main" id=bm><span class=ic><svg viewBox="0 0 32 32" fill="none" stroke="#6ef0b0" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="26" height="19" rx="3"/><path d="M6 15h5l2-4 3 8 2-5h8"/><path d="M11 28h10"/></svg></span><span class=tx><em>Alumnos · tablet, portátil o proyector</em><b>Abrir el monitor</b><span>Ondas, constantes, desfibrilador, cardioversión, marcapasos, PNI, TA invasiva y ECG de 12 derivaciones.</span></span></button>
-<button class=lc id=cgo><span class=ic><svg viewBox="0 0 32 32" fill="none" stroke="#7bd8ff" stroke-width="2.2" stroke-linecap="round"><path d="M5 9h22M5 16h22M5 23h22"/><circle cx="12" cy="9" r="3" fill="#0a171b"/><circle cx="21" cy="16" r="3" fill="#0a171b"/><circle cx="10" cy="23" r="3" fill="#0a171b"/></svg></span><span class=tx><em>Instructor · móvil</em><b>Panel del instructor</b><span>Controla el ritmo y las constantes de esa sesión. Necesita el código del monitor.</span></span></button>
-<button class=lc id=cof><span class=ic><svg viewBox="0 0 32 32" fill="none" stroke="#ffcf6b" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12c7-6 19-6 26 0M8 17c5-4 11-4 16 0M13 22c2-1.5 4-1.5 6 0"/><circle cx="16" cy="26" r="1.4" fill="#ffcf6b"/><path d="M5 5l22 22"/></svg></span><span class=tx><em>Sin internet</em><b>Panel sin internet</b><span>Para controlar un monitor emparejado con QR, sin wifi con internet.</span></span></button>
-<button class="lc wide" id=bds><span class=ic><svg viewBox="0 0 32 32" fill="none" stroke="#ff9a5c" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 27C6 20 4 14 4 10.5A6.5 6.5 0 0 1 16 7a6.5 6.5 0 0 1 12 3.5C28 14 26 20 16 27z"/><path d="M17 11l-4 6h5l-3 5"/></svg></span><span class=tx><em>Alumnos · tablet</em><b>Modo DESA</b><span>Desfibrilador externo automático con voz en castellano: parches, análisis, descarga y RCP cada 2 minutos. Escenarios programables, controlables desde otro dispositivo con el código de sesión.</span></span></button>
-</div>
-<p class=lnote>Usa un código distinto en cada monitor: si dos monitores comparten código, recibirán las mismas órdenes.</p></div>`;
+<button class="lc main" id=bm style="--c:#6ef0b0"><span class=ic style="--bg:#0b2e31;--bd:#3b9a8f"><svg viewBox="0 0 32 32" fill=none stroke="#6ef0b0" stroke-width=2.4 stroke-linecap=round stroke-linejoin=round><rect x=3 y=5 width=26 height=19 rx=3.5 /><path d="M6.5 15h4.5l2.2-4.5 3.2 8.5 2.2-5h6.4"/><path d="M11 28h10"/></svg></span><span class=tx><i class=tg>Para alumnos</i><b>Abrir el monitor</b><span>Ondas, constantes, desfibrilador y marcapasos.</span></span></button>
+<button class=lc id=cgo style="--c:#7bd8ff"><span class=ic><svg viewBox="0 0 32 32" fill=none stroke="#7bd8ff" stroke-width=2.4 stroke-linecap=round><path d="M5 9h22M5 16h22M5 23h22"/><circle cx=12 cy=9 r=3 fill="#0a171b"/><circle cx=21 cy=16 r=3 fill="#0a171b"/><circle cx=10 cy=23 r=3 fill="#0a171b"/></svg></span><span class=tx><i class=tg>Para el instructor</i><b>Panel del instructor</b><span>Controla ritmo y constantes. Pide el código.</span></span></button>
+<button class=lc id=bds style="--c:#ff9a5c"><span class=ic><svg viewBox="0 0 32 32" fill=none stroke="#ff9a5c" stroke-width=2.4 stroke-linecap=round stroke-linejoin=round><path d="M16 27C6 20 4 14 4 10.5A6.5 6.5 0 0 1 16 7a6.5 6.5 0 0 1 12 3.5C28 14 26 20 16 27z"/><path d="M17 11l-4 6h5l-3 5"/></svg></span><span class=tx><i class=tg>Para alumnos</i><b>Modo DESA</b><span>Desfibrilador automático con voz en castellano.</span></span></button>
+<button class=lc id=cof style="--c:#ffcf6b"><span class=ic><svg viewBox="0 0 32 32" fill=none stroke="#ffcf6b" stroke-width=2.4 stroke-linecap=round stroke-linejoin=round><path d="M3 12c7-6 19-6 26 0M8 17c5-4 11-4 16 0M13 22c2-1.5 4-1.5 6 0"/><circle cx=16 cy=26 r=1.4 fill="#ffcf6b"/><path d="M5 5l22 22"/></svg></span><span class=tx><i class=tg>Sin internet</i><b>Panel sin internet</b><span>Empareja el panel con el monitor mediante QR.</span></span></button>
+</div></div>`;
+$('lq').onclick=()=>{const o=$('lcode').classList.toggle('open');$('lq').classList.toggle('on',o);$('lq').setAttribute('aria-expanded',o)};
 $('bm').onclick=()=>{const c=cl($('cin').value);location.hash='#monitor'+(c?'/'+c:'')};
 $('cof').onclick=()=>{location.hash='#panel'};$('bds').onclick=()=>{const c=cl($('cin').value);if(c)ls('cc',c);location.hash='#desa'+(c?'/'+c:'')};
 $('cgo').onclick=()=>{const c=cl($('cin').value);if(c){ls('cc',c);location.hash='#control/'+c}else{const i=$('cin');i.focus();i.classList.remove('err');void i.offsetWidth;i.classList.add('err');setTimeout(()=>i.classList.remove('err'),900)}}}

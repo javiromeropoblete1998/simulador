@@ -16,8 +16,9 @@ if(matchMedia('(display-mode: fullscreen)').matches)return;
 /* Altura real visible: mide la ventana de verdad (sin la barra del navegador) y la actualiza al cambiar, así no hace falta deslizar la pantalla para que encaje */
 (function(){var r=document.documentElement,last=0;
 function vh(){var h=Math.round(window.innerHeight||r.clientHeight);if(h>0&&h!==last){last=h;r.style.setProperty('--vh',h+'px')}}
-vh();['resize','orientationchange','fullscreenchange','webkitfullscreenchange','pageshow','focus','scroll'].forEach(function(t){addEventListener(t,function(){vh();if(t==='orientationchange')setTimeout(vh,350)},{passive:true})});
+vh();['resize','orientationchange','fullscreenchange','webkitfullscreenchange','pageshow','focus','scroll'].forEach(function(t){addEventListener(t,function(){vh();if(t==='orientationchange'||t==='resize')[120,350,700,1200].forEach(function(d){setTimeout(vh,d)})},{passive:true})});
 if(window.visualViewport)visualViewport.addEventListener('resize',vh);
+try{matchMedia('(orientation:landscape)').addEventListener('change',function(){[0,150,400,800,1500].forEach(function(d){setTimeout(vh,d)})})}catch(e){}
 [80,300,800,1800,3500].forEach(function(t){setTimeout(vh,t)});setInterval(vh,1000)})();
 </script>
 <script>window.FB_URL=window.FB_URL||"https://simulador-62c11-default-rtdb.europe-west1.firebasedatabase.app";</script>
@@ -643,6 +644,20 @@ body.landing::before{content:"";position:fixed;left:0;right:0;top:0;height:env(s
  .lc .tg{font-size:12.5px;margin-bottom:4px}
  .lc .tx b{font-size:18.5px;margin-bottom:4px}.lc .tx span{font-size:14px;line-height:1.38}
 }
+
+/* botón DESCARGAR parpadeando mientras el desfibrilador está cargado */
+@keyframes shfl{0%,49%{filter:brightness(1.4) saturate(1.3);box-shadow:0 0 0 3px #fff,0 0 28px 9px #ff3b30}50%,100%{filter:brightness(.7);box-shadow:0 0 0 0 #0000}}
+#sh.rdyb{animation:shfl .55s steps(1,end) infinite}
+body.sk-lp #sh.rdyb,body.sk-co #sh.rdyb{border-radius:50%}
+/* mensaje de estado del desfibrilador (monitor genérico): va en la línea del título, sin ocupar altura nueva */
+body.sk-act #bt .gp{position:relative}
+body.sk-act #bt #dm{position:absolute;top:5px;right:8px;margin:0;min-height:0;max-width:calc(100% - 118px);font-size:10.5px;line-height:1.2;font-weight:700;letter-spacing:.04em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-align:right;color:#8aa}
+body.sk-act #bt #dm[data-s="1"]{color:#ffb74d}
+body.sk-act #bt #dm[data-s="2"]{color:#ff6b6b}
+body.sk-act #bt #dm[data-s="3"]{color:#4cc9f0}
+/* cuenta atrás del silencio */
+#mu.on::after{content:attr(data-t);margin-left:6px;font-variant-numeric:tabular-nums;font-weight:700}
+@media(max-width:560px){body.sk-act #top #mu.on::after{content:none}}
 </style></head><body><script>
 const $=i=>document.getElementById(i),g=(x,m,s)=>Math.exp(-((x-m)**2)/(2*s*s)),hm=()=>new Date().toLocaleTimeString('es-ES');
 const ls=(k,v)=>{try{if(v===undefined)return localStorage.getItem(k);localStorage.setItem(k,v)}catch(_){}};
@@ -2273,10 +2288,10 @@ document.body.innerHTML=`<div id=top><button id=hm title="Volver a la pantalla d
 <div id=fit><div id=stage><div id=mid><div id=hdr><span class=pid>ID Pac. n/d</span><b id=ht></b><span class=hrg><span class=bi>1</span><span class=bty><span style="height:30%;background:#e53935"></span></span><span class=bi>2</span><span class=bty><span style="height:90%"></span></span><b id=he></b></span></div><div id=nm><div class="n g" id=th><i>FC (lpm)</i><em class=lm>150<br>45</em><b id=nh>--</b></div><div class="n c" id=ts><i>SpO₂ (%)</i><em class=lm>--<br>90</em><b id=ns>--</b></div><div class="n w" id=tp><i>PNI (mmHg)</i><b id=np>---/---</b><small id=nq></small></div><div class="n y" id=te><i>EtCO₂ (mmHg)</i><b id=ne>--</b></div><div class="n w" id=tr><i>FR (rpm)</i><b id=nr>--</b></div><div class="n w" id=tt><i>Temp (°C)</i><b id=nt>--</b></div><div class="n r" id=ti><i>TAI (mmHg)</i><b id=ni>---/---</b><small id=nj></small></div></div><div id=wv><canvas id=cv></canvas><span class=dx id=dx1></span><span class=dx id=dx2></span><span class=dx id=dx3></span><span class="lb lb1"></span><span class="lb lb2"></span><span class="lb lb3"></span><span class="lb lb4"></span><div id=ibs><i class=ibl data-v=200></i><i class=ibl data-v=100></i><i class=ibl data-v=0></i></div></div></div>
 <div id=bt><div class=gp><h4>DESFIBRILADOR</h4><div class=rw><button id=em>−</button><b id=ev></b><button id=ep>+</button><button id=sy>SINCR.</button></div><div class=rw><button id=ch class=grn>Cargar</button><button id=sh class=red>Descargar</button><button id=ds>Desarmar</button></div><small id=dm></small></div>
 <div class=gp><h4>MARCAPASOS</h4><div class=rw><button id=pf>Activar</button><button id=rm>−</button><b id=rv></b><button id=rp>+</button></div><div class=rw><span>Intensidad</span><button id=am>−</button><b id=av></b><button id=ap>+</button></div></div>
-<div class=gp><h4>PRESIÓN ARTERIAL</h4><div class=rw><button id=pn>Medir PNI</button><button id=ib>TA invasiva</button></div><small>PNI: se infla y desinfla como un manguito manual (unos 12 s).</small></div>
+<div class=gp><h4>PRESIÓN ARTERIAL</h4><div class=rw><button id=pn>Medir PNI</button><button id=ib>TA invasiva</button></div><small>PNI: bomba eléctrica; infla y purga solo (unos 12 s).</small></div>
 <div class=gp><h4>ECG</h4><div class=rw><button id=e12>ECG 12 derivaciones</button></div><small>Registro completo a 25 mm/s del ritmo actual.</small></div></div><div id=dp></div></div></div><div id=cm></div><div id=off><b>MONITOR APAGADO</b><span id=offt>Esperando a que el instructor lo encienda.</span></div>`;
 const FS=200,cv=$('cv'),cx=cv.getContext('2d'),dpr=devicePixelRatio||1,PC={on:0,rate:70,mA:0},D={i:5,sync:0,st:0,wait:0,aed:0,rot:0,ib:0},G=new Gen(S,PC);
-let acc=0,lt=performance.now(),mutedUntil=0,X=0,PY=null,AL={c:0,w:0},AC,rdy=0,nextAl=0;
+let acc=0,lt=performance.now(),mutedUntil=0,mutedCrit=0,X=0,PY=null,AL={c:0,w:0},AC,rdy=0,nextAl=0;
 const log=x=>send({t:'log',m:x}),full=()=>send({t:'full',s:S}),say=m=>{$('ms').textContent=m;setTimeout(()=>{if($('ms').textContent===m)$('ms').textContent=''},4000)};
 document.addEventListener('pointerdown',()=>au(),true);
 let gotPanel=0,pwPrev=S.pw,lastPanel=0,CONNT='';
@@ -2312,22 +2327,38 @@ const cfgToggle=v=>{const o=v===undefined?!pc.classList.contains('on'):!!v;if(o)
 /* audio */
 function au(){if(!AC)AC=new(window.AudioContext||window.webkitAudioContext)();if(AC.state==='suspended')AC.resume();if($('ms').textContent.startsWith('Toca'))$('ms').textContent=''}
 document.addEventListener('pointerdown',au);
-function bp(f,d=.08,v=.12,ty='sine',at=0){if(!AC)return;const o=AC.createOscillator(),k=AC.createGain(),s=AC.currentTime+at;o.type=ty;o.frequency.value=f;k.gain.setValueAtTime(0,s);k.gain.linearRampToValueAtTime(v,s+.006);k.gain.setValueAtTime(v,s+Math.max(.007,d-.02));k.gain.linearRampToValueAtTime(0,s+d);o.connect(k).connect(AC.destination);o.start(s);o.stop(s+d+.02)}
-function nz(d,fc,v,at=0,ft='lowpass'){if(!AC)return;const n=AC.sampleRate*d|0,bf=AC.createBuffer(1,n,AC.sampleRate),a=bf.getChannelData(0);for(let i=0;i<n;i++)a[i]=Math.random()*2-1;const s=AC.createBufferSource();s.buffer=bf;const f=AC.createBiquadFilter();f.type=ft;f.frequency.value=fc;const k=AC.createGain(),T=AC.currentTime+at;k.gain.setValueAtTime(v,T);k.gain.linearRampToValueAtTime(0,T+d);s.connect(f).connect(k).connect(AC.destination);s.start(T)}
+let MB=null;function OUT(){if(!MB){const c=AC.createDynamicsCompressor();c.threshold.value=-16;c.knee.value=10;c.ratio.value=10;c.attack.value=.002;c.release.value=.12;const g=AC.createGain();g.gain.value=1.05;c.connect(g).connect(AC.destination);MB=c}return MB}
+function bp(f,d=.08,v=.12,ty='sine',at=0){if(!AC)return;const o=AC.createOscillator(),k=AC.createGain(),s=AC.currentTime+at;o.type=ty;o.frequency.value=f;k.gain.setValueAtTime(0,s);k.gain.linearRampToValueAtTime(v,s+.006);k.gain.setValueAtTime(v,s+Math.max(.007,d-.02));k.gain.linearRampToValueAtTime(0,s+d);o.connect(k).connect(OUT());o.start(s);o.stop(s+d+.02)}
+function nz(d,fc,v,at=0,ft='lowpass'){if(!AC)return;const n=AC.sampleRate*d|0,bf=AC.createBuffer(1,n,AC.sampleRate),a=bf.getChannelData(0);for(let i=0;i<n;i++)a[i]=Math.random()*2-1;const s=AC.createBufferSource();s.buffer=bf;const f=AC.createBiquadFilter();f.type=ft;f.frequency.value=fc;const k=AC.createGain(),T=AC.currentTime+at;k.gain.setValueAtTime(v,T);k.gain.linearRampToValueAtTime(0,T+d);s.connect(f).connect(k).connect(OUT());s.start(T)}
 const HARM=[[1,1],[2,.5],[3,.33],[4,.25],[5,.2]];function pulse(f,at,d=.15,v=.09){HARM.forEach(([m,a])=>bp(f*m,d,v*a,'sine',at))}
-function sw(f0,f1,d,v,ty='sine',at=0){if(!AC)return;const o=AC.createOscillator(),k=AC.createGain(),s=AC.currentTime+at;o.type=ty;o.frequency.setValueAtTime(f0,s);o.frequency.exponentialRampToValueAtTime(f1,s+d);k.gain.setValueAtTime(v,s);k.gain.exponentialRampToValueAtTime(.001,s+d);o.connect(k).connect(AC.destination);o.start(s);o.stop(s+d+.02)}
+function sw(f0,f1,d,v,ty='sine',at=0){if(!AC)return;const o=AC.createOscillator(),k=AC.createGain(),s=AC.currentTime+at;o.type=ty;o.frequency.setValueAtTime(f0,s);o.frequency.exponentialRampToValueAtTime(f1,s+d);k.gain.setValueAtTime(v,s);k.gain.exponentialRampToValueAtTime(.001,s+d);o.connect(k).connect(OUT());o.start(s);o.stop(s+d+.02)}
 let CHN=null,RT=null;
 /* carga: silbido ascendente con trémolo, armónico y chasquidos del cargador */
 function chStop(){if(CHN&&AC){const t=AC.currentTime;try{CHN.k.gain.cancelScheduledValues(t);CHN.k.gain.setTargetAtTime(0,t,.02);CHN.o.forEach(o=>o.stop(t+.15))}catch(_){}}CHN=null}
-function chSnd(s){if(!AC)return;chStop();const t=AC.currentTime,k=AC.createGain(),f=AC.createBiquadFilter(),m=AC.createGain(),lf=AC.createOscillator(),lg=AC.createGain(),a=AC.createOscillator(),b=AC.createOscillator(),gb=AC.createGain();
-f.type='lowpass';f.frequency.value=4200;a.type='sawtooth';a.frequency.setValueAtTime(280,t);a.frequency.exponentialRampToValueAtTime(2300,t+s);
-b.type='triangle';b.frequency.setValueAtTime(560,t);b.frequency.exponentialRampToValueAtTime(4600,t+s);gb.gain.value=.35;
-lf.frequency.value=21;lg.gain.value=.3;m.gain.value=.7;lf.connect(lg).connect(m.gain);a.connect(m);b.connect(gb).connect(m);m.connect(f).connect(k).connect(AC.destination);
-k.gain.setValueAtTime(0,t);k.gain.linearRampToValueAtTime(.05,t+.05);k.gain.setValueAtTime(.05,t+Math.max(.06,s-.03));k.gain.linearRampToValueAtTime(0,t+s);
-[a,b,lf].forEach(o=>o.start(t));[a,b,lf].forEach(o=>o.stop(t+s+.05));CHN={o:[a,b,lf],k};
-for(let i=0,tt=0;tt<s;i++){nz(.012,1800,.05,tt,'highpass');tt+=Math.max(.05,.17-i*.007)}}
+function chSnd(s){if(!AC)return;chStop();const t=AC.currentTime,k=AC.createGain(),f=AC.createBiquadFilter(),m=AC.createGain(),lf=AC.createOscillator(),lg=AC.createGain(),a=AC.createOscillator(),b=AC.createOscillator(),gb=AC.createGain(),vb=AC.createOscillator(),vg=AC.createGain();
+f.type='lowpass';f.frequency.setValueAtTime(1800,t);f.frequency.exponentialRampToValueAtTime(7000,t+s);
+a.type='sawtooth';a.frequency.setValueAtTime(260,t);a.frequency.exponentialRampToValueAtTime(2400,t+s);
+b.type='square';b.frequency.setValueAtTime(520,t);b.frequency.exponentialRampToValueAtTime(4800,t+s);gb.gain.value=.2;
+vb.frequency.value=9;vg.gain.value=22;vb.connect(vg);vg.connect(a.detune);vg.connect(b.detune);
+lf.frequency.value=24;lg.gain.value=.28;m.gain.value=.72;lf.connect(lg).connect(m.gain);a.connect(m);b.connect(gb).connect(m);m.connect(f).connect(k).connect(OUT());
+k.gain.setValueAtTime(0,t);k.gain.linearRampToValueAtTime(.09,t+.12);k.gain.exponentialRampToValueAtTime(.36,t+Math.max(.2,s-.05));k.gain.linearRampToValueAtTime(0,t+s);
+[a,b,lf,vb].forEach(o=>o.start(t));[a,b,lf,vb].forEach(o=>o.stop(t+s+.05));CHN={o:[a,b,lf,vb],k};
+for(let i=0,tt=0;tt<s;i++){nz(.012,1800,.16,tt,'highpass');tt+=Math.max(.05,.17-i*.006)}}
 /* tono continuo de "listo para descargar" (Lifepak) */
-function rdyTone(on){if(on&&AC){if(!RT){const t=AC.currentTime,o=AC.createOscillator(),o2=AC.createOscillator(),k=AC.createGain(),g2=AC.createGain();o.type='sine';o.frequency.value=1000;o2.type='square';o2.frequency.value=1000;g2.gain.value=.25;k.gain.setValueAtTime(0,t);k.gain.linearRampToValueAtTime(.04,t+.02);o.connect(k);o2.connect(g2).connect(k);k.connect(AC.destination);o.start(t);o2.start(t);RT={o:[o,o2],k}}}else if(RT){const t=AC.currentTime;try{RT.k.gain.cancelScheduledValues(t);RT.k.gain.setTargetAtTime(0,t,.015);RT.o.forEach(x=>x.stop(t+.1))}catch(_){}RT=null}}
+function rdyTone(on){if(on&&AC){if(!RT){const t=AC.currentTime,F=skin==='co'?880:skin==='lp'?1120:1000,o=AC.createOscillator(),o2=AC.createOscillator(),o3=AC.createOscillator(),k=AC.createGain(),g2=AC.createGain(),g3=AC.createGain();o.type='sine';o.frequency.value=F;o2.type='square';o2.frequency.value=F;g2.gain.value=.3;o3.type='sine';o3.frequency.value=F*2;g3.gain.value=.25;k.gain.setValueAtTime(0,t);k.gain.linearRampToValueAtTime(.26,t+.02);o.connect(k);o2.connect(g2).connect(k);o3.connect(g3).connect(k);k.connect(OUT());[o,o2,o3].forEach(x=>x.start(t));RT={o:[o,o2,o3],k}}}else if(RT){const t=AC.currentTime;try{RT.k.gain.cancelScheduledValues(t);RT.k.gain.setTargetAtTime(0,t,.015);RT.o.forEach(x=>x.stop(t+.1))}catch(_){}RT=null}}
+/* PNI con bomba eléctrica: zumbido del motor, purga escalonada por electroválvula y pitidos finales */
+function eCuff(TI,DD,TT){if(!AC)return;const t=AC.currentTime,k=AC.createGain(),lp=AC.createBiquadFilter(),a=AC.createOscillator(),b=AC.createOscillator(),gb=AC.createGain(),am=AC.createOscillator(),ag=AC.createGain(),mod=AC.createGain();
+nz(.012,2800,.3,0,'highpass');bp(160,.05,.1,'square',0);
+lp.type='lowpass';lp.frequency.value=1100;lp.Q.value=2;a.type='sawtooth';b.type='square';gb.gain.value=.3;
+a.frequency.setValueAtTime(92,t);a.frequency.linearRampToValueAtTime(130,t+TI);a.frequency.exponentialRampToValueAtTime(60,t+TI+.35);
+b.frequency.setValueAtTime(184,t);b.frequency.linearRampToValueAtTime(260,t+TI);b.frequency.exponentialRampToValueAtTime(120,t+TI+.35);
+am.frequency.value=31;ag.gain.value=.32;mod.gain.value=.68;am.connect(ag).connect(mod.gain);a.connect(mod);b.connect(gb).connect(mod);mod.connect(lp).connect(k).connect(OUT());
+k.gain.setValueAtTime(0,t);k.gain.linearRampToValueAtTime(.34,t+.18);k.gain.setValueAtTime(.34,t+TI-.05);k.gain.linearRampToValueAtTime(0,t+TI+.35);
+[a,b,am].forEach(o=>{o.start(t);o.stop(t+TI+.45)});
+nz(TI,3600,.05,.1,'highpass');
+for(let x=TI+.1;x<TT-.2;x+=.5){nz(.01,3200,.22,x,'highpass');bp(210,.035,.09,'square',x+.005)}
+nz(DD,2600,.04,TI,'highpass');nz(.6,2200,.14,TT,'highpass');nz(.01,2800,.28,TT);
+bp(1500,.09,.14,'sine',TT+.7);bp(1500,.09,.14,'sine',TT+.9)}
 /* descarga: clic de relé, chasquido eléctrico y golpe grave del condensador */
 function zap(){nz(.006,7000,.8,0,'highpass');nz(.12,1500,.6,.004,'highpass');nz(.25,600,.55,.01);sw(150,35,.35,.7,'sine',.006);sw(1200,150,.1,.2,'square',.004)}
 
@@ -2406,16 +2437,15 @@ if(!el)x+=sy?' → ritmo no indicado para cardioversión, sin efecto':' → ritm
 else if(E>=th){x+=` → efectiva, pasa a ${RH[out][0]}`;setTimeout(()=>{Object.assign(S,{rhythm:out,hr:RH[out][1],pulse:RH[out][2]});G.reset();full()},1500)}
 else x+=` → energía insuficiente (eficaz desde ${th} J), el ritmo no cambia`;
 log(x);$('ms').textContent='DESCARGA ADMINISTRADA: '+E+' J';setTimeout(()=>{if($('ms').textContent.startsWith('DESC'))$('ms').textContent=''},3000);ds()}
-function ds(){$('ev').textContent=EN[D.i]+' J';$('he').textContent=EN[D.i]+' J';$('sy').classList.toggle('on',!!D.sync);$('dm').textContent=D.wait?'SINCRONIZANDO: esperando onda R…':D.st===1?'Cargando…':D.st===2?'CARGADO · listo para descargar':'';rdyTone(D.st===2&&skin==='lp')}
+function ds(){$('ev').textContent=EN[D.i]+' J';$('he').textContent=EN[D.i]+' J';$('sy').classList.toggle('on',!!D.sync);$('dm').textContent=D.wait?'ESPERANDO ONDA R':D.st===1?'CARGANDO…':D.st===2?'CARGADO':'';$('dm').dataset.s=D.wait?'3':D.st;$('sh').classList.toggle('rdyb',D.st===2);rdyTone(D.st===2)}
 function disarm(q){if(D.st||D.wait){chStop();D.st=0;D.wait=0;rdy=0;if(q)log('Desfibrilador desarmado')}ds()}
 $('em').onclick=()=>{if(D.i>0)D.i--;disarm(0)};$('ep').onclick=()=>{if(D.i<EN.length-1)D.i++;disarm(0)};
 $('sy').onclick=()=>{D.sync=D.sync?0:1;log('Modo SINCRONIZADO '+(D.sync?'activado':'desactivado'));ds()};
-$('ch').onclick=()=>{au();if(D.st)return;if(!need('vP','Parches / palas','SIN PARCHES: pide al instructor que conecte los parches o las palas')){log('Intento de cargar el desfibrilador sin parches conectados');return}D.st=1;const E=EN[D.i],s=1+E/120;log(`Carga a ${E} J iniciada`);
+$('ch').onclick=()=>{au();if(D.st)return;if(!need('vP','Parches / palas','SIN PARCHES: pide al instructor que conecte los parches o las palas')){log('Intento de cargar el desfibrilador sin parches conectados');return}D.st=1;const E=EN[D.i],s=1.4+E/65;log(`Carga a ${E} J iniciada`);
 chSnd(s);
 ds();const my=D.i;setTimeout(()=>{if(D.st===1&&D.i===my){D.st=2;rdy=1;ds()}},s*1000)};
 $('sh').onclick=()=>{au();if(D.st!==2)return;if(D.sync){const r=S.rhythm;if(CONT.includes(r)||G.t<G.blank||!(S.vE||S.vP)){bp(300,.3,.15);$('ms').textContent='SINCRONIZACIÓN: no se detecta onda R, no se puede sincronizar';log('Intento de descarga sincronizada sin onda R detectable (FV/asistolia)');return}D.wait=1;ds()}else deliver(0)};
 $('ds').onclick=()=>disarm(1);
-setInterval(()=>{if(rdy&&D.st===2&&skin!=='lp'){bp(1100,.12,.1);bp(1100,.12,.1,'sine',.2)}},900);
 /* marcapasos */
 const pu=()=>{$('rv').textContent=PC.rate;$('av').textContent=PC.mA+' mA';$('pf').textContent=PC.on?'Pausar':'Activar';$('pf').classList.toggle('on',!!PC.on)};
 $('pf').onclick=()=>{if(!PC.on&&!need('vP','Parches / palas','SIN PARCHES: el marcapasos necesita parches conectados')){log('Intento de activar el marcapasos sin parches conectados');return}PC.on=PC.on?0:1;G.nP=G.t;G.capped=0;log(PC.on?`Marcapasos activado: ${PC.rate} lpm, ${PC.mA} mA`:'Marcapasos pausado');pu()};
@@ -2424,11 +2454,8 @@ $('am').onclick=()=>{PC.mA=Math.max(0,PC.mA-10);pu()};$('ap').onclick=()=>{PC.mA
 /* PNI con sonidos de bomba y válvula */
 let nb=0;$('pn').onclick=()=>{au();if(nb)return;if(!need('vN','Manguito de PNI','SIN MANGUITO DE PNI: pide al instructor que lo conecte')){log('Intento de PNI sin manguito conectado');return}nb=1;log('PNI iniciada');$('np').classList.remove('red');$('np').textContent='---/---';
 const P0=Math.max(180,S.sbp+30),TI=5.5,DD=(P0-40)/20,TT=TI+DD,pf=G.B.some(b=>b.perf&&G.t-b.t<5);
-nz(.09,5000,.1,0,'highpass');for(let i=0;i<5;i++)nz(.05,3500,.14,.12+i*.07,'highpass');
-for(let i=0;i<9;i++){const at=.7+i*.55;nz(.15,1300,.25,at);nz(.1,450,.2,at+.12);bp(160,.05,.06,'sine',at+.13)}
-nz(DD,2600,.07,TI,'highpass');bp(2600,.01,.05,'square',TI);
+eCuff(TI,DD,TT);
 if(pf){const iv=60/Math.max(40,Math.min(180,S.hr||75)),a0=TI+(P0-S.sbp)/20,a1=TI+(P0-S.dbp)/20;for(let k=0;a0+k*iv<a1;k++){nz(.07,150,.28,a0+k*iv);bp(70,.07,.2,'sine',a0+k*iv)}}
-nz(.5,2200,.12,TT,'highpass');
 const t0=Date.now(),iv=setInterval(()=>{const s=(Date.now()-t0)/1000;$('nq').textContent='Manguito '+Math.round(s<TI?s/TI*P0:Math.max(40,P0-(s-TI)*20))+' mmHg'},250);
 setTimeout(()=>{clearInterval(iv);nb=0;if(!G.B.some(b=>b.perf&&G.t-b.t<5)){$('np').textContent='---/---';$('nq').textContent='ERROR: pulso no detectado';log('PNI: no se detecta pulso');bp(330,.2,.14);bp(330,.2,.14,'sine',.3)}
 else{const sy=Math.round(S.sbp+Math.random()*6-3),di=Math.round(S.dbp+Math.random()*4-2);$('np').textContent=sy+'/'+di;$('nq').textContent='PAM '+Math.round((sy+2*di)/3)+' · '+hm();log(`PNI medida: ${sy}/${di} mmHg`);$('np').classList.add('red');bp(880,.12,.15);bp(1175,.22,.15,'sine',.16)}},TT*1000)};
@@ -2442,12 +2469,14 @@ if(!S.vP){if(PC.on){PC.on=0;pu();log('Parches retirados: marcapasos detenido')}i
 function ui(){devUi();ibUi();$('cd').textContent=code;conn();if(typeof pcUi==='function'&&$('pc').classList.contains('on'))pcUi();const kE=!!S.pw&&!!(S.vE||S.vP),kS=!!S.pw&&!!S.vS,kC=!!S.pw&&!!S.vC,kT=!!S.pw&&!!S.vT,src=kE?G.B:kS?G.B.filter(b=>b.perf):[],rc=src.slice(-6);let hr='--';if(rc.length>1&&G.t-rc[rc.length-1].t<4)hr=Math.round(60*(rc.length-1)/(rc[rc.length-1].t-rc[0].t));
 const pf=G.B.some(b=>b.perf&&G.t-b.t<5),r=G.eff();$('nh').textContent=hr;$('ns').textContent=kS&&pf?S.spo2:'--';$('ne').textContent=kC&&S.rr>0?S.co2:'--';$('nr').textContent=(kC||kE)&&S.rr?S.rr:'--';$('nt').textContent=kT?(+S.temp).toFixed(1):'--';
 let c=0,w=0,tx='';if(kE&&CRIT.includes(r)&&G.t>=G.blank){c=1;tx='ALARMA CRÍTICA'}else if(kS&&pf&&S.spo2<90){w=1;tx='SpO₂ BAJA'}else if(hr>150){w=1;tx='FC ALTA'}else if(hr!=='--'&&hr<45){w=1;tx='FC BAJA'}
-AL={c,w};$('al').textContent=Date.now()<mutedUntil&&tx?tx+' 🔕':tx;$('al').className=c&&Date.now()>=mutedUntil?'blink':w?'wn':'';$('mu').classList.toggle('on',Date.now()<mutedUntil)}
+AL={c,w};if(c&&!mutedCrit&&Date.now()<mutedUntil){mutedUntil=0;log('Alarma crítica nueva: se reactiva el sonido')}
+const mr=Math.max(0,Math.ceil((mutedUntil-Date.now())/1000)),mt=mr?Math.floor(mr/60)+':'+String(mr%60).padStart(2,'0'):'';
+$('al').textContent=mr&&tx?tx+' 🔕 '+mt:tx;$('al').className=c&&!mr?'blink':w?'wn':'';$('mu').classList.toggle('on',!!mr);if($('mu').dataset.t!==mt)$('mu').dataset.t=mt}
 setInterval(ui,300);
 setInterval(()=>{const n=Date.now();if(n<mutedUntil||n<nextAl||!AC)return;
-if(AL.c){[0,.22,.44,.95,1.17,2.15,2.37,2.59,3.1,3.32].forEach(a=>pulse(900,a));nextAl=n+6000}
-else if(AL.w){[0,.25,.5].forEach(a=>pulse(640,a,.14,.08));nextAl=n+6500}},250);
-$('mu').onclick=()=>{au();mutedUntil=Date.now()+120000;log('Alarmas silenciadas 2 min')};
+if(AL.c){[0,.22,.44,.95,1.17,2.15,2.37,2.59,3.1,3.32].forEach(a=>pulse(900,a,.15,.26));nextAl=n+6000}
+else if(AL.w){[0,.25,.5].forEach(a=>pulse(640,a,.14,.22));nextAl=n+6500}},250);
+$('mu').onclick=()=>{au();mutedUntil=Date.now()+120000;mutedCrit=AL.c?1:0;log('Alarmas silenciadas 2 min (se reactivan solas al terminar)')};
 $('ib').onclick=()=>{au();D.ib=D.ib?0:1;lay();log(D.ib?(S.ia?'TA invasiva activada ('+(SITE[S.isite]||'')+')':'TA invasiva activada: no hay catéter arterial conectado (SIN SEÑAL)'):'TA invasiva desactivada')};
 let E12=null;addEventListener('resize',()=>{if(E12&&$('eov').classList.contains('on'))E12()});
 $('e12').onclick=()=>{au();if(!need('v12','Electrodos de 12 derivaciones','SIN ELECTRODOS DE 12 DERIVACIONES: pide al instructor que los conecte')){log('Intento de ECG de 12 derivaciones sin electrodos conectados');return}let ov=$('eov');if(!ov){ov=document.createElement('div');ov.id='eov';ov.className='eov';document.body.append(ov)}

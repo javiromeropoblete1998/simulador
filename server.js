@@ -1,13 +1,24 @@
-// Servidor mínimo: sirve la página y retransmite mensajes entre dispositivos de la misma sala.
-// Sin dependencias: solo necesita Node.js 18 o superior.
+// Servidor mínimo para usar el simulador en una red local SIN internet (por ejemplo en el portátil del aula).
+// Sirve los archivos de la carpeta tal cual (index.html, config.js, sw.js, iconos...) y, además,
+// retransmite mensajes entre dispositivos de la misma sala por WebSocket (/ws?room=CODIGO).
+// Sin dependencias: solo necesita Node.js 18 o superior.   Uso:  node server.js
 const http = require('http'), fs = require('fs'), path = require('path'), crypto = require('crypto');
 const PORT = process.env.PORT || 3000;
 const rooms = new Map();
+const TYPES = { '.html': 'text/html; charset=utf-8', '.js': 'text/javascript; charset=utf-8', '.webmanifest': 'application/manifest+json',
+  '.png': 'image/png', '.webp': 'image/webp', '.json': 'application/json', '.svg': 'image/svg+xml', '.ico': 'image/x-icon' };
 
 const srv = http.createServer((req, res) => {
-  if (req.url === '/healthz') { res.end('ok'); return; }
-  res.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8', 'Cache-Control': 'no-cache' });
-  res.end(fs.readFileSync(path.join(__dirname, 'index.html')));
+  const p = decodeURIComponent(new URL(req.url, 'http://x').pathname);
+  if (p === '/healthz') { res.end('ok'); return; }
+  const name = p === '/' ? 'index.html' : path.normalize(p).replace(/^([/\\]|\.\.)+/, '');
+  const file = path.join(__dirname, name);
+  if (!file.startsWith(__dirname) || /server\.js$|package\.json$/.test(file)) { res.writeHead(404); res.end('No encontrado'); return; }
+  fs.readFile(file, (err, data) => {
+    if (err) { res.writeHead(404); res.end('No encontrado'); return; }
+    res.writeHead(200, { 'Content-Type': TYPES[path.extname(file).toLowerCase()] || 'application/octet-stream', 'Cache-Control': 'no-cache' });
+    res.end(data);
+  });
 });
 
 function frame(op, d) {

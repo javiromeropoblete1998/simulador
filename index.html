@@ -688,7 +688,106 @@ body.sk-act #bt #dm[data-s="3"]{color:#4cc9f0}
 .sw i{position:absolute;top:4px;left:4px;width:32px;height:32px;border-radius:50%;background:#e57373;transition:left .15s,background .15s}
 .sw span{position:absolute;right:14px;top:50%;transform:translateY(-50%)}
 .sw.on{border-color:#3ddc84;background:#12331f;color:#9ff0bd}.sw.on i{left:calc(100% - 36px);background:#3ddc84}.sw.on span{right:auto;left:14px}
-</style></head><body><script>
+
+/* ===== v14: inicio sencillo ===== */
+body.landing{background:radial-gradient(900px 560px at 50% 10%,#123a43 0,#0b1a1f 55%,#070d10 100%) no-repeat #070d10}
+.land2{width:100%;max-width:820px;min-height:var(--vh,100dvh);margin:0 auto;display:flex;flex-direction:column;justify-content:center;gap:clamp(18px,4.5vh,34px);padding:max(22px,calc(env(safe-area-inset-top) + 14px)) max(18px,env(safe-area-inset-right)) max(26px,calc(env(safe-area-inset-bottom) + 14px)) max(18px,env(safe-area-inset-left));position:relative}
+.land2 *{min-width:0}
+.land2 header{text-align:center}
+.land2 header img{width:clamp(60px,10vh,80px);height:auto;border-radius:20px;box-shadow:0 8px 26px #000a,0 0 0 1px #2a4249}
+.land2 h1{margin:14px 0 0;font:800 clamp(21px,4.6vw,30px)/1.15 var(--num);letter-spacing:-.015em;color:#eafcf3}
+.lt-grid{display:grid;grid-template-columns:minmax(0,1fr);gap:14px}
+@media(min-width:620px),(min-aspect-ratio:3/2){.lt-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.lt{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;text-align:center;min-height:clamp(120px,24vh,210px);padding:18px 14px;border-radius:24px;border:2px solid;color:#fff;font:inherit;transition:transform .12s,box-shadow .15s;-webkit-tap-highlight-color:transparent}
+.lt:active{transform:scale(.985)}.lt:hover{box-shadow:0 10px 28px #0009}
+.lt:focus-visible,.lpill:focus-visible{outline:3px solid #4cc9f0;outline-offset:3px}
+.lt .ic svg{width:clamp(36px,6vh,46px);height:clamp(36px,6vh,46px)}
+.lt b{font:800 clamp(22px,4.6vw,28px)/1.1 var(--num)}
+.lt .s{color:#bfd6da;font-size:clamp(14px,2.4vw,16px)}
+.lt-a{background:linear-gradient(145deg,#0f524c,#0d3d47);border-color:#2f8a80}
+.lt-b{background:linear-gradient(145deg,#173a4c,#10252f);border-color:#37697f}
+.lfoot{display:flex;flex-wrap:wrap;justify-content:center;gap:10px}
+.lpill{display:inline-flex;align-items:center;gap:9px;min-height:48px;padding:0 18px;border-radius:999px;border:1px solid #2f4850;background:#0e1d22;color:#cfeaf0;font:600 15px var(--ui)}
+.lpill svg{width:22px;height:22px;flex:0 0 auto}.lpill:hover{border-color:#4cc9f0}
+.lver2{position:absolute;right:max(14px,env(safe-area-inset-right));bottom:max(8px,env(safe-area-inset-bottom));font-style:normal;font-size:11px;color:#4d6970}
+@media(max-height:520px) and (min-aspect-ratio:3/2){.land2{gap:10px;padding-top:max(8px,env(safe-area-inset-top));padding-bottom:max(8px,env(safe-area-inset-bottom))}.land2 header{display:flex;align-items:center;justify-content:center;gap:12px}.land2 header img{width:44px;border-radius:12px}.land2 h1{margin:0;font-size:19px}.lt{min-height:84px;flex-direction:row;gap:14px;padding:10px 14px}.lt .s{display:none}.lpill{min-height:40px}}
+
+/* ===== v14: un solo estilo de menús (monitor, panel, conexión) ===== */
+:root{--mn-bg:#121c20;--mn-bd:#33454a;--mn-it:#0f181b;--mn-itb:#22333a;--mn-h:52px;--mn-sel:#4cc9f0;--mn-ok:#3ddc84}
+#gm,#pc,#cm{background:var(--mn-bg);border:1px solid var(--mn-bd);border-radius:16px;padding:10px;width:min(320px,calc(100vw - 16px));box-shadow:0 12px 34px #000b;color:#e8eeee}
+#gm .gh,#pc .gh{display:flex;align-items:center;gap:8px;margin:0 0 8px;font-size:12px;letter-spacing:.08em;color:#8aa;font-weight:700;min-height:36px}
+#gm .gh b,#pc .gh b{display:block;font-weight:700}
+#gm .gh .bk,#pc .gh .bk{width:44px;height:36px;margin:0;padding:0 0 3px;display:grid;place-items:center;border-radius:10px;font-size:24px;line-height:1;background:#16252a;border:1px solid #2f444b;color:#e8eeee;min-height:0}
+#pc>small{display:block;color:#8aa;font-size:12px;margin:0 2px 8px}
+#gm button:not(.bk),#pc .pct button{min-height:var(--mn-h);border-radius:12px;border:2px solid var(--mn-itb);background:var(--mn-it);color:#e8eeee;font-size:15px}
+#pc label{font-size:12px;color:#9ab}
+.pb{min-height:44px;border-radius:12px}
+.ovh .pb,#hd .hbk,.rptbar .sm{min-height:44px;border-radius:12px;font-weight:600}
+.ovh h2{font:700 19px var(--num)}
+/* panel: misma barra superior que el monitor */
+#hd{background:#0b1215;border-bottom:1px solid #1d2a2d;gap:8px}
+#hd .hbk{margin:0}
+#hd .lkc{margin-left:auto;display:inline-flex;align-items:center;gap:9px;min-height:44px;padding:0 14px;border-radius:999px;background:#0f181b;border:1px solid #2a4249;color:#d6f2f8;max-width:calc(100% - 110px);min-width:0}
+#hd .lkc .dot{flex:0 0 12px;width:12px;height:12px;margin:0}
+#hd .lkc #ls{font-size:13px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
+#hd .lkc #cd{margin:0;font:700 15px/1 var(--mono);letter-spacing:.16em;white-space:nowrap}
+#hd .lkc svg{width:18px;height:18px;flex:0 0 auto;opacity:.8}
+@media(max-width:420px){#hd .lkc #ls{display:none}}
+/* panel: pestañas inferiores y tarjetas con interruptor, todo igual */
+#tb button{min-height:52px;font-weight:600}
+.tl.vs{border-radius:14px}
+.vsh h4{font-size:16px}
+.tl.vs>small{display:block;margin:2px 0 4px;color:#8aa;font-size:12.5px}
+#pwc .tl.vs{border-color:#2f5a4a;background:#0f1d1a}
+#acc{grid-template-columns:minmax(0,1fr)}
+@media(min-width:760px){#acc{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.pr-st{margin:6px 0 12px}
+.pr-qr .qrw{padding:8px}
+.pr-qr .qrw canvas{width:min(62vw,calc(var(--vh,100dvh)*.36),260px)}
+details.pr-paste summary{min-height:44px;display:flex;align-items:center}
+
+/* ===== v15: casos del manual ===== */
+.cq{width:100%;min-height:48px;padding:0 14px;margin:0 0 10px;border-radius:12px;border:1px solid #33454a;background:#0f181b;color:#e8eeee;font-size:16px}
+details.cg{margin:0 0 10px;border:1px solid #22333a;border-radius:14px;background:#0f181b}
+details.cg>summary{list-style:none;cursor:pointer;min-height:52px;display:flex;align-items:center;gap:8px;padding:0 14px;font-weight:700;font-size:15px}
+details.cg>summary::-webkit-details-marker{display:none}
+details.cg>summary::after{content:"›";margin-left:auto;font-size:22px;color:#8aa;transition:transform .15s}
+details[open].cg>summary::after{transform:rotate(90deg)}
+details.cg>summary i{font-style:normal;font-weight:600;font-size:12px;color:#8aa;background:#16252a;border-radius:999px;padding:2px 9px}
+details.cg>.sc,details.cg>div>.sc{margin:0 8px 8px;width:calc(100% - 16px)}
+details.cg>.cvp{margin:0 14px 12px}
+.cvh{display:flex;align-items:center;gap:10px;margin:0 0 10px}.cvh h3{margin:0;font-size:17px;line-height:1.25}
+.cvp{margin:2px 0 8px;font-size:14.5px;line-height:1.45;color:#dfe9ea}
+.fst{display:flex;gap:6px;flex-wrap:wrap;margin:0 0 10px}
+.fst button{min-width:44px;min-height:44px;border-radius:12px;border:2px solid #22333a;background:#0f181b;color:#9ab;font-weight:700;font-size:15px}
+.fst button.dn{border-color:#2f5a4a;color:#6ef0b0}.fst button.on{background:#0b6e78;border-color:#4cc9f0;color:#fff}
+.cph{border-color:#2f5a4a}
+.rbs{display:grid;gap:8px;margin:8px 0}
+.rb{display:flex;flex-direction:column;align-items:flex-start;gap:2px;text-align:left;min-height:56px;padding:8px 14px;border-radius:12px;border:2px solid #22333a;background:#0f181b;color:#e8eeee}
+.rb small{color:#8aa;font-size:12.5px}.rb:disabled{opacity:.45}
+.rb.now{border-color:#ffb74d;background:#2a2012}.rb.now small{color:#ffcf6b}.rb.sent{border-color:#3ddc84;background:#0f2a1c}
+.ecgth{width:100%;border-radius:8px;margin-top:4px;background:#fff}
+/* informe en el monitor */
+.rpb{justify-content:center}
+.lab{background:#fff;color:#111;border-radius:10px;padding:14px 16px 12px;width:min(100%,480px);font-family:var(--ui);box-shadow:0 6px 26px #000a;align-self:flex-start}
+.lab .lh{font-weight:800;letter-spacing:.04em;border-bottom:2px solid #111;padding-bottom:8px;margin-bottom:6px}.lab .lh small{display:block;font-weight:500;letter-spacing:0;color:#444;font-size:12.5px;margin-top:2px}
+.lr{display:grid;grid-template-columns:5.2em 1fr 4.6em 5.6em;gap:6px;align-items:baseline;padding:6px 0;border-bottom:1px solid #e3e3e3;font-size:16px}
+.lr span{font-weight:700}.lr b{text-align:right;font-size:19px}.lr i,.lr em{font-style:normal;color:#555;font-size:13px}.lr em{text-align:right}
+.lf{margin-top:8px;font-size:13px;color:#555}
+.ecgimg{width:100%;max-width:1100px;height:auto;background:#fff;border-radius:6px;box-shadow:0 6px 26px #000a;align-self:flex-start}.ecgimg.z{width:240%;max-width:none}
+.rb b{font:700 15px/1.25 var(--ui)}.cvh .pb{flex:0 0 auto;min-width:0;padding:0 14px}
+
+/* asistente sin wifi */
+.lpill.warn{border-color:#ffb74d;color:#ffe2a8;box-shadow:0 0 0 3px #ffb74d33}
+.wst{display:flex;align-items:center;gap:10px;min-height:52px;padding:0 16px;margin:0 0 12px;border-radius:14px;border:2px solid #33454a;background:#0f181b;font-weight:700;font-size:16px}
+.wst .dot{flex:0 0 14px;width:14px;height:14px;background:#8aa}.wst[data-s="1"]{border-color:#3ddc84;background:#0f2a1c;color:#b9f5d0}.wst[data-s="1"] .dot{background:#3ddc84}.wst[data-s="2"]{border-color:#ffb74d}.wst[data-s="2"] .dot{background:#ffb74d}
+.wl3{list-style:none;counter-reset:w;margin:0 0 12px;padding:0;display:grid;gap:10px}
+.wl3 li{counter-increment:w;position:relative;padding:12px 14px 12px 56px;border-radius:14px;background:#121c20;border:1px solid #22333a;font-size:16px;line-height:1.4}
+.wl3 li::before{content:counter(w);position:absolute;left:12px;top:12px;width:32px;height:32px;border-radius:50%;display:grid;place-items:center;background:#0b6e78;color:#fff;font-weight:800}
+.wl3 li>b{display:block}.wl3 li>span{display:block;color:#bfd0d4;font-size:15px}
+#w_ok{width:100%;margin:6px 0 12px}#wov{background:#070d10}
+</style></head><body><script src="casos.js"></script>
+<script>
 const $=i=>document.getElementById(i),g=(x,m,s)=>Math.exp(-((x-m)**2)/(2*s*s)),hm=()=>new Date().toLocaleTimeString('es-ES');
 const ls=(k,v)=>{try{if(v===undefined)return localStorage.getItem(k);localStorage.setItem(k,v)}catch(_){}};
 /* ventanas superpuestas: el botón atrás del móvil (o el de la pantalla) las cierra sin salir de la app */
@@ -704,7 +803,7 @@ pvc:['Sinusal con ESV',75,1],bigem:['Bigeminismo ventricular',75,1],trigem:['Tri
 aivr:['Ritmo idioventricular acelerado',75,1],idiov:['Ritmo idioventricular',30,1],vt:['TV monomorfa',180,0],vtpol:['TV polimorfa',0,0],torsades:['Torsades de pointes',0,0],
 vf:['FV gruesa',0,0],vff:['FV fina',0,0],agon:['Ritmo agónico',20,0],asys:['Asistolia',0,0]};
 const EN=[30,50,70,100,120,150,170,200,360],LD=['vf','vff','torsades','vt','vtpol'],LC=['vt','svt','af','flutter'],CONT=['vf','vff','torsades','vtpol','asys'],CRIT=['asys','vf','vff','torsades','vtpol','vt','agon'];
-const DP={rhythm:'sinus',hr:80,spo2:97,sbp:120,dbp:80,rr:16,co2:38,temp:36.6,pulse:1,art:0},DR={thr:70,eD:150,eC:100,oD:'sinus',oC:'sinus',ia:0,isite:'rad',ilink:1,isbp:120,idbp:80,pw:0,vE:0,vS:0,vN:0,vC:0,vT:0,vP:0,v12:0,free:0};
+const DP={rhythm:'sinus',hr:80,spo2:97,sbp:120,dbp:80,rr:16,co2:38,temp:36.6,pulse:1,art:0,hold:0,ecgi:''},DR={rep:null,thr:70,eD:150,eC:100,oD:'sinus',oC:'sinus',ia:0,isite:'rad',ilink:1,isbp:120,idbp:80,pw:0,vE:0,vS:0,vN:0,vC:0,vT:0,vP:0,v12:0,free:0};
 const SS=x=>x*x*(3-2*x),S={...DP,...DR};
 /* equipos que el docente conecta al paciente simulado: [clave, nombre, ayuda] */
 const DEVS=[['vE','Electrodos ECG','3 derivaciones. Sin ellos no hay ECG ni FC.'],['vS','Pulsioxímetro','SpO₂, pletismografía y tono del pitido.'],['vN','Manguito de PNI','Necesario para medir la tensión.'],['vC','Capnografía','Línea de EtCO₂ y frecuencia respiratoria.'],['vT','Sonda de temperatura','Temperatura del paciente.'],['vP','Parches / palas','Necesarios para cargar, descargar y marcapasos.'],['v12','Electrodos de 12 derivaciones','Necesarios para el ECG de 12 derivaciones.'],['ia','Catéter arterial','Permite la TA invasiva (TAI).']],DEVK=['vE','vS','vN','vC','vT','vP','v12'];
@@ -1740,13 +1839,23 @@ const unmaskEnd=st=>{try{st&&st.getTracks().forEach(t=>t.stop())}catch(_){}};
 function unmask(){return new Promise(res=>{let done=0;const t=setTimeout(()=>{done=1;res(null)},7000);try{navigator.mediaDevices.getUserMedia({video:true,audio:false}).then(st=>{clearTimeout(t);if(done)unmaskEnd(st);else res(st)},()=>{clearTimeout(t);if(!done)res(null)})}catch(_){clearTimeout(t);res(null)}})}
 function pcWatch(pc){pc.oniceconnectionstatechange=()=>{if(PCx!==pc)return;if(pc.iceConnectionState==='failed')pmsg('No se pudo abrir la conexión directa. Comprueba que los dos dispositivos están en la misma red WiFi (o que uno comparte su punto de acceso con el otro) y que la red no bloquea la comunicación entre dispositivos. Después vuelve a empezar.')};
 setTimeout(()=>{if(PCx===pc&&pc.remoteDescription&&pc.iceConnectionState!=='closed'&&!(DC&&DC.readyState==='open'))pmsg('Todavía no hay conexión. Si tarda más, comprueba que los dos dispositivos están en la misma red.')},20000)}
-async function mkOffer(){if(PCx)try{PCx.close()}catch(_){}const cam=await unmask();try{const pc=PCx=new RTCPeerConnection(ICE);pcWatch(pc);dcSet(pc.createDataChannel('sim'));await pc.setLocalDescription(await pc.createOffer());await waitIce(pc);return 'O'+await pack(slim(pc.localDescription.sdp))}finally{unmaskEnd(cam)}}
-async function useAnswer(c){await PCx.setRemoteDescription({type:'answer',sdp:await unpack(c.slice(1))})}
-async function mkAnswer(c){if(PCx)try{PCx.close()}catch(_){}const cam=await unmask();try{const pc=PCx=new RTCPeerConnection(ICE);pcWatch(pc);pc.ondatachannel=e=>dcSet(e.channel);await pc.setRemoteDescription({type:'offer',sdp:await unpack(c.slice(1))});await pc.setLocalDescription(await pc.createAnswer());await waitIce(pc);return 'A'+await pack(slim(pc.localDescription.sdp))}finally{unmaskEnd(cam)}}
+/* Código compacto: solo lo imprescindible de la conexión (usuario, clave, huella y direcciones). Se reconstruye la descripción completa en el otro dispositivo. Así el QR es pequeño y se lee a la primera. */
+function compact(sdp){const g=re=>{const m=re.exec(sdp);return m?m[1]:''},uf=g(/a=ice-ufrag:(\S+)/),pw=g(/a=ice-pwd:(\S+)/),fp=g(/a=fingerprint:sha-256 (\S+)/);
+const cs=[];for(const m of sdp.matchAll(/a=candidate:\S+ \d+ udp \d+ (\S+) (\d+) typ host/gi)){if(!m[1].includes(':')&&cs.length<4)cs.push(m[1]+':'+m[2])}
+if(!uf||!pw||!fp||!cs.length)throw new Error('no se han encontrado direcciones de red; conecta el dispositivo a una wifi');
+return [uf,pw,b64(Uint8Array.from(fp.split(':').map(h=>parseInt(h,16)))),cs.join(',')].join('~')}
+function expand(c,offer){const [uf,pw,fp,cs]=c.split('~');if(!uf||!pw||!fp||!cs)throw new Error('código incompleto');
+const hex=Array.from(ub64(fp)).map(x=>x.toString(16).padStart(2,'0').toUpperCase()).join(':');
+const L=['v=0','o=- '+Date.now()+' 2 IN IP4 127.0.0.1','s=-','t=0 0','a=group:BUNDLE 0','a=msid-semantic: WMS','m=application 9 UDP/DTLS/SCTP webrtc-datachannel','c=IN IP4 0.0.0.0','a=ice-ufrag:'+uf,'a=ice-pwd:'+pw,'a=fingerprint:sha-256 '+hex,'a=setup:'+(offer?'actpass':'active'),'a=mid:0','a=sctp-port:5000','a=max-message-size:262144'];
+cs.split(',').forEach((x,i)=>{const p=x.lastIndexOf(':');L.push('a=candidate:'+(i+1)+' 1 udp '+(2122260223-i*1000)+' '+x.slice(0,p)+' '+x.slice(p+1)+' typ host generation 0')});
+L.push('a=end-of-candidates');return L.join('\r\n')+'\r\n'}
+async function mkOffer(){if(PCx)try{PCx.close()}catch(_){}const cam=await unmask();try{const pc=PCx=new RTCPeerConnection(ICE);pcWatch(pc);dcSet(pc.createDataChannel('sim'));await pc.setLocalDescription(await pc.createOffer());await waitIce(pc);return 'O'+compact(pc.localDescription.sdp)}finally{unmaskEnd(cam)}}
+async function useAnswer(c){await PCx.setRemoteDescription({type:'answer',sdp:expand(c.slice(1),0)})}
+async function mkAnswer(c){if(PCx)try{PCx.close()}catch(_){}const cam=await unmask();try{const pc=PCx=new RTCPeerConnection(ICE);pcWatch(pc);pc.ondatachannel=e=>dcSet(e.channel);await pc.setRemoteDescription({type:'offer',sdp:expand(c.slice(1),1)});await pc.setLocalDescription(await pc.createAnswer());await waitIce(pc);return 'A'+compact(pc.localDescription.sdp)}finally{unmaskEnd(cam)}}
 const pbase=()=>/^https?:$/.test(location.protocol)?location.origin+location.pathname+'#p/':'';
 const norm=r=>{let t=(r||'').trim();const i=t.indexOf('#p/');if(i>=0)t=t.slice(i+3);return t.replace(/\s+/g,'')};
-function drawQR(cv,text){const q=new QRLib(0,1);q.addData(text);q.make();const n=q.getModuleCount(),c=Math.max(3,Math.floor(Math.min(innerWidth-56,720)/(n+8))),z=(n+8)*c;cv.width=cv.height=z;const x=cv.getContext('2d');x.fillStyle='#fff';x.fillRect(0,0,z,z);x.fillStyle='#000';for(let r=0;r<n;r++)for(let k=0;k<n;k++)if(q.isDark(r,k))x.fillRect((k+4)*c,(r+4)*c,c,c)}
-function showQR(code){const u=pbase()+code;document.getElementById('p_out').value=u;drawQR(document.getElementById('p_qr'),u)}
+function drawQR(cv,text){const q=new QRLib(0,1);q.addData(text);q.make();const n=q.getModuleCount(),c=Math.max(6,Math.floor(560/(n+6))),z=(n+6)*c;cv.width=cv.height=z;const x=cv.getContext('2d');x.fillStyle='#fff';x.fillRect(0,0,z,z);x.fillStyle='#000';for(let r=0;r<n;r++)for(let k=0;k<n;k++)if(q.isDark(r,k))x.fillRect((k+3)*c,(r+3)*c,c,c)}
+function showQR(code){const u=code;document.getElementById('p_out').value=u;drawQR(document.getElementById('p_qr'),u)}
 /* ---------- lector de QR propio (sin librerías): binariza, localiza los 3 buscadores, corrige perspectiva y decodifica con Reed-Solomon ---------- */
 const QRD=(()=>{
 const RSB=[[1,26,19],[1,26,16],[1,26,13],[1,26,9],[1,44,34],[1,44,28],[1,44,22],[1,44,16],[1,70,55],[1,70,44],[2,35,17],[2,35,13],[1,100,80],[2,50,32],[2,50,24],[4,25,9],[1,134,108],[2,67,43],[2,33,15,2,34,16],[2,33,11,2,34,12],[2,86,68],[4,43,27],[4,43,19],[4,43,15],[2,98,78],[4,49,31],[2,32,14,4,33,15],[4,39,13,1,40,14],[2,121,97],[2,60,38,2,61,39],[4,40,18,2,41,19],[4,40,14,2,41,15],[2,146,116],[3,58,36,2,59,37],[4,36,16,4,37,17],[4,36,12,4,37,13],[2,86,68,2,87,69],[4,69,43,1,70,44],[6,43,19,2,44,20],[6,43,15,2,44,16],[4,101,81],[1,80,50,4,81,51],[4,50,22,4,51,23],[3,36,12,8,37,13],[2,116,92,2,117,93],[6,58,36,2,59,37],[4,46,20,6,47,21],[7,42,14,4,43,15],[4,133,107],[8,59,37,1,60,38],[8,44,20,4,45,21],[12,33,11,4,34,12],[3,145,115,1,146,116],[4,64,40,5,65,41],[11,36,16,5,37,17],[11,36,12,5,37,13],[5,109,87,1,110,88],[5,65,41,5,66,42],[5,54,24,7,55,25],[11,36,12],[5,122,98,1,123,99],[7,73,45,3,74,46],[15,43,19,2,44,20],[3,45,15,13,46,16],[1,135,107,5,136,108],[10,74,46,1,75,47],[1,50,22,15,51,23],[2,42,14,17,43,15],[5,150,120,1,151,121],[9,69,43,4,70,44],[17,50,22,1,51,23],[2,42,14,19,43,15],[3,141,113,4,142,114],[3,70,44,11,71,45],[17,47,21,4,48,22],[9,39,13,16,40,14],[3,135,107,5,136,108],[3,67,41,13,68,42],[15,54,24,5,55,25],[15,43,15,10,44,16],[4,144,116,4,145,117],[17,68,42],[17,50,22,6,51,23],[19,46,16,6,47,17],[2,139,111,7,140,112],[17,74,46],[7,54,24,16,55,25],[34,37,13],[4,151,121,5,152,122],[4,75,47,14,76,48],[11,54,24,14,55,25],[16,45,15,14,46,16],[6,147,117,4,148,118],[6,73,45,14,74,46],[11,54,24,16,55,25],[30,46,16,2,47,17],[8,132,106,4,133,107],[8,75,47,13,76,48],[7,54,24,22,55,25],[22,45,15,13,46,16],[10,142,114,2,143,115],[19,74,46,4,75,47],[28,50,22,6,51,23],[33,46,16,4,47,17],[8,152,122,4,153,123],[22,73,45,3,74,46],[8,53,23,26,54,24],[12,45,15,28,46,16],[3,147,117,10,148,118],[3,73,45,23,74,46],[4,54,24,31,55,25],[11,45,15,31,46,16],[7,146,116,7,147,117],[21,73,45,7,74,46],[1,53,23,37,54,24],[19,45,15,26,46,16],[5,145,115,10,146,116],[19,75,47,10,76,48],[15,54,24,25,55,25],[23,45,15,25,46,16],[13,145,115,3,146,116],[2,74,46,29,75,47],[42,54,24,1,55,25],[23,45,15,28,46,16],[17,145,115],[10,74,46,23,75,47],[10,54,24,35,55,25],[19,45,15,35,46,16],[17,145,115,1,146,116],[14,74,46,21,75,47],[29,54,24,19,55,25],[11,45,15,46,46,16],[13,145,115,6,146,116],[14,74,46,23,75,47],[44,54,24,7,55,25],[59,46,16,1,47,17],[12,151,121,7,152,122],[12,75,47,26,76,48],[39,54,24,14,55,25],[22,45,15,41,46,16],[6,151,121,14,152,122],[6,75,47,34,76,48],[46,54,24,10,55,25],[2,45,15,64,46,16],[17,152,122,4,153,123],[29,74,46,14,75,47],[49,54,24,10,55,25],[24,45,15,46,46,16],[4,152,122,18,153,123],[13,74,46,32,75,47],[48,54,24,14,55,25],[42,45,15,32,46,16],[20,147,117,4,148,118],[40,75,47,7,76,48],[43,54,24,22,55,25],[10,45,15,67,46,16],[19,148,118,6,149,119],[18,75,47,31,76,48],[34,54,24,34,55,25],[20,45,15,61,46,16]],PP=[[],[6,18],[6,22],[6,26],[6,30],[6,34],[6,22,38],[6,24,42],[6,26,46],[6,28,50],[6,30,54],[6,32,58],[6,34,62],[6,26,46,66],[6,26,48,70],[6,26,50,74],[6,30,54,78],[6,30,56,82],[6,30,58,86],[6,34,62,90],[6,28,50,72,94],[6,26,50,74,98],[6,30,54,78,102],[6,28,54,80,106],[6,32,58,84,110],[6,30,58,86,114],[6,34,62,90,118],[6,26,50,74,98,122],[6,30,54,78,102,126],[6,26,52,78,104,130],[6,30,56,82,108,134],[6,34,60,86,112,138],[6,30,58,86,114,142],[6,34,62,90,118,146],[6,30,54,78,102,126,150],[6,24,50,76,102,128,154],[6,28,54,80,106,132,158],[6,32,58,84,110,136,162],[6,26,54,82,110,138,166],[6,30,58,86,114,142,170]];
@@ -1933,16 +2042,16 @@ const PRI={
  ios:{t:'Punto de acceso iPhone',s:['En <b>el iPhone o iPad con datos móviles</b> abre <span class=pr-path>Ajustes › Punto de acceso personal</span> y activa «Permitir a otros conectarse».','Deja esa pantalla abierta mientras el otro dispositivo se conecta. Si no ve la red, activa «Maximizar compatibilidad».','En <b>el otro dispositivo</b> abre <span class=pr-path>Ajustes › Wifi</span>, elige la red del iPhone y escribe la contraseña.'],note:'Apple no permite abrir Ajustes desde una web, así que sigue la ruta indicada.'}};
 function openPair(role,auto,home){let ov=document.getElementById('pov');if(!ov){ov=document.createElement('div');ov.id='pov';ov.className='ov';document.body.append(ov)}ov.classList.add('on');ov.scrollTop=0;ovPush(()=>{stopScan();ov.classList.remove('on')});
 const M=role==='m';
-const qrblock='<div class=pr-qr><div class=qrw title="Toca para ampliar"><canvas id=p_qr></canvas></div><div class=pr-qrside><p class=pr-tip>Toca el QR para ampliarlo y que se lea mejor.</p><button class="pb pr-sec" id=p_cp>Copiar código</button><textarea id=p_out readonly aria-label="Código del QR"></textarea></div></div>';
+const qrblock='<div class=pr-qr><div class=qrw title="Toca para ampliar"><canvas id=p_qr></canvas></div><div class=pr-qrside><p class=pr-tip>QR pequeño y rápido de leer. Toca el QR para ampliarlo si hace falta.</p><details class=pr-paste><summary>Ver el código en texto</summary><button class="pb pr-sec" id=p_cp>Copiar código</button><textarea id=p_out readonly aria-label="Código del QR"></textarea></details></div></div>';
 const scanblock=`<div class=pr-acts><button class="pb pr-main" id=p_sc>Escanear con la cámara</button><button class="pb pr-sec" id=p_ph>Hacer foto del QR</button></div><input id=p_f type=file accept="image/*" capture=environment hidden><div id=p_vid></div><details class=pr-paste><summary>O pega el código a mano</summary><textarea id=p_in placeholder="Pega aquí el código"></textarea></details><button class="pb pr-main pr-go" id=p_go>${M?'Conectar':'Continuar'}</button>`;
 const tabs=[['wifi','Wifi','<svg viewBox="0 0 24 24"><path d="M2.5 9a14 14 0 0 1 19 0M6 12.8a9 9 0 0 1 12 0M9.4 16.4a4 4 0 0 1 5.2 0"/><circle cx=12 cy=19.5 r=1 fill=currentColor /></svg>'],['and','Android','<svg viewBox="0 0 24 24"><rect x=6.5 y=2.5 width=11 height=19 rx=2.5 /><path d="M10.5 18.5h3"/></svg>'],['ios','iPhone / iPad','<svg viewBox="0 0 24 24"><rect x=5 y=3 width=14 height=18 rx=3 /><circle cx=12 cy=18 r=.9 fill=currentColor /></svg>']];
-const pg1=M?`<h3>Enseña este QR al panel</h3><p class=pr-p>En el dispositivo del instructor abre la app, pulsa <b>Panel sin internet</b> y escanea este código.</p>${qrblock}<button class="pb pr-main pr-go" data-go=2>Ya lo ha leído: siguiente ›</button>`:`<h3>Lee el QR del monitor</h3><p class=pr-p>En el monitor pulsa <b>Sin internet</b>: saldrá un QR. Escanéalo con este dispositivo.</p>${scanblock}`;
-const pg2=M?`<h3>Lee la respuesta del panel</h3><p class=pr-p>El panel mostrará otro QR. Escanéalo aquí con la cámara para terminar de conectar.</p>${scanblock}`:`<h3>Enseña este QR al monitor</h3><p class=pr-p>En el monitor, pulsa <b>Escanear con la cámara</b> y apunta a este código. Al leerlo, queda conectado.</p>${qrblock}`;
+const pg1=M?`<h3>Enseña este QR al panel</h3><p class=pr-p>En el panel, pulsa <b>Escanear con la cámara</b> y apunta a este QR.</p>${qrblock}<button class="pb pr-main pr-go" data-go=2>Ya lo ha leído: siguiente ›</button>`:`<h3>Lee el QR del monitor</h3><p class=pr-p>En el monitor aparece un QR. Pulsa <b>Escanear con la cámara</b> y apunta a él.</p>${scanblock}`;
+const pg2=M?`<h3>Lee el QR del panel</h3><p class=pr-p>El panel muestra otro QR. Pulsa <b>Escanear con la cámara</b> y apunta a él: queda conectado.</p>${scanblock}`:`<h3>Enseña este QR al monitor</h3><p class=pr-p>En el monitor, pulsa <b>Escanear con la cámara</b> y apunta a este QR. Al leerlo, queda conectado.</p>${qrblock}`;
 ov.innerHTML=`<div class="box pr"><div class=ovh><button class=pb id=p_b>‹ Volver</button><h2>Conectar sin internet</h2></div>
-<ol class=pr-st><li><button data-go=0><i>1</i><span>Red</span></button></li><li><button data-go=1><i>2</i><span>${M?'Mostrar QR':'Leer QR'}</span></button></li><li><button data-go=2><i>3</i><span>${M?'Leer respuesta':'Mostrar QR'}</span></button></li></ol>
+<ol class=pr-st><li><button data-go=0><i>1</i><span>Wifi</span></button></li><li><button data-go=1><i>2</i><span>${M?'Mostrar QR':'Leer QR'}</span></button></li><li><button data-go=2><i>3</i><span>${M?'Leer QR':'Mostrar QR'}</span></button></li></ol>
 <p id=p_st class=pr-msg role=status></p>
-<section class="pr-pg on" data-p=0><h3>Conecta los dos dispositivos a la misma red</h3><p class=pr-p>No hace falta que la red tenga internet. ¿Cómo la vas a crear?</p>
-<div class=pr-tabs role=tablist>${tabs.map(t=>`<button role=tab data-t=${t[0]}>${t[2]}<span>${t[1]}</span></button>`).join('')}</div><div id=pr_body></div>
+<section class="pr-pg on" data-p=0><h3>Misma wifi en los dos</h3><p class=pr-p>Conecta el monitor y el panel a <b>la misma wifi</b>. No hace falta que tenga internet.</p>
+<details class=pr-paste><summary>No hay wifi: usar el punto de acceso del móvil</summary><div id=pr_body></div></details>
 <button class="pb pr-main pr-go" data-go=1>Ya están conectados ›</button></section>
 <section class=pr-pg data-p=1>${pg1}</section>
 <section class=pr-pg data-p=2>${pg2}</section>
@@ -1958,7 +2067,7 @@ else if(d.path&&k==='wifi')html+=`<p class=pr-tip>Ruta: <span class=pr-path>${d.
 if(d.note)html+=`<p class=pr-tip>${d.note}</p>`;
 html+='<p class=pr-warn id=p_hint style="display:none"></p></div>';$$('pr_body').innerHTML=html;
 if($$('p_s1'))$$('p_s1').onclick=()=>openSetting(d.and[0],d.and[1]);if($$('p_s2'))$$('p_s2').onclick=()=>openSetting(d.and2[0],d.and2[1])}
-ov.querySelectorAll('.pr-tabs button').forEach(b=>b.onclick=()=>tab(b.dataset.t));tab(IS_AND?'and':IS_IOS?'ios':'wifi');
+ov.querySelectorAll('.pr-tabs button').forEach(b=>b.onclick=()=>tab(b.dataset.t));tab(IS_IOS?'ios':'and');
 $$('p_x').onclick=()=>ovPop();$$('p_b').onclick=()=>{if(home){location.hash=''}else ovPop()};
 ov.querySelectorAll('#p_cp').forEach(b=>b.onclick=()=>{const t=$$('p_out');t.select();try{navigator.clipboard.writeText(t.value)}catch(_){document.execCommand('copy')}b.textContent='¡Copiado!';setTimeout(()=>b.textContent='Copiar código',1500)});
 $$('p_sc').onclick=()=>scanQR(raw=>{$$('p_in').value=norm(raw);$$('p_go').click()});
@@ -1983,25 +2092,40 @@ else if(md==='p'&&cdq&&cdq[0]==='O')control('LOCAL',{auto:cdq});
 else if(md==='p'&&cdq&&cdq[0]==='A')ansTab(cdq);else land();
 addEventListener('hashchange',()=>location.reload());
 
-function land(){document.body.className='landing';{const t=document.querySelector('meta[name=theme-color]');if(t)t.content='#070d10'}document.body.innerHTML=`<div class=land>
-<header class=lhead><img src="icon-192.png" alt="" width=68 height=68><div><h1>Simulador de monitor-desfibrilador</h1><p>Prácticas de emergencias: monitor, DESA y panel del instructor.</p></div><span class=lver>v13</span></header>
+function land(){document.body.className='landing';{const t=document.querySelector('meta[name=theme-color]');if(t)t.content='#070d10'}document.body.innerHTML=`<div class=land2>
+<header><img src="icon-192.png" alt="" width=76 height=76><h1>Simulador de monitor-desfibrilador</h1></header>
 ${FB?'':'<div class=lwarn>Falta configurar la base de datos: edita el archivo config.js siguiendo la guía.</div>'}
-<p class=lhow><b>1</b> Abre el monitor en el dispositivo del alumno <b>2</b> Anota su código (o enseña su QR) <b>3</b> En el panel del instructor, escribe el código.</p>
-<div class=lgrid>
-<button class="lc main" id=bm style="--c:#6ef0b0"><span class=ic style="--bg:#0b2e31;--bd:#3b9a8f"><svg viewBox="0 0 32 32" fill=none stroke="#6ef0b0" stroke-width=2.4 stroke-linecap=round stroke-linejoin=round><rect x=3 y=5 width=26 height=19 rx=3.5 /><path d="M6.5 15h4.5l2.2-4.5 3.2 8.5 2.2-5h6.4"/><path d="M11 28h10"/></svg></span><span class=tx><i class=tg>Para alumnos</i><b>Abrir el monitor</b><span>Crea un código nuevo y lo muestra para conectar el panel.</span></span></button>
-<button class=lc id=cgo style="--c:#7bd8ff"><span class=ic><svg viewBox="0 0 32 32" fill=none stroke="#7bd8ff" stroke-width=2.4 stroke-linecap=round><path d="M5 9h22M5 16h22M5 23h22"/><circle cx=12 cy=9 r=3 fill="#0a171b"/><circle cx=21 cy=16 r=3 fill="#0a171b"/><circle cx=10 cy=23 r=3 fill="#0a171b"/></svg></span><span class=tx><i class=tg>Para el instructor</i><b>Panel del instructor</b><span>Escribe el código del monitor o escanea su QR.</span></span></button>
-<button class=lc id=bds style="--c:#ff9a5c"><span class=ic><svg viewBox="0 0 32 32" fill=none stroke="#ff9a5c" stroke-width=2.4 stroke-linecap=round stroke-linejoin=round><path d="M16 27C6 20 4 14 4 10.5A6.5 6.5 0 0 1 16 7a6.5 6.5 0 0 1 12 3.5C28 14 26 20 16 27z"/><path d="M17 11l-4 6h5l-3 5"/></svg></span><span class=tx><i class=tg>Para alumnos</i><b>Modo DESA</b><span>Desfibrilador automático con voz. Código nuevo cada vez.</span></span></button>
-<button class=lc id=cof style="--c:#ffcf6b"><span class=ic><svg viewBox="0 0 32 32" fill=none stroke="#ffcf6b" stroke-width=2.4 stroke-linecap=round stroke-linejoin=round><path d="M3 12c7-6 19-6 26 0M8 17c5-4 11-4 16 0M13 22c2-1.5 4-1.5 6 0"/><circle cx=16 cy=26 r=1.4 fill="#ffcf6b"/><path d="M5 5l22 22"/></svg></span><span class=tx><i class=tg>Sin internet</i><b>Panel sin internet</b><span>Si la red no tiene internet: empareja con QR.</span></span></button>
-</div></div>`;
+<main class=lt-grid>
+<button class="lt lt-a" id=bm><span class=ic><svg viewBox="0 0 32 32" fill=none stroke="#6ef0b0" stroke-width=2.2 stroke-linecap=round stroke-linejoin=round><rect x=3 y=5 width=26 height=19 rx=3.5 /><path d="M6.5 15h4.5l2.2-4.5 3.2 8.5 2.2-5h6.4"/><path d="M11 28h10"/></svg></span><b>Soy alumno</b><span class=s>Abrir el monitor</span></button>
+<button class="lt lt-b" id=cgo><span class=ic><svg viewBox="0 0 32 32" fill=none stroke="#7bd8ff" stroke-width=2.2 stroke-linecap=round><path d="M5 9h22M5 16h22M5 23h22"/><circle cx=12 cy=9 r=3 fill="#10222c"/><circle cx=21 cy=16 r=3 fill="#10222c"/><circle cx=10 cy=23 r=3 fill="#10222c"/></svg></span><b>Soy instructor</b><span class=s>Abrir el panel de control</span></button>
+</main>
+<footer class=lfoot><button class=lpill id=bds><svg viewBox="0 0 32 32" fill=none stroke="#ff9a5c" stroke-width=2.4 stroke-linecap=round stroke-linejoin=round><path d="M16 27C6 20 4 14 4 10.5A6.5 6.5 0 0 1 16 7a6.5 6.5 0 0 1 12 3.5C28 14 26 20 16 27z"/><path d="M17 11l-4 6h5l-3 5"/></svg>Modo DESA</button><button class=lpill id=cof><svg viewBox="0 0 32 32" fill=none stroke="#ffcf6b" stroke-width=2.4 stroke-linecap=round stroke-linejoin=round><path d="M3 12c7-6 19-6 26 0M8 17c5-4 11-4 16 0M13 22c2-1.5 4-1.5 6 0"/><circle cx=16 cy=26 r=1.4 fill="#ffcf6b"/><path d="M5 5l22 22"/></svg>Sin wifi</button></footer>
+<i class=lver2>v16</i></div>`;
 $('bm').onclick=()=>{const c=newCode();try{sessionStorage.setItem('newmon',c)}catch(_){}location.hash='#monitor/'+c};
-$('cof').onclick=()=>{location.hash='#panel'};
+$('cof').onclick=sinWifi;if(navigator.onLine===false)$('cof').classList.add('warn');
 $('bds').onclick=()=>{location.hash='#desa/'+newCode()};
 $('cgo').onclick=joinSheet}
+/* asistente "Sin wifi": compartir datos de un móvil (lo más fácil) o conexión directa por QR */
+function sinWifi(){let ov=document.getElementById('wov');if(!ov){ov=document.createElement('div');ov.id='wov';ov.className='ov';document.body.append(ov)}
+const ios=typeof IS_IOS!=='undefined'&&IS_IOS,A='Ajustes → Conexiones → Punto de acceso y módem → activa <b>Punto de acceso Wi-Fi</b>',I='Ajustes → <b>Punto de acceso personal</b> → activa «Permitir a otros conectarse»';
+ov.innerHTML=`<div class="box pr"><div class=ovh><button class=pb id=w_b>‹ Volver</button><h2>Sin wifi</h2></div>
+<div id=w_st class=wst data-s=0 role=status><i class=dot></i><span>Comprobando internet…</span></div>
+<p class=pr-p>Un móvil comparte sus datos y el otro se conecta a él. Después la app funciona igual que siempre, con el código.</p>
+<ol class=wl3><li><b>En el móvil que tenga datos</b><span>${ios?I:A}</span></li><li><b>En el otro móvil</b><span>Ajustes → <b>Wi-Fi</b> → elige el nombre del primer móvil y escribe su contraseña.</span></li><li><b>Espera al ✓ verde de arriba</b><span>Entonces vuelve atrás y elige «Soy alumno» o «Soy instructor».</span></li></ol>
+<details class=pr-paste><summary>${ios?'Mi compañero tiene Android':'Mi compañero tiene iPhone'}</summary><p class=pr-p>Punto de acceso en ${ios?'Android':'iPhone'}: ${ios?A:I}</p></details>
+<button class="pb pr-main" id=w_ok hidden>Continuar</button>
+<details class=pr-paste id=w_d><summary>Nadie tiene datos ni wifi: conexión directa por QR</summary><p class=pr-p>Los dos móviles tienen que estar cerca. Se emparejan leyendo un QR en cada sentido.</p><div class=pr-acts><button class="pb pr-sec" id=w_m>Soy alumno: mostrar mi QR</button><button class="pb pr-sec" id=w_p>Soy instructor: leer el QR</button></div></details></div>`;
+ov.classList.add('on');let on=1,tm=0;const st=ov.querySelector('#w_st'),stop=()=>{on=0;clearTimeout(tm)};
+const chk=async()=>{if(!on)return;let ok=false;if(FB&&navigator.onLine!==false){try{const ac=new AbortController(),t=setTimeout(()=>ac.abort(),4000);await fetch(FB+'/.json?shallow=true&_='+Date.now(),{cache:'no-store',mode:'no-cors',signal:ac.signal});clearTimeout(t);ok=true}catch(_){}}
+if(!on)return;st.dataset.s=ok?'1':'2';st.querySelector('span').textContent=ok?'✓ Hay internet. Ya puedes continuar.':'Todavía sin internet…';ov.querySelector('#w_ok').hidden=!ok;tm=setTimeout(chk,3000)};chk();
+const close=()=>{stop();ov.classList.remove('on')};$('w_b').onclick=close;$('w_ok').onclick=close;
+$('w_m').onclick=()=>{close();const c=newCode();try{sessionStorage.setItem('autopair',c)}catch(_){}location.hash='#monitor/'+c};
+$('w_p').onclick=()=>{close();location.hash='#panel'}}
 /* hoja "Panel del instructor": código a mano, QR del monitor o la última sesión */
 function joinSheet(){let ov=document.getElementById('jov');if(!ov){ov=document.createElement('div');ov.id='jov';ov.className='ov';document.body.append(ov)}
 const last=cl(ls('cc'));
-ov.innerHTML=`<div class="box pr"><div class=ovh><button class=pb id=j_b>‹ Volver</button><h2>Panel del instructor</h2></div>
-<p class=pr-p>Escribe el código que aparece arriba en la pantalla del monitor, o escanea su QR.</p>
+ov.innerHTML=`<div class="box pr"><div class=ovh><button class=pb id=j_b>‹ Volver</button><h2>Soy instructor</h2></div>
+<p class=pr-p>Escribe el código que muestra el monitor.</p>
 <input id=j_in class=jin maxlength=8 placeholder="CÓDIGO" autocomplete=off autocapitalize=characters autocorrect=off spellcheck=false aria-label="Código del monitor">
 <p id=p_st class=pr-msg role=status></p>
 <div class=pr-acts><button class="pb pr-main" id=j_go>Conectar</button><button class="pb pr-sec" id=j_sc>Escanear QR del monitor</button></div>
@@ -2238,22 +2362,18 @@ const SC=[['Parada en FV','Sin pulso, SpO₂ no medible. Una descarga eficaz lo 
 ['Ritmo agónico','Complejos anchos y lentos sin pulso.',{rhythm:'agon',hr:20,pulse:0,spo2:60,sbp:0,dbp:0,co2:8}],
 ['Paciente normal','Ritmo sinusal con constantes normales.',{}]];
 document.body.className='ctl';
-document.body.innerHTML=`<div id=hd><button class="pb hbk" id=hb title="Volver al inicio" aria-label="Volver al inicio">‹ Inicio</button><i class=dot id=dt></i><b id=ls>Buscando monitor…</b><span id=cd>${code==='LOCAL'?'SIN INTERNET':code}</span><button class=pb id=pq style="margin:0 0 0 8px">Sin internet</button></div>
+document.body.innerHTML=`<div id=hd><button class="pb hbk" id=hb title="Volver al inicio" aria-label="Volver al inicio">‹ Inicio</button><button class=lkc id=pq title="Conexión del panel" aria-label="Conexión del panel"><i class=dot id=dt></i><b id=ls>Buscando monitor…</b><span id=cd>${code==='LOCAL'?'SIN INTERNET':code}</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 9a14 14 0 0 1 19 0M6 12.8a9 9 0 0 1 12 0M9.4 16.4a4 4 0 0 1 5.2 0"/><circle cx="12" cy="19.5" r="1" fill="currentColor"/></svg></button></div>
 <div id=lvw><canvas id=lv></canvas><div id=lvn></div></div>
-<div id=pgs><div class=pg id=p0><div class=chips><button class=chip id=cp>Pulso presente</button><button class=chip id=ca>Artefacto RCP</button></div>
-<h3>Constantes</h3><div class=rg id=vt></div><div id=rgw></div><h3>TA invasiva (línea arterial)</h3><div class=tl><h4>Catéter arterial</h4><small>Si lo colocas, el alumno podrá activar la TAI en su monitor. Sin catéter verá «SIN SEÑAL».</small><div class=chips style="margin:8px 0"><button class=chip id=ia>Catéter colocado</button><button class=chip id=il>Cifras = TA no invasiva</button></div><small>Lugar de punción</small><select id=s_is><option value=rad>Radial</option><option value=fem>Femoral</option><option value=bra>Braquial</option><option value=ped>Pedia</option></select></div><div class=rg id=vti></div></div>
+<div id=pgs><div class="pg on" id=p0><p class=mu style="font-size:13px;margin:0 0 10px">Enciende cada interruptor cuando el alumno coloque ese sensor. Hasta entonces el monitor no muestra ese dato.</p><div id=pwc></div><div class=chips style="margin:8px 0 4px"><button class=chip id=dv_on>Conectar todo</button><button class=chip id=dv_off>Quitar todo</button></div><div class=chips style="margin-top:10px"><button class=chip id=cp>Pulso presente</button><button class=chip id=ca>Artefacto RCP</button></div>
+<h3>Constantes</h3><div class=rg id=vt></div><div id=rgw></div><h3>TA invasiva (línea arterial)</h3><div class="tl vs" id=iac><div class=vsh><h4>Catéter arterial</h4><button class=sw data-k=ia role=switch aria-checked=false aria-label="Catéter arterial: colocar o retirar"><i></i><span></span></button></div><small>Si lo colocas, el alumno podrá activar la TAI en su monitor. Sin catéter verá «SIN SEÑAL».</small><div class=chips style="margin:8px 0"><button class=chip id=il>Cifras = TA no invasiva</button></div><small>Lugar de punción</small><select id=s_is><option value=rad>Radial</option><option value=fem>Femoral</option><option value=bra>Braquial</option><option value=ped>Pedia</option></select></div><div class=rg id=vti></div><h3>Parches y electrodos</h3><div class=rg id=acc></div></div>
 <div class=pg id=p1></div>
 <div class=pg id=p2><div class=tl><h4>Desfibrilación (sin SYNC)</h4><small>Sobre FV (gruesa y fina), TV monomorfa, TV polimorfa y torsades. Energía mínima para que sea eficaz:</small><div class=sr><input type=range id=r_eD min=30 max=360 step=10><output id=o_eD></output></div><small>Ritmo tras descarga eficaz</small><select id=s_oD></select></div>
 <div class=tl><h4>Cardioversión (con SYNC)</h4><small>Sobre TV con pulso, TSV, FA y flutter. Energía mínima para que sea eficaz:</small><div class=sr><input type=range id=r_eC min=30 max=360 step=10><output id=o_eC></output></div><small>Ritmo tras cardioversión eficaz</small><select id=s_oC></select></div>
 <div class=tl><h4>Marcapasos transcutáneo</h4><small>Intensidad mínima para conseguir captura:</small><div class=sr><input type=range id=r_thr min=20 max=200 step=5><output id=o_thr></output></div></div></div>
 <div class=pg id=p3><div class=lbt><button class="sm main" id=lr>Generar informe</button><button class=sm id=lc>Borrar registro</button></div><div id=lgl><p class=mu>Aquí aparecerán las acciones del alumno.</p></div></div>
-<div class="pg on" id=p4><button class=pwb id=dv_pw><span class=pwi>⏻</span><span><b>Monitor-desfibrilador</b><em></em><small>El alumno lo ve apagado hasta que lo enciendas.</small></span></button>
-
-<h3>Sensores y accesorios</h3><div class=dvg id=dvg></div>
-<div class=chips style="margin-top:12px"><button class=chip id=dv_on>Conectar todo</button><button class=chip id=dv_off>Quitar todo</button></div>
-<p class=mu style="font-size:13px">Conecta cada elemento cuando el alumno lo coloque en el paciente simulado. Hasta entonces el monitor no mostrará ese dato ni permitirá usarlo.</p></div></div>
-<nav id=tb><button data-p=4 class=on>Equipos</button><button data-p=0>Paciente</button><button data-p=1>Casos</button><button data-p=2>Reglas</button><button data-p=3>Registro<i id=bd></i></button></nav>`;
-let nlog=0,lastHb=0,was=0,tab=4,CT0=Date.now();
+</div>
+<nav id=tb><button data-p=0 class=on>Paciente</button><button data-p=1>Casos</button><button data-p=2>Reglas</button><button data-p=3>Registro<i id=bd></i></button></nav>`;
+let nlog=0,lastHb=0,was=0,tab=0,CT0=Date.now();
 const sync=()=>send({t:'s',s:S});
 function chg(k,d){const v=VT.concat(VI).find(x=>x[0]===k);S[k]=Math.min(v[7],Math.max(v[6],Math.round((S[k]+d)*10)/10));ui();sync()}
 function rep(b,f){let to,iv;const st=()=>{clearTimeout(to);clearInterval(iv)};b.onpointerdown=e=>{e.preventDefault();f();to=setTimeout(()=>{iv=setInterval(f,90)},420)};['pointerup','pointerleave','pointercancel'].forEach(v=>b.addEventListener(v,st))}
@@ -2267,19 +2387,61 @@ r.addEventListener('input',()=>{S[k]=k==='temp'?Math.round(+r.value*10)/10:+r.va
 w.querySelectorAll('.vn').forEach(x=>rep(x,()=>chg(k,+x.dataset.d)));h.append(w)};
 /* interruptor verde/rojo = sensor conectado / retirado (el monitor del alumno muestra «--» sin él) */
 const VG=[['Frecuencia cardiaca','vE',['hr']],['Saturación de oxígeno','vS',['spo2']],['Tensión arterial (PNI)','vN',['sbp','dbp']],['Capnografía','vC',['co2','rr']],['Temperatura','vT',['temp']]];
+const mkDev=(h,nm,k,note)=>{const d=document.createElement('div');d.className='tl vs';d.innerHTML=`<div class=vsh><h4>${nm}</h4><button class=sw data-k=${k} role=switch aria-checked=false aria-label="${nm}: conectar o retirar"><i></i><span></span></button></div>${note?`<small>${note}</small>`:''}`;d.querySelector('.sw').onclick=()=>devSet(k,S[k]?0:1);h.append(d)};
+mkDev($('pwc'),'Monitor-desfibrilador','pw','El alumno lo ve apagado hasta que lo enciendas.');
+mkDev($('acc'),'Parches / palas','vP','Para cargar, descargar y marcapasos.');mkDev($('acc'),'Electrodos 12 derivaciones','v12','Para el ECG de 12 derivaciones.');
 VG.forEach(([nm,fl,ks])=>{const d=document.createElement('div');d.className='tl vs';d.innerHTML=`<div class=vsh><h4>${nm}</h4><button class=sw data-k=${fl} role=switch aria-checked=false aria-label="${nm}: conectar o retirar sensor"><i></i><span></span></button></div>`;d.querySelector('.sw').onclick=()=>devSet(fl,S[fl]?0:1);ks.forEach(k=>mkSl(d,k));$('vt').append(d)});
 VI.forEach(([k])=>mkSl($('vti'),k));
-$('ia').onclick=()=>{S.ia=S.ia?0:1;ui();sync()};$('il').onclick=()=>{S.ilink=S.ilink?0:1;if(!S.ilink){S.isbp=S.sbp;S.idbp=S.dbp}ui();sync()};$('s_is').onchange=e=>{S.isite=e.target.value;sync()};
+document.querySelector('#iac .sw').onclick=()=>devSet('ia',S.ia?0:1);$('il').onclick=()=>{S.ilink=S.ilink?0:1;if(!S.ilink){S.isbp=S.sbp;S.idbp=S.dbp}ui();sync()};$('s_is').onchange=e=>{S.isite=e.target.value;sync()};
 function mini(cv,r){const dp=devicePixelRatio||1;cv.width=cv.clientWidth*dp;cv.height=cv.clientHeight*dp;const x=cv.getContext('2d'),G=new Gen({...DP,...DR,rhythm:r,hr:RH[r][1],pulse:RH[r][2]});for(let i=0;i<100;i++)G.step(.01);
 x.strokeStyle='#3ddc84';x.lineWidth=1.6*dp;x.beginPath();const n=400;for(let i=0;i<n;i++){const e=G.step(.01).e,X=i/n*cv.width,Y=cv.height*.62-e*cv.height*.42;i?x.lineTo(X,Y):x.moveTo(X,Y)}x.stroke()}
 const MINI=[];let MD=0;const GR=[['Sinusales y morfología',['sinus','sbrad','stach','stemi','stdep','hiperk','bbb']],['Supraventriculares',['svt','af','flutter','junc']],['Bloqueos AV',['avb1','wenck','mob2','avb21','bav3']],['Ectopia y marcapasos',['pvc','bigem','trigem','paced']],['Ventriculares',['aivr','idiov','vt','vtpol','torsades']],['Parada',['vf','vff','agon','asys']]];
 GR.forEach(([n,ks])=>{const h=document.createElement('h3');h.textContent=n;const gd=document.createElement('div');gd.className='rg';$('rgw').append(h,gd);
 ks.forEach(k=>{const b=document.createElement('button');b.className='rc';b.dataset.k=k;b.innerHTML=`<canvas></canvas><span>${RH[k][0]}</span>`;b.onclick=()=>{S.rhythm=k;S.hr=RH[k][1];S.pulse=RH[k][2];addLog('Instructor: ritmo cambiado a '+RH[k][0],{r:k,p:RH[k][2]});ui();sync()};gd.append(b);MINI.push([b.firstChild,k]);mini(b.firstChild,k)})});
 for(const k in RH)['s_oD','s_oC'].forEach(i=>$(i).append(new Option(RH[k][0],k)));
-SC.forEach(([n,d,p])=>{const b=document.createElement('button');b.className='sc';b.innerHTML=`<b>${n}</b><small>${d}</small>`;b.onclick=()=>{Object.assign(S,DP,p);addLog('Instructor: caso «'+n+'» cargado',{r:S.rhythm,p:S.pulse});ui();sync();tabTo(0)};$('p1').append(b)});
+/* ===== Casos del manual ALS: lista, guion por fases e informes ===== */
+const CS={id:-1,f:0,sh:0,cv:0},esc=t=>String(t).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])),CAS=window.CASOS||[];
+$('p1').innerHTML=`<div id=cll><input id=cq class=cq type=search placeholder="Buscar caso…" aria-label="Buscar caso"><div id=cls></div><details class="cg"><summary>Estados rápidos (sin guion)</summary><div id=cqs></div></details></div><div id=cvw hidden></div>`;
+SC.forEach(([n,d,p])=>{const b=document.createElement('button');b.className='sc';b.innerHTML=`<b>${n}</b><small>${d}</small>`;b.onclick=()=>{CS.id=-1;Object.assign(S,DP,p);addLog('Instructor: caso «'+n+'» cargado',{r:S.rhythm,p:S.pulse});ui();sync();tabTo(0)};$('cqs').append(b)});
+const openG=new Set();
+function casosLista(){const q=($('cq').value||'').toLowerCase().trim(),h=$('cls');h.innerHTML='';const gs={};
+CAS.forEach(c=>{if(q&&!(c.n+' '+c.g+' '+c.hx).toLowerCase().includes(q))return;(gs[c.g]=gs[c.g]||[]).push(c)});
+Object.entries(gs).forEach(([g,l])=>{const d=document.createElement('details');d.className='cg';d.open=!!q||openG.has(g);d.ontoggle=()=>{d.open?openG.add(g):openG.delete(g)};d.innerHTML=`<summary>${esc(g)} <i>${l.length}</i></summary>`;
+l.forEach(c=>{const b=document.createElement('button');b.className='sc';b.innerHTML=`<b>${esc(c.n)}</b><small>${c.f.length} fase${c.f.length>1?'s':''}${c.labs.length?' · analítica':''}${c.ecg?' · ECG de 12 derivaciones':''}</small>`;b.onclick=()=>casoAbre(c.id);d.append(b)});h.append(d)});
+if(!h.children.length)h.innerHTML='<p class=mu>Ningún caso coincide.</p>'}
+$('cq').oninput=casosLista;casosLista();
+function casoAbre(id){CS.id=id;CS.sh=0;CS.cv=0;const c=CAS[id];addLog('Instructor: caso «'+c.n+'» cargado',{r:c.f[0].m.rhythm,p:c.f[0].m.pulse});fasePon(0,1)}
+function fasePon(i,quiet){const c=CAS[CS.id];if(!c||i<0||i>=c.f.length)return;CS.f=i;const ph=c.f[i],m={...ph.m};if(m.hr==null)m.hr=RH[m.rhythm][1];
+Object.assign(S,DP,m,{eD:30,eC:30,ecgi:c.ecg&&i>=c.ep?c.ecg:''});
+if(!quiet)addLog('Instructor: fase «'+ph.t+'» ('+(i+1)+'/'+c.f.length+') del caso «'+c.n+'»',{r:S.rhythm,p:S.pulse});ui();sync();casoVista();if(navigator.vibrate&&!quiet)navigator.vibrate(40)}
+function casoCierra(){CS.id=-1;$('cvw').hidden=true;$('cll').hidden=false;casosLista()}
+function casoVista(){const c=CAS[CS.id],w=$('cvw');if(!c){casoCierra();return}$('cll').hidden=true;w.hidden=false;const ph=c.f[CS.f],n=c.f.length;
+const lab=c.labs.map((l,k)=>{const ok=c.lp[k]<=CS.f,now=c.lp[k]===CS.f;return `<button class="rb${now?' now':''}" data-l=${k} ${ok?'':'disabled'}><b>Analítica ${k+1}${l.art?' (gasometría arterial)':''}</b><small>${ok?(now?'Pedida en esta fase: envíala al monitor':'Enviar al monitor'):'Aún no se pide (fase '+(c.lp[k]+1)+')'}</small></button>`}).join('');
+const ecg=c.ecg?`<button class="rb${c.ep===CS.f?' now':''}" data-e=1 ${c.ep<=CS.f?'':'disabled'}><b>ECG de 12 derivaciones</b><small>${c.ep<=CS.f?(c.ep===CS.f?'Pedido en esta fase: envíalo al monitor':'Enviar al monitor'):'Aún no se pide (fase '+(c.ep+1)+')'}</small></button>`:'';
+const auto=ph.sh?`<p class=mu>Cambia solo a la siguiente fase cuando el alumno administre la descarga nº ${ph.sh} (cuenta total del caso: ${CS.sh}).</p>`:ph.cv?`<p class=mu>Cambia solo a la siguiente fase cuando el alumno haga la cardioversión sincronizada nº ${ph.cv} (llevan ${CS.cv}).</p>`:'';
+w.innerHTML=`<div class=cvh><button class=pb id=cb>‹ Casos</button><h3>${esc(c.n)}</h3></div>
+<details class=cg><summary>Historia del caso</summary><p class=cvp>${esc(c.hx)}</p></details>
+<div class=fst>${c.f.map((f,k)=>`<button class="${k===CS.f?'on':k<CS.f?'dn':''}" data-f=${k} aria-label="Fase ${k+1}: ${esc(f.t)}">${k+1}</button>`).join('')}</div>
+<div class="tl cph"><h4>Fase ${CS.f+1}/${n}: ${esc(ph.t)}</h4>
+${ph.say?`<small>Qué cuentas al alumno (hallazgos)</small><p class=cvp>${esc(ph.say)}</p>`:''}
+${ph.do?`<small>Qué se espera del alumno</small><p class=cvp>${esc(ph.do)}</p>`:''}
+${ph.go?`<small>Cuándo pasar a la siguiente fase</small><p class=cvp>${esc(ph.go)}</p>`:''}${auto}
+<div class=chips style="margin-top:8px"><button class=chip id=fp ${CS.f?'':'disabled'}>‹ Fase anterior</button><button class="chip on" id=fn ${CS.f<n-1?'':'disabled'}>Siguiente fase ›</button></div></div>
+${lab||ecg?`<div class=tl><h4>Informes para el monitor</h4><small>El alumno los ve en su pantalla y solo puede cerrarlos.</small><div class=rbs>${lab}${ecg}</div>${c.ecg?`<img class=ecgth src="ecg/${c.ecg}.jpg" alt="ECG del caso" loading=lazy>`:''}</div>`:''}
+${c.res?`<div class=tl><h4>Interpretación (instructor)</h4><p class=cvp>${esc(c.res)}</p></div>`:''}
+${c.dest?`<div class=tl><h4>Traspaso y traslado</h4><p class=cvp>${esc(c.dest)}</p></div>`:''}
+<div class=chips><button class=chip id=cc>Cerrar caso</button></div>`;
+$('cb').onclick=casoCierra;$('cc').onclick=casoCierra;$('fp').onclick=()=>fasePon(CS.f-1);$('fn').onclick=()=>fasePon(CS.f+1);
+w.querySelectorAll('.fst button').forEach(b=>b.onclick=()=>fasePon(+b.dataset.f));
+w.querySelectorAll('[data-l]').forEach(b=>b.onclick=()=>repSend('abg',+b.dataset.l));w.querySelectorAll('[data-e]').forEach(b=>b.onclick=()=>repSend('ecg',0))}
+let repT=0;
+function repSend(k,i){const c=CAS[CS.id];if(!c)return;S.rep={k,c:CS.id,i,id:c.ecg,n:Date.now()};sync();addLog('Instructor: envía al monitor '+(k==='abg'?'la analítica n.º '+(i+1):'el ECG de 12 derivaciones')+' del caso «'+c.n+'»');clearTimeout(repT);repT=setTimeout(()=>{S.rep=null;sync()},4000);
+const b=$('cvw').querySelector(k==='abg'?`[data-l="${i}"]`:'[data-e]');if(b){b.classList.add('sent');setTimeout(()=>b.classList.remove('sent'),1500)}}
+function casoLog(m){if(CS.id<0)return;const e=/^(Cardioversión sincronizada|Descarga NO sincronizada) de \d+ J sobre .*→ (efectiva|energía insuficiente)/.exec(m);if(!e)return;if(e[1][0]==='C')CS.cv++;else CS.sh++;const c=CAS[CS.id],ph=c.f[CS.f];
+if(ph&&((ph.sh&&CS.sh>=ph.sh)||(ph.cv&&CS.cv>=ph.cv))&&CS.f<c.f.length-1){const f0=CS.f;setTimeout(()=>{if(CS.id>=0&&CS.f===f0)fasePon(f0+1)},2200)}else casoVista()}
 ['eD','eC','thr'].forEach(k=>$('r_'+k).oninput=e=>{S[k]=+e.target.value;ui();sync()});['oD','oC'].forEach(k=>$('s_'+k).onchange=e=>{S[k]=e.target.value;sync()});
 $('cp').onclick=()=>{S.pulse=S.pulse?0:1;addLog('Instructor: pulso '+(S.pulse?'presente':'ausente'),{p:S.pulse});ui();sync()};$('ca').onclick=()=>{S.art=S.art?0:1;addLog('Instructor: artefacto RCP '+(S.art?'activado':'desactivado'));ui();sync()};
-function tabTo(i){tab=i;document.querySelectorAll('#tb button').forEach(b=>b.classList.toggle('on',+b.dataset.p===i));for(let j=0;j<5;j++)$('p'+j).classList.toggle('on',j===i);if(i===3){nlog=0;$('bd').style.display='none'}if(i===0&&!MD){MD=1;MINI.forEach(([c,k])=>mini(c,k))}}
+function tabTo(i){tab=i;document.querySelectorAll('#tb button').forEach(b=>b.classList.toggle('on',+b.dataset.p===i));for(let j=0;j<4;j++)$('p'+j).classList.toggle('on',j===i);if(i===3){nlog=0;$('bd').style.display='none'}if(i===0&&!MD){MD=1;MINI.forEach(([c,k])=>mini(c,k))}}
 document.querySelectorAll('#tb button').forEach(b=>b.onclick=()=>tabTo(+b.dataset.p));
 /* ---- registro estructurado e informe de debriefing ---- */
 const hx=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])),LK='lg_'+code;
@@ -2355,20 +2517,18 @@ $('r_dl').onclick=()=>{rend();const b=new Blob([rp.html],{type:'text/html'}),a=d
 if(navigator.share&&navigator.canShare){$('r_sh').onclick=async()=>{rend();const f=new File([rp.html],file(),{type:'text/html'});try{if(navigator.canShare({files:[f]}))await navigator.share({files:[f],title:'Informe de debriefing'});else await navigator.share({title:'Informe de debriefing',text:rp.text})}catch(_){}}}else $('r_sh').style.display='none';
 $('r_cp').onclick=async()=>{rend();try{await navigator.clipboard.writeText(rp.text)}catch(_){const t=document.createElement('textarea');t.value=rp.text;document.body.append(t);t.select();try{document.execCommand('copy')}catch(__){}t.remove()}$('r_cp').textContent='¡Copiado!';setTimeout(()=>$('r_cp').textContent='Copiar texto',1500)};
 rend()}
-function devUi(){document.querySelectorAll('.sw').forEach(b=>{const o=!!S[b.dataset.k];b.classList.toggle('on',o);b.setAttribute('aria-checked',o?'true':'false');b.querySelector('span').textContent=o?'ON':'OFF'});$('dv_pw').classList.toggle('on',!!S.pw);$('dv_pw').querySelector('em').textContent=S.pw?'ENCENDIDO':'APAGADO';document.querySelectorAll('.dv').forEach(b=>{const o=!!S[b.dataset.k];b.classList.toggle('on',o);b.querySelector('em').textContent=o?'CONECTADO':'SIN CONECTAR'})}
+function devUi(){document.querySelectorAll('.sw').forEach(b=>{const o=!!S[b.dataset.k];b.classList.toggle('on',o);b.setAttribute('aria-checked',o?'true':'false');b.querySelector('span').textContent=o?'ON':'OFF'})}
 function devSet(k,v){S[k]=v;const n=k==='pw'?'Monitor':(DEVS.find(x=>x[0]===k)||[0,k])[1];addLog(`Instructor: ${n} ${k==='pw'?(v?'encendido':'apagado'):(v?'conectado':'retirado')}`);ui();sync()}
-DEVS.forEach(([k,n,d])=>{const b=document.createElement('button');b.className='dv';b.dataset.k=k;b.innerHTML=`<b>${n}</b><em></em><small>${d}</small>`;b.onclick=()=>devSet(k,S[k]?0:1);$('dvg').append(b)});
-$('dv_pw').onclick=()=>devSet('pw',S.pw?0:1);
 $('dv_on').onclick=()=>{DEVS.forEach(([k])=>S[k]=1);S.pw=1;addLog('Instructor: monitor encendido y todos los accesorios conectados');ui();sync()};
 $('dv_off').onclick=()=>{DEVS.forEach(([k])=>S[k]=0);addLog('Instructor: todos los accesorios retirados');ui();sync()};
 $('hb').onclick=()=>{location.hash=''};
 $('lc').onclick=()=>{if(LOGS.length&&!confirm('¿Borrar el registro? No se podrá generar el informe de esta sesión.'))return;LOGS=[];ls(LK,'[]');$('lgl').innerHTML='<p class=mu>Registro vacío.</p>'};$('lr').onclick=openReport;
-function ui(){devUi();$('ia').classList.toggle('on',!!S.ia);$('il').classList.toggle('on',!!S.ilink);$('vti').style.display=S.ilink?'none':'';$('s_is').value=S.isite;VT.concat(VI).forEach(([k])=>$('v_'+k).textContent=k==='temp'?(+S[k]).toFixed(1):S[k]);VT.concat(VI).forEach(([k,,,,,,mn,mx])=>{const r=$('vr_'+k);if(dragK!==k)r.value=S[k];r.style.setProperty('--p',Math.max(0,Math.min(100,(S[k]-mn)/(mx-mn)*100))+'%')});$('cp').classList.toggle('on',!!S.pulse);$('ca').classList.toggle('on',!!S.art);
+function ui(){devUi();$('il').classList.toggle('on',!!S.ilink);$('vti').style.display=S.ilink?'none':'';$('s_is').value=S.isite;VT.concat(VI).forEach(([k])=>$('v_'+k).textContent=k==='temp'?(+S[k]).toFixed(1):S[k]);VT.concat(VI).forEach(([k,,,,,,mn,mx])=>{const r=$('vr_'+k);if(dragK!==k)r.value=S[k];r.style.setProperty('--p',Math.max(0,Math.min(100,(S[k]-mn)/(mx-mn)*100))+'%')});$('cp').classList.toggle('on',!!S.pulse);$('ca').classList.toggle('on',!!S.art);
 document.querySelectorAll('.rc').forEach(b=>b.classList.toggle('on',b.dataset.k===S.rhythm));
 ['eD','eC','thr'].forEach(k=>{$('r_'+k).value=S[k];$('o_'+k).textContent=S[k]+(k==='thr'?' mA':' J')});$('s_oD').value=S.oD;$('s_oC').value=S.oC;
 $('lvn').innerHTML=`FC ${S.hr} · SpO₂ ${S.spo2}<br>TA ${S.sbp}/${S.dbp}${S.ia?' · TAI '+(S.ilink?S.sbp+'/'+S.dbp:S.isbp+'/'+S.idbp):''}`}
 onmsg=o=>{if(o.t==='dstate'){desaCtl(CODE,1);return}if(o.t==='hb')lastHb=Date.now();if(o.t==='full'){Object.assign(S,o.s);ui()}
-if(o.t==='log'){pushLog(o.m,'a');if(tab!==3){nlog++;$('bd').textContent=nlog;$('bd').style.display='block'}if(navigator.vibrate)navigator.vibrate(60)}};
+if(o.t==='log'){pushLog(o.m,'a');casoLog(o.m);if(tab!==3){nlog++;$('bd').textContent=nlog;$('bd').style.display='block'}if(navigator.vibrate)navigator.vibrate(60)}};
 setInterval(()=>{const on=Date.now()-lastHb<7000;$('dt').classList.toggle('on',on);$('ls').textContent=on?'Conectado':(Date.now()-CT0>10000?'No encuentro el monitor · revisa el código':'Buscando monitor…');if(on&&!was)send({t:'hello'});was=on},1000);
 /* tira de ECG en vivo */
 const lv=$('lv'),lx=lv.getContext('2d'),dp=devicePixelRatio||1,L=new Gen(S);let LX=0,LY=null,acc=0,lt=performance.now();
@@ -2391,7 +2551,6 @@ document.body.innerHTML=`<div id=top><button id=hm title="Volver a la pantalla d
 const FS=200,cv=$('cv'),cx=cv.getContext('2d'),dpr=devicePixelRatio||1,PC={on:0,rate:70,mA:0},D={i:5,sync:0,st:0,wait:0,aed:0,rot:0,ib:0},G=new Gen(S,PC);
 let acc=0,lt=performance.now(),mutedUntil=0,mutedCrit=0,X=0,PY=null,AL={c:0,w:0},AC,rdy=0,nextAl=0;
 const log=x=>send({t:'log',m:x}),full=()=>send({t:'full',s:S}),say=m=>{$('ms').textContent=m;setTimeout(()=>{if($('ms').textContent===m)$('ms').textContent=''},4000)};
-document.addEventListener('pointerdown',()=>au(),true);
 let gotPanel=0,pwPrev=S.pw,lastPanel=0,CONNT='';
 /* estado de la sesión (punto de la barra): verde = panel conectado; naranja = a medias (conectando, esperando al panel, enlace parcial); rojo = sin conexión o panel perdido */
 function conn(){const lk=$('lk');if(!lk)return;const now=Date.now(),on=navigator.onLine!==false,direct=!!(DC&&DC.readyState==='open'),rx=ntRxOk(),tx=NET.put!==-1,cloud=!!FB&&on&&rx&&tx,alive=now-lastPanel<10000,sec=Math.round((now-lastPanel)/1000),ago=sec>=90?Math.round(sec/60)+' min':sec+' s';let s,t;
@@ -2414,7 +2573,7 @@ const PK=[...Object.keys(DP),...Object.keys(DR)].filter(k=>k!=='free'),
 NUMF=[['hr','FC','lpm',0,250,1],['spo2','SpO₂','%',0,100,1],['sbp','TA sist.','mmHg',0,260,1],['dbp','TA diast.','mmHg',0,160,1],['rr','FR','rpm',0,40,1],['co2','EtCO₂','mmHg',0,80,1],['temp','Temp.','°C',30,42,.1]],
 TG=[['pw','Monitor encendido'],['pulse','Pulso presente'],['vE','Electrodos ECG'],['vS','Pulsioxímetro'],['vN','Manguito de PNI'],['vC','Capnografía'],['vT','Sonda de temperatura'],['vP','Parches / palas'],['v12','Electrodos 12 deriv.'],['ia','Catéter arterial']];
 const pc=document.createElement('div');pc.id='pc';
-pc.innerHTML=`<b>CONFIGURAR MONITOR</b><small>Lo que dejes aquí se muestra al abrir el monitor sin panel. Si conectas un panel, el panel manda.</small><label class=pcr>Ritmo<select id=pc_r>${Object.keys(RH).map(k=>`<option value=${k}>${RH[k][0]}</option>`).join('')}</select></label><div class=pcn>${NUMF.map(([k,n,u,a,b,st])=>`<label>${n} <i>${u}</i><input type=number inputmode=decimal id=pc_${k} min=${a} max=${b} step=${st}></label>`).join('')}</div><div class=pct>${TG.map(([k,n])=>`<button data-k=${k}><span>${n}</span><em></em></button>`).join('')}</div><div class=pca><button id=pc_s class=grn>Guardar como inicio</button><button id=pc_x>Borrar guardado</button><button id=pc_c>Cerrar</button></div>`;
+pc.innerHTML=`<div class=gh><button class=bk id=pc_bk aria-label="Volver a ajustes">‹</button><b>AJUSTE DE PARÁMETROS</b></div><small>Lo que dejes aquí se muestra al abrir el monitor sin panel. Si conectas un panel, el panel manda.</small><label class=pcr>Ritmo<select id=pc_r>${Object.keys(RH).map(k=>`<option value=${k}>${RH[k][0]}</option>`).join('')}</select></label><div class=pcn>${NUMF.map(([k,n,u,a,b,st])=>`<label>${n} <i>${u}</i><input type=number inputmode=decimal id=pc_${k} min=${a} max=${b} step=${st}></label>`).join('')}</div><div class=pct>${TG.map(([k,n])=>`<button data-k=${k}><span>${n}</span><em></em></button>`).join('')}</div><div class=pca><button id=pc_s class=grn>Guardar como inicio</button><button id=pc_x>Borrar guardado</button><button id=pc_c>Cerrar</button></div>`;
 document.body.append(pc);
 const pcSync=()=>{if(gotPanel)full();ui();pcUi()};
 function pcUi(){$('pc_r').value=S.rhythm;NUMF.forEach(([k])=>{const e=$('pc_'+k);if(document.activeElement!==e)e.value=S[k]});pc.querySelectorAll('.pct button').forEach(b=>{const o=!!S[b.dataset.k];b.classList.toggle('on',o);b.querySelector('em').textContent=o?'SÍ':'NO'})}
@@ -2423,11 +2582,18 @@ NUMF.forEach(([k])=>$('pc_'+k).addEventListener('input',e=>{const v=parseFloat(e
 pc.querySelectorAll('.pct button').forEach(b=>b.onclick=()=>{S[b.dataset.k]=S[b.dataset.k]?0:1;pcSync()});
 $('pc_s').onclick=()=>{ls('pre',JSON.stringify(Object.fromEntries(PK.map(k=>[k,S[k]]))));say('Configuración guardada: se usará al abrir sin panel')};
 $('pc_x').onclick=()=>{try{localStorage.removeItem('pre')}catch(_){}say('Configuración guardada borrada')};
-$('pc_c').onclick=()=>pc.classList.remove('on');
+$('pc_c').onclick=()=>pc.classList.remove('on');$('pc_bk').onclick=()=>{pc.classList.remove('on');if(window.GMO)window.GMO(true)};
 const cfgToggle=v=>{const o=v===undefined?!pc.classList.contains('on'):!!v;if(o)pc.style.top=Math.round($('top').getBoundingClientRect().bottom+6)+'px';pc.classList.toggle('on',o);if(o)pcUi()};
 /* audio */
-function au(){if(!AC)AC=new(window.AudioContext||window.webkitAudioContext)();if(AC.state==='suspended')AC.resume();if($('ms').textContent.startsWith('Toca'))$('ms').textContent=''}
-document.addEventListener('pointerdown',au);
+let AU0=0;
+function auMsg(){const m=$('ms');if(m&&AC&&AC.state==='running'&&m.textContent.startsWith('Toca'))m.textContent=''}
+function au(){if(!AC){try{AC=new(window.AudioContext||window.webkitAudioContext)();AC.onstatechange=auMsg}catch(_){return}}
+if(AC.state!=='running'){try{const p=AC.resume();if(p&&p.catch)p.catch(()=>{})}catch(_){}}
+if(!AU0){AU0=1;try{const b=AC.createBuffer(1,1,22050),q=AC.createBufferSource();q.buffer=b;q.connect(AC.destination);q.start(0)}catch(_){}}
+auMsg()}
+/* el audio solo se desbloquea con ciertos gestos (toque soltado, clic, tecla): se prueban todos para que suene desde el primer toque, sin tener que desfibrilar */
+['pointerdown','pointerup','touchstart','touchend','click','keydown'].forEach(t=>document.addEventListener(t,au,{capture:true,passive:true}));
+document.addEventListener('visibilitychange',()=>{if(!document.hidden&&AC&&AC.state!=='running'){try{AC.resume()}catch(_){}}});
 let MB=null;function OUT(){if(!MB){const c=AC.createDynamicsCompressor();c.threshold.value=-16;c.knee.value=10;c.ratio.value=10;c.attack.value=.002;c.release.value=.12;const g=AC.createGain();g.gain.value=1.05;c.connect(g).connect(AC.destination);MB=c}return MB}
 function bp(f,d=.08,v=.12,ty='sine',at=0){if(!AC)return;const o=AC.createOscillator(),k=AC.createGain(),s=AC.currentTime+at;o.type=ty;o.frequency.value=f;k.gain.setValueAtTime(0,s);k.gain.linearRampToValueAtTime(v,s+.006);k.gain.setValueAtTime(v,s+Math.max(.007,d-.02));k.gain.linearRampToValueAtTime(0,s+d);o.connect(k).connect(OUT());o.start(s);o.stop(s+d+.02)}
 function nz(d,fc,v,at=0,ft='lowpass'){if(!AC)return;const n=AC.sampleRate*d|0,bf=AC.createBuffer(1,n,AC.sampleRate),a=bf.getChannelData(0);for(let i=0;i<n;i++)a[i]=Math.random()*2-1;const s=AC.createBufferSource();s.buffer=bf;const f=AC.createBiquadFilter();f.type=ft;f.frequency.value=fc;const k=AC.createGain(),T=AC.currentTime+at;k.gain.setValueAtTime(v,T);k.gain.linearRampToValueAtTime(0,T+d);s.connect(f).connect(k).connect(OUT());s.start(T)}
@@ -2465,7 +2631,18 @@ function zap(){nz(.006,7000,.8,0,'highpass');nz(.12,1500,.6,.004,'highpass');nz(
 
 document.querySelectorAll('.mon button').forEach(b=>b.addEventListener('click',()=>bp(1200,.03,.04)));
 /* red */
-onmsg=o=>{lastPanel=Date.now();if(o.t==='s'||o.t==='hello')gotPanel=1;if(o.t==='s'){const old=S.rhythm;Object.assign(S,o.s);S.free=0;if(old!==S.rhythm)G.reset()}if(o.t==='hello')full()};
+let repSeen=0;
+const fk1=v=>v==null?'--':(Number.isInteger(v)?v.toFixed(1):String(v)).replace('.',',');
+const fk=(v,d)=>v==null?'--':(d!=null?(+v).toFixed(d):String(v)).replace('.',','),labRow=(a,b,c,d)=>`<div class=lr><span>${a}</span><b>${b}</b><i>${c||''}</i><em>${d||''}</em></div>`;
+function labHtml(c,i){const l=c.labs[i];return `<div class=lab><div class=lh>INFORME DE MUESTRA<small>${esc(c.n)}</small><small>${l.art?'Gasometría arterial':'Tipo: venosa'} · Muestra n.º ${i+1} · Medido a 37,0 °C (98,6 °F)</small></div>
+${labRow('pH',fk(l.pH,2),'')}${labRow('pO₂',fk(l.pO2),'mmHg',fk1(l.pO2k)+' kPa')}${labRow('pCO₂',fk(l.pCO2),'mmHg',fk1(l.pCO2k)+' kPa')}${labRow('HCO₃⁻',fk(l.HCO3),'mmol/L')}${labRow('BE',fk(l.BE),'mmol/L')}${labRow('SpO₂',fk(l.SpO2),'%')}${labRow('HGB',fk(l.Hb),'g/dL')}${labRow('Na⁺',fk(l.Na),'mmol/L')}${labRow('K⁺',fk(l.K),'mmol/L')}${labRow('Glucosa',fk(l.Glu),'mg/dL',fk1(l.Glum)+' mmol/L')}${labRow('LAC',fk(l.Lac),'mmol/L')}${labRow('HCT',fk(l.Hct),'%')}${l.fio2?`<div class=lf>FiO₂ ${l.fio2}</div>`:''}</div>`}
+function repShow(r){const c=(window.CASOS||[])[r.c]||{labs:[]};let ov=$('rov');if(!ov){ov=document.createElement('div');ov.id='rov';ov.className='eov';document.body.append(ov)}
+let h='',t='';if(r.k==='abg'&&c.labs[r.i]){h=labHtml(c,r.i);t='Informe de gasometría'}else if(r.k==='ecg'&&r.id){h=`<img class=ecgimg src="ecg/${r.id}.jpg" alt="ECG de 12 derivaciones">`;t='ECG de 12 derivaciones'}else return;
+ov.innerHTML=`<div class=eh><button id=r_x class=eb>Cerrar</button><b>${t}</b></div><div class="ec rpb">${h}</div>`;ov.classList.add('on');ovPush(()=>ov.classList.remove('on'));$('r_x').onclick=()=>ovPop();
+const im=ov.querySelector('.ecgimg');if(im)im.onclick=()=>im.classList.toggle('z');
+bp(1320,.09,.12);setTimeout(()=>bp(1760,.09,.12),140);log(r.k==='abg'?'Llega al monitor la analítica n.º '+(r.i+1):'Llega al monitor el ECG de 12 derivaciones')}
+const esc=t=>String(t).replace(/[&<>"]/g,ch=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[ch]));
+onmsg=o=>{lastPanel=Date.now();if(o.t==='s'||o.t==='hello')gotPanel=1;if(o.t==='s'){const old=S.rhythm;Object.assign(S,o.s);S.free=0;if(old!==S.rhythm)G.reset();if(S.rep&&S.rep.n!==repSeen){repSeen=S.rep.n;repShow(S.rep)}}if(o.t==='hello')full()};
 netInit(code,'m');setInterval(()=>send({t:'hb'}),2500);
 /* dibujo */
 const SKN={act:{c:['#3ddc84','#4cc9f0','#ffd23f','#ff5252'],w:2,fill:0,l:['','','','ART']},lp:{c:['#6be07a','#4d8dff','#ffa24d','#ff6b6b'],w:2,fill:0,l:['II x1.0','SpO₂','CO₂','ART']},co:{c:['#111','#1565c0','#27208f','#c62828'],w:1.8,fill:1,l:['IIauto','Pleth','CO2','P1(ART)']}},T0=Date.now();
@@ -2524,7 +2701,7 @@ const ys=LYC.map((q,i)=>v[i]==null?null:H*(q[0]-v[i]*q[1])),cs=K.c;if(K.fill&&ys
 if(PY&&PY.length===n)for(let i=0;i<n;i++){if(ys[i]==null||PY[i]==null)continue;cx.strokeStyle=cs[i];cx.beginPath();cx.moveTo(X-st,PY[i]);cx.lineTo(X,ys[i]);cx.stroke()}
 if(S.pw){const per=14*dpr*(skin==='act'?1:Math.max(.6,Math.min(1.4,SC)));if(DC%per<per*.6){cx.globalAlpha=.8;for(let i=0;i<Math.min(3,n);i++)if(ys[i]==null){cx.strokeStyle=cs[i];cx.beginPath();cx.moveTo(X-st,H*LYC[i][0]);cx.lineTo(X,H*LYC[i][0]);cx.stroke()}cx.globalAlpha=1}}
 PY=ys;if(mk){cx.fillStyle=K.fill?'#000':'#fff';cx.fillRect(X-dpr,.02*H,2*dpr,.05*H)}}
-function frame(n){acc=Math.min(.25,acc+(n-lt)/1000);lt=n;const kE=!!S.pw&&!!(S.vE||S.vP),kS=!!S.pw&&!!S.vS,kC=!!S.pw&&!!S.vC;while(acc>=1/FS){acc-=1/FS;const o=G.step(1/FS);let mk=0;
+let lastRes=0;function frame(n){if(AC&&AC.state!=='running'&&n-lastRes>1200){lastRes=n;try{AC.resume()}catch(_){}}acc=Math.min(.25,acc+(n-lt)/1000);lt=n;const kE=!!S.pw&&!!(S.vE||S.vP),kS=!!S.pw&&!!S.vS,kC=!!S.pw&&!!S.vC;while(acc>=1/FS){acc-=1/FS;const o=G.step(1/FS);let mk=0;
 if(o.sp&&kE)bp(1800,.012,.05,'square');if(o.cap)log(`Captura eléctrica y mecánica con ${PC.mA} mA a ${PC.rate} lpm`);if(o.lost)log('Pérdida de captura');
 for(const b of o.beats){if(kE||(kS&&b.perf))bp(kS&&b.perf?Math.max(250,300+(S.spo2-70)*12):800,.09,.12);if(D.sync&&kE)mk=1;if(D.wait){D.wait=0;deliver(1)}}
 const ia=S.pw&&D.ib&&S.ia?o.a:0;if(++IBN%4===0){IBB.push(ia);if(IBB.length>200)IBB.shift()}plot([kE?o.e:null,kS?o.p:null,kC?o.c:null,S.pw?ia:null],mk&&kE)}requestAnimationFrame(frame)}requestAnimationFrame(frame);
@@ -2535,7 +2712,7 @@ let x=`${sy?'Cardioversión sincronizada':'Descarga NO sincronizada'} de ${E} J 
 if(!sy&&S.pulse&&!CONT.includes(r))x+=' (aviso: descarga asíncrona con pulso, riesgo de R sobre T)';
 G.blank=G.t+1.5;G.Pw=[];G.V=[];G.B=[];
 if(!el)x+=sy?' → ritmo no indicado para cardioversión, sin efecto':' → ritmo no desfibrilable, sin efecto';
-else if(E>=th){x+=` → efectiva, pasa a ${RH[out][0]}`;setTimeout(()=>{Object.assign(S,{rhythm:out,hr:RH[out][1],pulse:RH[out][2]});G.reset();full()},1500)}
+else if(E>=th){if(S.hold)x+=' → efectiva (la evolución la marca el caso)';else{x+=` → efectiva, pasa a ${RH[out][0]}`;setTimeout(()=>{Object.assign(S,{rhythm:out,hr:RH[out][1],pulse:RH[out][2]});G.reset();full()},1500)}}
 else x+=` → energía insuficiente (eficaz desde ${th} J), el ritmo no cambia`;
 log(x);$('ms').textContent='DESCARGA ADMINISTRADA: '+E+' J';setTimeout(()=>{if($('ms').textContent.startsWith('DESC'))$('ms').textContent=''},3000);ds()}
 function ds(){$('ev').textContent=EN[D.i]+' J';$('he').textContent=EN[D.i]+' J';$('sy').classList.toggle('on',!!D.sync);$('dm').textContent=D.wait?'ESPERANDO ONDA R':D.st===1?'CARGANDO…':D.st===2?'CARGADO':'';$('dm').dataset.s=D.wait?'3':D.st;$('sh').classList.toggle('rdyb',D.st===2);rdyTone(D.st===2)}
@@ -2580,17 +2757,17 @@ else if(AL.w){[0,.25,.5].forEach(a=>pulse(640,a,.14,.22));nextAl=n+6500}},250);
 $('mu').onclick=()=>{au();mutedUntil=Date.now()+120000;mutedCrit=AL.c?1:0;log('Alarmas silenciadas 2 min (se reactivan solas al terminar)')};
 $('ib').onclick=()=>{au();D.ib=D.ib?0:1;lay();log(D.ib?(S.ia?'TA invasiva activada ('+(SITE[S.isite]||'')+')':'TA invasiva activada: no hay catéter arterial conectado (SIN SEÑAL)'):'TA invasiva desactivada')};
 let E12=null;addEventListener('resize',()=>{if(E12&&$('eov').classList.contains('on'))E12()});
-$('e12').onclick=()=>{au();if(!need('v12','Electrodos de 12 derivaciones','SIN ELECTRODOS DE 12 DERIVACIONES: pide al instructor que los conecte')){log('Intento de ECG de 12 derivaciones sin electrodos conectados');return}let ov=$('eov');if(!ov){ov=document.createElement('div');ov.id='eov';ov.className='eov';document.body.append(ov)}
+$('e12').onclick=()=>{au();if(!need('v12','Electrodos de 12 derivaciones','SIN ELECTRODOS DE 12 DERIVACIONES: pide al instructor que los conecte')){log('Intento de ECG de 12 derivaciones sin electrodos conectados');return}if(S.ecgi){repShow({k:'ecg',c:0,id:S.ecgi});log('Alumno realiza ECG de 12 derivaciones');return}let ov=$('eov');if(!ov){ov=document.createElement('div');ov.id='eov';ov.className='eov';document.body.append(ov)}
 ov.innerHTML='<div class=eh><button id=e_b class=eb>‹ Volver</button><b>ECG de 12 derivaciones</b><span>Ganancia: </span><button data-g=5>5</button><button data-g=10>10</button><button data-g=20>20</button><span>mm/mV</span><button id=e_nw>Repetir registro</button></div><div class=ec><canvas id=e_cv></canvas></div>';ov.classList.add('on');ovPush(()=>ov.classList.remove('on'));
 let gn=10,d=ecg12(S,PC);const hr=CONT.includes(S.rhythm)||!S.hr?'--':S.hr,ec=ov.querySelector('.ec');
 E12=()=>{const k=Math.max(3,Math.min((ec.clientWidth-24)/265,(ec.clientHeight-24)/150));draw12($('e_cv'),d,gn,k,hr);ov.querySelectorAll('[data-g]').forEach(b=>b.classList.toggle('on',+b.dataset.g===gn))};
 ov.querySelectorAll('[data-g]').forEach(b=>b.onclick=()=>{gn=+b.dataset.g;E12()});$('e_nw').onclick=()=>{d=ecg12(S,PC);E12()};$('e_b').onclick=()=>ovPop();E12();log('Alumno realiza ECG de 12 derivaciones')};
-ds();pu();setSkin(skin);const gv=n=>{$('gv0').hidden=n!==0;$('gv1').hidden=n!==1},gmo=v=>{const m=$('gm');if(v){gv(0);m.style.top=Math.round($('top').getBoundingClientRect().bottom+6)+'px'}m.classList.toggle('on',v);$('gear').classList.toggle('on',v);$('gear').setAttribute('aria-expanded',v?'true':'false')};$('gear').onclick=()=>gmo(!$('gm').classList.contains('on'));$('hm').onclick=()=>{if(confirm('¿Volver a la pantalla de inicio? Se cerrará el monitor.'))location.hash=''};document.addEventListener('pointerdown',e=>{if(!e.target.closest('#gm,#gear'))gmo(false);if(!e.target.closest('#cm,#cn'))cmo(false)});$('gm').querySelectorAll('[data-sk]').forEach(x=>x.onclick=()=>{setSkin(x.dataset.sk);gmo(false)});
+ds();pu();setSkin(skin);const gv=n=>{$('gv0').hidden=n!==0;$('gv1').hidden=n!==1},gmo=v=>{const m=$('gm');if(v){gv(0);m.style.top=Math.round($('top').getBoundingClientRect().bottom+6)+'px'}m.classList.toggle('on',v);$('gear').classList.toggle('on',v);$('gear').setAttribute('aria-expanded',v?'true':'false')};window.GMO=gmo;$('gear').onclick=()=>gmo(!$('gm').classList.contains('on'));$('hm').onclick=()=>{if(confirm('¿Volver a la pantalla de inicio? Se cerrará el monitor.'))location.hash=''};document.addEventListener('pointerdown',e=>{if(!e.target.closest('#gm,#gear'))gmo(false);if(!e.target.closest('#cm,#cn'))cmo(false)});$('gm').querySelectorAll('[data-sk]').forEach(x=>x.onclick=()=>{setSkin(x.dataset.sk);gmo(false)});
 $('gm').querySelectorAll('[data-a]').forEach(x=>x.onclick=()=>{const a=x.dataset.a;if(a==='look')gv(1);else if(a==='back')gv(0);else if(a==='net'){gmo(false);openPair('m')}else if(a==='cfg'){gmo(false);cfgToggle(true)}});
 function cdOpen(auto){let ov=$('cdlg');if(!ov){ov=document.createElement('div');ov.id='cdlg';ov.className='ov';document.body.append(ov)}if(ov.classList.contains('on'))return;
 const url=/^https?:$/.test(location.protocol)?location.origin+location.pathname+'#control/'+code:code;
 ov.innerHTML=`<div class="box pr"><div class=ovh><button class=pb id=cd_b>‹ Volver al monitor</button><h2>Conectar el panel</h2></div>
-<p class=pr-p>En el dispositivo del instructor abre la app, pulsa <b>Panel del instructor</b> y escribe este código, o escanea el QR.</p>
+<p class=pr-p>En el dispositivo del instructor abre la app, pulsa <b>Soy instructor</b> y escribe este código.</p>
 <div class=cdbig>${code}</div>
 <div class=pr-qr><div class=qrw title="Toca para ampliar"><canvas id=cd_qr></canvas></div>
 <div class=pr-qrside><div class=cdst id=cd_st data-s=warn><i></i><span></span></div><p class=pr-tip id=cd_hint></p>
@@ -2605,6 +2782,6 @@ $('cd_b').onclick=()=>ovPop();ov.querySelectorAll('.qrw').forEach(q=>q.onclick=(
 $('cd_off').onclick=()=>openPair('m');
 $('cd_new').onclick=()=>{if(!confirm('¿Empezar una sesión nueva con otro código? El panel actual dejará de controlar este monitor.'))return;const c=newCode();try{sessionStorage.setItem('newmon',c)}catch(_){}location.hash='#monitor/'+c}}
 $('lk').onclick=()=>{au();cdOpen()};conn();
-try{if(sessionStorage.getItem('newmon')===code){sessionStorage.removeItem('newmon');setTimeout(()=>cdOpen(1),700)}}catch(_){}
+try{if(sessionStorage.getItem('newmon')===code){sessionStorage.removeItem('newmon');setTimeout(()=>cdOpen(1),700)}else if(sessionStorage.getItem('autopair')===code){sessionStorage.removeItem('autopair');setTimeout(()=>openPair('m'),700)}}catch(_){}
 if(typeof BroadcastChannel==='function'){const pbc=new BroadcastChannel('simpair');pbc.onmessage=async e=>{if(e.data.t==='ans'&&PCx){try{await useAnswer(e.data.code);pbc.postMessage({t:'ack'})}catch(_){}}}}}
 </script></body></html>

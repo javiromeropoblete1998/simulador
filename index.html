@@ -786,7 +786,8 @@ details.cg>.cvp{margin:0 14px 12px}
 .wl3 li::before{content:counter(w);position:absolute;left:12px;top:12px;width:32px;height:32px;border-radius:50%;display:grid;place-items:center;background:#0b6e78;color:#fff;font-weight:800}
 .wl3 li>b{display:block}.wl3 li>span{display:block;color:#bfd0d4;font-size:15px}
 #w_ok{width:100%;margin:6px 0 12px}#wov{background:#070d10}
-</style></head><body><script src="casos.js"></script>
+.ecm{flex:1;min-height:0;padding:8px;display:flex}.ecm canvas{flex:1;width:100%;height:100%;display:block;border-radius:6px;border:1px solid #2a3a40}.eov #m_st{margin-left:auto;font-size:14px;opacity:.85}@keyframes ecgpr{from{clip-path:inset(0 0 100% 0);transform:translateY(-26px)}to{clip-path:inset(0 0 0 0);transform:none}}.ec canvas.pr{animation:ecgpr 2.4s linear}
+</style></head><body><script src="casos.js"></script><script src="ecgdata.js"></script>
 <script>
 const $=i=>document.getElementById(i),g=(x,m,s)=>Math.exp(-((x-m)**2)/(2*s*s)),hm=()=>new Date().toLocaleTimeString('es-ES');
 const ls=(k,v)=>{try{if(v===undefined)return localStorage.getItem(k);localStorage.setItem(k,v)}catch(_){}};
@@ -2636,7 +2637,7 @@ const fk1=v=>v==null?'--':(Number.isInteger(v)?v.toFixed(1):String(v)).replace('
 const fk=(v,d)=>v==null?'--':(d!=null?(+v).toFixed(d):String(v)).replace('.',','),labRow=(a,b,c,d)=>`<div class=lr><span>${a}</span><b>${b}</b><i>${c||''}</i><em>${d||''}</em></div>`;
 function labHtml(c,i){const l=c.labs[i];return `<div class=lab><div class=lh>INFORME DE MUESTRA<small>${esc(c.n)}</small><small>${l.art?'Gasometría arterial':'Tipo: venosa'} · Muestra n.º ${i+1} · Medido a 37,0 °C (98,6 °F)</small></div>
 ${labRow('pH',fk(l.pH,2),'')}${labRow('pO₂',fk(l.pO2),'mmHg',fk1(l.pO2k)+' kPa')}${labRow('pCO₂',fk(l.pCO2),'mmHg',fk1(l.pCO2k)+' kPa')}${labRow('HCO₃⁻',fk(l.HCO3),'mmol/L')}${labRow('BE',fk(l.BE),'mmol/L')}${labRow('SpO₂',fk(l.SpO2),'%')}${labRow('HGB',fk(l.Hb),'g/dL')}${labRow('Na⁺',fk(l.Na),'mmol/L')}${labRow('K⁺',fk(l.K),'mmol/L')}${labRow('Glucosa',fk(l.Glu),'mg/dL',fk1(l.Glum)+' mmol/L')}${labRow('LAC',fk(l.Lac),'mmol/L')}${labRow('HCT',fk(l.Hct),'%')}${l.fio2?`<div class=lf>FiO₂ ${l.fio2}</div>`:''}</div>`}
-function repShow(r){const c=(window.CASOS||[])[r.c]||{labs:[]};let ov=$('rov');if(!ov){ov=document.createElement('div');ov.id='rov';ov.className='eov';document.body.append(ov)}
+function repShow(r){if(r.k==='ecg'&&r.id){const E=ecgLoad(r.id);if(E){bp(1320,.09,.12);setTimeout(()=>bp(1760,.09,.12),140);log('Llega al monitor el ECG de 12 derivaciones');ecgFlow(E,(CONT.includes(S.rhythm)||!S.hr)?null:S.hr);return}}const c=(window.CASOS||[])[r.c]||{labs:[]};let ov=$('rov');if(!ov){ov=document.createElement('div');ov.id='rov';ov.className='eov';document.body.append(ov)}
 let h='',t='';if(r.k==='abg'&&c.labs[r.i]){h=labHtml(c,r.i);t='Informe de gasometría'}else if(r.k==='ecg'&&r.id){h=`<img class=ecgimg src="ecg/${r.id}.jpg" alt="ECG de 12 derivaciones">`;t='ECG de 12 derivaciones'}else return;
 ov.innerHTML=`<div class=eh><button id=r_x class=eb>Cerrar</button><b>${t}</b></div><div class="ec rpb">${h}</div>`;ov.classList.add('on');ovPush(()=>ov.classList.remove('on'));$('r_x').onclick=()=>ovPop();
 const im=ov.querySelector('.ecgimg');if(im)im.onclick=()=>im.classList.toggle('z');
@@ -2756,8 +2757,53 @@ if(AL.c){[0,.22,.44,.95,1.17,2.15,2.37,2.59,3.1,3.32].forEach(a=>pulse(900,a,.15
 else if(AL.w){[0,.25,.5].forEach(a=>pulse(640,a,.14,.22));nextAl=n+6500}},250);
 $('mu').onclick=()=>{au();mutedUntil=Date.now()+120000;mutedCrit=AL.c?1:0;log('Alarmas silenciadas 2 min (se reactivan solas al terminar)')};
 $('ib').onclick=()=>{au();D.ib=D.ib?0:1;lay();log(D.ib?(S.ia?'TA invasiva activada ('+(SITE[S.isite]||'')+')':'TA invasiva activada: no hay catéter arterial conectado (SIN SEÑAL)'):'TA invasiva desactivada')};
+/* ---------- ECG 12 derivaciones digital: pantalla del monitor + impresión en papel milimetrado ---------- */
+const ECGR={};
+function ecgLoad(id){if(ECGR[id])return ECGR[id];const e=window.ECGD&&window.ECGD[id];if(!e)return null;
+const cells=e.cells.map(c=>{const b=atob(c[4]),n=b.length>>1,v=new Float32Array(n);for(let i=0;i<n;i++){let x=b.charCodeAt(2*i)|(b.charCodeAt(2*i+1)<<8);if(x>32767)x-=65536;v[i]=x/100}return{l:c[0],r:c[1],t:c[2],d:c[3],v,fs:e.fs,rh:c[5]}});
+return ECGR[id]={lay:e.lay,cells}}
+function ecgSynth(d){const LY=[[0,3,6,9],[1,4,7,10],[2,5,8,11]],cells=[];for(let r=0;r<3;r++)for(let c=0;c<4;c++)cells.push({l:LDN[LY[r][c]],r,t:2.5*c,d:2.5,v:d[LY[r][c]].slice(c*1250,(c+1)*1250),fs:500,rh:0});cells.push({l:'II',r:3,t:0,d:10,v:d[1],fs:500,rh:1});return{lay:'c34r',cells}}
+function ecgGeo(E){const L=E.lay;return{W:265,H:150,yb:L==='c62'?[34,54,74,94,114,134]:L==='c34'?[48,82,116]:[38,68,98,128]}}
+function ecgHR(E){const c=E.cells.find(x=>x.rh)||E.cells.filter(x=>x.l==='II').sort((a,b)=>b.d-a.d)[0]||E.cells[0],v=c.v,fs=c.fs,n=v.length,s=Array.from(v).sort((a,b)=>a-b),m=s[n>>1];let mx=0;for(let i=0;i<n;i++)mx=Math.max(mx,Math.abs(v[i]-m));
+const th=.5*mx,pk=[],A=i=>Math.abs(v[i]-m);let last=-1e9;for(let i=1;i<n-1;i++){const a=A(i);if(a>=th&&a>=A(i-1)&&a>=A(i+1)){if(i-last>.2*fs){pk.push(i);last=i}else if(a>A(pk[pk.length-1])){pk[pk.length-1]=i;last=i}}}
+if(pk.length<3)return'--';const rr=[];for(let i=1;i<pk.length;i++)rr.push(pk[i]-pk[i-1]);rr.sort((a,b)=>a-b);return Math.round(60*fs/rr[rr.length>>1])}
+function ecgTraces(x,E,g,s,ox,oy,gn,upto){for(const c of E.cells){const xs=10+c.t*25,yb=g.yb[c.r],N=c.v.length;x.beginPath();let st=0;for(let i=0;i<N;i++){const mm=xs+i/c.fs*25;if(upto!=null&&mm>upto)break;const px=ox+mm*s,py=oy+yb*s-c.v[i]*gn*s;st?x.lineTo(px,py):(x.moveTo(px,py),st=1)}x.stroke()}}
+function ecgLabels(x,E,g,s,ox,oy,F,fs){x.font='700 '+fs*s+'px '+F;const six=E.lay==='c62';for(const c of E.cells){const xs=10+c.t*25,yb=g.yb[c.r];x.fillText(c.rh?'II  (ritmo)':c.l,ox+(xs+1)*s,oy+(yb-(six?8:9))*s);if(c.t>0&&!c.rh){x.beginPath();x.moveTo(ox+xs*s,oy+(yb-2)*s);x.lineTo(ox+xs*s,oy+(yb+2)*s);x.stroke()}}}
+function ecgScreen(cv,E,prog,hr){const dp=devicePixelRatio||1,w=cv.clientWidth,h=cv.clientHeight;if(!w||!h)return;if(cv.width!==Math.round(w*dp)||cv.height!==Math.round(h*dp)){cv.width=Math.round(w*dp);cv.height=Math.round(h*dp)}
+const x=cv.getContext('2d'),g=ecgGeo(E),s=Math.min(cv.width/g.W,cv.height/g.H),ox=(cv.width-g.W*s)/2,oy=(cv.height-g.H*s)/2,sk=SKN[skin]||SKN.act,light=skin==='co',F='"Inter","Segoe UI",Roboto,Arial,sans-serif',tc=sk.c[0];
+x.fillStyle=light?'#f1f5f6':(skin==='lp'?'#000':'#050b0e');x.fillRect(0,0,cv.width,cv.height);
+x.strokeStyle=light?'rgba(30,60,70,.10)':'rgba(120,180,170,.10)';x.lineWidth=Math.max(1,dp*.6);x.beginPath();for(let i=0;i<=g.W;i+=5){x.moveTo(ox+i*s,oy);x.lineTo(ox+i*s,oy+g.H*s)}for(let i=0;i<=g.H;i+=5){x.moveTo(ox,oy+i*s);x.lineTo(ox+g.W*s,oy+i*s)}x.stroke();
+x.fillStyle=light?'#14313a':'#d7e6e6';x.font='700 '+4*s+'px '+F;x.fillText('ECG 12 DERIVACIONES',ox+10*s,oy+8*s);x.font='600 '+3.4*s+'px '+F;x.fillStyle=tc;x.fillText('FC '+(hr)+' lpm',ox+78*s,oy+8*s);x.fillStyle=light?'#4a6770':'#8fa9ab';x.font='500 '+3*s+'px '+F;x.fillText('25 mm/s   10 mm/mV   0,5–40 Hz',ox+105*s,oy+8*s);
+x.lineJoin='round';x.lineCap='round';x.strokeStyle=tc;x.lineWidth=Math.max(1.4*dp,.42*s);
+const upto=prog>=1?null:10+prog*250;ecgTraces(x,E,g,s,ox,oy,10,upto);
+x.fillStyle=light?'#27495a':'#9fc2c0';x.lineWidth=Math.max(1,dp);ecgLabels(x,E,g,s,ox,oy,F,3.2);
+if(upto!=null){x.strokeStyle=light?'rgba(20,50,60,.5)':'rgba(255,255,255,.35)';x.beginPath();x.moveTo(ox+upto*s,oy+12*s);x.lineTo(ox+upto*s,oy+g.H*s);x.stroke()}}
+function ecgPaper(cv,E,gn,k,hr){const dp=devicePixelRatio||1,g=ecgGeo(E),W=g.W,H=g.H,s=k*dp,F='"Inter","Segoe UI",Roboto,Arial,sans-serif';cv.style.width=W*k+'px';cv.style.height=H*k+'px';cv.width=Math.round(W*s);cv.height=Math.round(H*s);const x=cv.getContext('2d'),X=m=>m*s;
+x.fillStyle='#fffdfb';x.fillRect(0,0,cv.width,cv.height);
+const grid=(st,col,w)=>{x.strokeStyle=col;x.lineWidth=w;x.beginPath();for(let i=0;i<=W;i+=st){x.moveTo(X(i),0);x.lineTo(X(i),cv.height)}for(let i=0;i<=H;i+=st){x.moveTo(0,X(i));x.lineTo(cv.width,X(i))}x.stroke()};grid(1,'#f8dcdc',Math.max(1,.4*dp));grid(5,'#eda0a0',Math.max(1.2,.9*dp));
+x.fillStyle='#111';x.font='700 '+3.6*s+'px '+F;x.fillText('ECG de 12 derivaciones',X(10),X(7));x.font='500 '+3*s+'px '+F;x.fillText('ID Pac.: n/d    FC: '+hr+' lpm',X(10),X(13));x.fillText('25 mm/s    '+gn+' mm/mV    Filtro 0,5–40 Hz',X(10),X(18));x.textAlign='right';x.fillText(new Date().toLocaleString('es-ES'),X(260),X(7));x.font='italic 500 '+2.4*s+'px '+F;x.fillText('Simulación docente: registro para formación, no es un paciente real',X(260),X(148));x.textAlign='left';
+x.strokeStyle='#111';x.lineJoin='round';x.lineCap='round';x.lineWidth=Math.min(3*dp,Math.max(1.1*dp,.3*s));
+for(const yb of g.yb){x.beginPath();x.moveTo(X(1),X(yb));x.lineTo(X(2),X(yb));x.lineTo(X(2),X(yb)-gn*s);x.lineTo(X(7),X(yb)-gn*s);x.lineTo(X(7),X(yb));x.lineTo(X(9),X(yb));x.stroke()}
+ecgTraces(x,E,g,s,0,0,gn,null);x.fillStyle='#111';x.lineWidth=Math.max(1,.2*s);ecgLabels(x,E,g,s,0,0,F,3.4)}
+const ECGUI={scr:null,pap:null,raf:0};
+addEventListener('resize',()=>{if(ECGUI.scr&&$('eov2')&&$('eov2').classList.contains('on'))ECGUI.scr();if(ECGUI.pap&&$('pov2')&&$('pov2').classList.contains('on'))ECGUI.pap()});
+function ecgFlow(E,hr){au();if(hr==null)hr=ecgHR(E);let ov=$('eov2');if(!ov){ov=document.createElement('div');ov.id='eov2';ov.className='eov';document.body.append(ov)}
+ov.innerHTML='<div class=eh><button id=m_x class=eb>‹ Cerrar</button><b>ECG de 12 derivaciones</b><span id=m_st>Adquiriendo…</span><button id=m_p class=eb disabled>🖨 Imprimir</button></div><div class=ecm><canvas id=m_cv></canvas></div>';
+ov.classList.add('on');cancelAnimationFrame(ECGUI.raf);let prog=0;const t0=performance.now(),cv=$('m_cv');
+ECGUI.scr=()=>ecgScreen(cv,E,prog,hr);ovPush(()=>{ov.classList.remove('on');cancelAnimationFrame(ECGUI.raf);ECGUI.scr=null});$('m_x').onclick=()=>ovPop();
+bp(1000,.05,.08);const tick=n=>{prog=Math.min(1,(n-t0)/3400);ECGUI.scr();if(prog<1)ECGUI.raf=requestAnimationFrame(tick);else{$('m_st').textContent='Registro completo · FC '+hr+' lpm';$('m_p').disabled=false;bp(1320,.09,.12)}};ECGUI.raf=requestAnimationFrame(tick);
+$('m_p').onclick=()=>ecgPrint(E,hr)}
+function ecgPrint(E,hr){let ov=$('pov2');if(!ov){ov=document.createElement('div');ov.id='pov2';ov.className='eov';ov.style.zIndex=81;document.body.append(ov)}
+ov.innerHTML='<div class=eh><button id=p_b class=eb>‹ Volver</button><b>ECG impreso</b><span>Ganancia: </span><button data-g=5>5</button><button data-g=10>10</button><button data-g=20>20</button><span>mm/mV</span><button id=p_s>Guardar imagen</button></div><div class=ec><canvas id=p_cv></canvas></div>';
+ov.classList.add('on');ovPush(()=>{ov.classList.remove('on');ECGUI.pap=null});$('p_b').onclick=()=>ovPop();let gn=10;const ec=ov.querySelector('.ec'),cv=$('p_cv');
+ECGUI.pap=()=>{const k=Math.max(3,Math.min((ec.clientWidth-24)/265,(ec.clientHeight-24)/150));ecgPaper(cv,E,gn,k,hr);ov.querySelectorAll('[data-g]').forEach(b=>b.classList.toggle('on',+b.dataset.g===gn))};
+ov.querySelectorAll('[data-g]').forEach(b=>b.onclick=()=>{gn=+b.dataset.g;ECGUI.pap()});
+$('p_s').onclick=()=>{cv.toBlob(b=>{if(!b)return;const a=document.createElement('a');a.href=URL.createObjectURL(b);a.download='ecg-12-derivaciones.png';document.body.append(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove()},500)},'image/png')};
+ECGUI.pap();cv.classList.remove('pr');void cv.offsetWidth;cv.classList.add('pr');let n=0;const iv=setInterval(()=>{bp(170+Math.random()*60,.03,.05,'square');if(++n>=12)clearInterval(iv)},180);log('Alumno imprime el ECG de 12 derivaciones')}
+
 let E12=null;addEventListener('resize',()=>{if(E12&&$('eov').classList.contains('on'))E12()});
-$('e12').onclick=()=>{au();if(!need('v12','Electrodos de 12 derivaciones','SIN ELECTRODOS DE 12 DERIVACIONES: pide al instructor que los conecte')){log('Intento de ECG de 12 derivaciones sin electrodos conectados');return}if(S.ecgi){repShow({k:'ecg',c:0,id:S.ecgi});log('Alumno realiza ECG de 12 derivaciones');return}let ov=$('eov');if(!ov){ov=document.createElement('div');ov.id='eov';ov.className='eov';document.body.append(ov)}
+$('e12').onclick=()=>{au();if(!need('v12','Electrodos de 12 derivaciones','SIN ELECTRODOS DE 12 DERIVACIONES: pide al instructor que los conecte')){log('Intento de ECG de 12 derivaciones sin electrodos conectados');return}{const E=S.ecgi?ecgLoad(S.ecgi):null;if(E){ecgFlow(E,(CONT.includes(S.rhythm)||!S.hr)?null:S.hr);log('Alumno realiza ECG de 12 derivaciones');return}if(!S.ecgi){ecgFlow(ecgSynth(ecg12(S,PC)),CONT.includes(S.rhythm)||!S.hr?'--':S.hr);log('Alumno realiza ECG de 12 derivaciones');return}}
+if(S.ecgi){repShow({k:'ecg',c:0,id:S.ecgi});log('Alumno realiza ECG de 12 derivaciones');return}let ov=$('eov');if(!ov){ov=document.createElement('div');ov.id='eov';ov.className='eov';document.body.append(ov)}
 ov.innerHTML='<div class=eh><button id=e_b class=eb>‹ Volver</button><b>ECG de 12 derivaciones</b><span>Ganancia: </span><button data-g=5>5</button><button data-g=10>10</button><button data-g=20>20</button><span>mm/mV</span><button id=e_nw>Repetir registro</button></div><div class=ec><canvas id=e_cv></canvas></div>';ov.classList.add('on');ovPush(()=>ov.classList.remove('on'));
 let gn=10,d=ecg12(S,PC);const hr=CONT.includes(S.rhythm)||!S.hr?'--':S.hr,ec=ov.querySelector('.ec');
 E12=()=>{const k=Math.max(3,Math.min((ec.clientWidth-24)/265,(ec.clientHeight-24)/150));draw12($('e_cv'),d,gn,k,hr);ov.querySelectorAll('[data-g]').forEach(b=>b.classList.toggle('on',+b.dataset.g===gn))};

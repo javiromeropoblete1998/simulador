@@ -947,6 +947,31 @@ body.sk-co .pA{grid-template-columns:minmax(0,1fr)}
 body.sk-co .pV{cursor:pointer;padding:6px;border-radius:9px;border:2px solid transparent}
 body.sk-co .pV.sel{border-color:#ffd23f;background:#ffffff1a}
 body.sk-co .pB{align-items:center}
+
+/* v20 Corpuls3: constantes en una fila superior (como el equipo real), ondas debajo a todo el ancho */
+body.sk-co #mid,body.sk-co.lay-b #mid{grid-template-columns:minmax(0,1fr);grid-template-rows:auto auto minmax(0,1fr) auto;grid-template-areas:"hdr" "nm" "wv" "sk"}
+body.sk-co #nm{flex-direction:row;border-left:0;border-bottom:2px solid #1b1b1b;height:104px;min-height:0;flex:none}
+body.sk-co.nt #nm{border-bottom-color:#26333a}
+body.sk-co .cLogo{display:none}
+body.sk-co .n{flex:1 1 0;border-bottom:0;border-right:1px solid #9a9a98;padding:0 6px;grid-template-columns:minmax(0,1fr) auto;grid-template-rows:auto minmax(0,1fr);column-gap:4px;align-items:start;overflow:hidden}
+body.sk-co.nt .n{border-right-color:#26333a}
+body.sk-co #nm .n>.cn{grid-area:1/1;align-self:start;padding-top:3px;font-size:12px}
+body.sk-co .cn span{display:inline;margin-left:4px;font-size:10px}
+body.sk-co #ts .cn::after{display:none}
+body.sk-co #nm .n>.lm{grid-area:1/2;margin-top:3px;font-size:10px}
+body.sk-co #nm .n>.lm::before{width:10px;height:10px;margin:0 0 1px auto}
+body.sk-co #nm .n>b{grid-area:2/1/3/3;align-self:center;font-size:min(64px,62cqh,40cqw)}
+body.sk-co #nm .n>small{left:6px;bottom:0}
+body.sk-co #th{flex-grow:1.2}body.sk-co #ts{flex-grow:1.2}body.sk-co #te{flex-grow:1}body.sk-co #tr{flex-grow:.85}
+body.sk-co #tp{flex-grow:2}body.sk-co #tt{flex-grow:.9}body.sk-co #ti{flex-grow:1.2}
+body.sk-co #nm #tp{display:flex;flex-direction:column}
+body.sk-co #tp .nb p{padding:0 6px;column-gap:4px;border-bottom:1px solid #b9b9b7}
+body.sk-co #tp .nb .cn{font-size:11px}body.sk-co #tp .nb .cn span{display:none}
+body.sk-co #tp .nb strong{font-size:min(26px,72cqh,20cqw)}
+body.sk-co.nt #tp .nb p{border-bottom-color:#26333a}
+body.sk-co .cTm{flex:1 1 0;order:8;padding:2px 6px;gap:1px;border-left:0;justify-content:center;font-size:10px}
+body.sk-co .cTm div{flex-direction:column;align-items:flex-start}body.sk-co .cTm strong{font-size:15px}
+body.sk-co #nm .n>.lm{display:none}
 </style></head><body><script src="casos.js"></script><script src="ecgdata.js"></script>
 <script>
 const $=i=>document.getElementById(i),g=(x,m,s)=>Math.exp(-((x-m)**2)/(2*s*s)),hm=()=>new Date().toLocaleTimeString('es-ES');
@@ -2841,7 +2866,7 @@ DPL={lp:`<div class=lpP>
 <div class=lpV><span>Frecuencia (lpm)</span><div class=lpAr><i data-m=rm></i><i data-m=rv></i><i data-m=rp></i></div></div>
 <div class=lpV><span>Corriente</span><div class=lpAr><i data-m=am></i><i data-m=av></i><i data-m=ap></i></div></div></div>
 <div class=lpAux><i data-m=pn></i><i data-m=ib></i><i data-m=e12></i><i data-m=mu></i></div></div>`,
-co:`<div class=cP><div class=cK><span class=cWh></span><button type=button class=cRd id=cAed disabled title="Modo DEA: no disponible en este simulador">DEA</button><span class="cNum n1">1</span><button type=button id=cEn title="Siguiente nivel de energía">Energía</button><button type=button class=cRd id=cAn disabled title="Análisis DEA: no disponible en este simulador">Analizar</button><span class="cNum n2">2</span><i data-m=ch></i><span class=cSh><i data-m=sh></i></span><span class=cSd><i data-m=sy></i><i data-m=ds></i></span><i data-m=dm></i></div><div id=kn tabindex=0 role=slider aria-label="Selector de energía: gira para subir o bajar" title="Gira para cambiar la energía"><i></i></div><div class=cN><button type=button id=cMon>Monitor</button><button type=button id=cPac>Marcapasos</button><button type=button id=cBk aria-label="Atrás"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 7 4 12l5 5"/><path d="M4 12h10a6 6 0 0 1 6 6v1"/></svg></button><button type=button id=cBr disabled title="No disponible en este simulador">Navegador</button><button type=button id=cHm aria-label="Inicio"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11.5 12 4l9 7.5"/><path d="M5.5 10v10h13V10"/></svg></button></div></div>`};
+co:`<div class=cP><div class=cK><span class=cWh></span><button type=button class=cRd id=cAed disabled title="Modo DEA: no disponible en este simulador">DESA</button><span class="cNum n1">1</span><button type=button id=cEn title="Manual: siguiente nivel de energía">Manual</button><button type=button class=cRd id=cAn disabled title="Análisis DEA: no disponible en este simulador">Análisis</button><span class="cNum n2">2</span><i data-m=ch></i><span class=cSh><i data-m=sh></i></span><span class=cSd><i data-m=sy></i><i data-m=ds></i></span><i data-m=dm></i></div><div id=kn tabindex=0 role=slider aria-label="Selector de energía: gira para subir o bajar" title="Gira para cambiar la energía"><i></i></div><div class=cN><button type=button id=cMon>Monitor</button><button type=button id=cPac>Estim</button><button type=button id=cBk aria-label="Atrás"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 7 4 12l5 5"/><path d="M4 12h10a6 6 0 0 1 6 6v1"/></svg></button><button type=button id=cBr disabled title="No disponible en este simulador">Nav.</button><button type=button id=cHm aria-label="Inicio"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11.5 12 4l9 7.5"/><path d="M5.5 10v10h13V10"/></svg></button></div></div>`};
 const SHK={lp:IC.bolt+'<span>Descargar</span>',co:IC.heart+'<span class=sr>Descargar</span>'};
 /* ---------- Corpuls3: pantalla y panel como el equipo real (réplica del corpuls³ / iSimulate) ---------- */
 const PCR=`<div class=pT><b>Marcapasos</b><em>Demanda</em><span id=pst></span></div><div class=pB><div class=pV data-f=r><small>Frecuencia · 1/min</small><div class=pA><i data-m=rv></i></div></div><div class=pV data-f=a><small>Corriente · mA</small><div class=pA><i data-m=av></i></div></div><div class=pG><i data-m=pf></i></div></div><div class=pH>Toque un valor y gire la perilla para cambiarlo</div>`;
@@ -2885,7 +2910,7 @@ function setSkin(v){if(!SKN[v])v='act';skin=v;K=(v==='co'&&NT)?NK:SKN[v];ls('ski
 ORD.forEach(([r,c])=>r.append(...c));DMP.append($('dm'));$('top').insertBefore($('mu'),$('gear'));
 const dp=$('dp');dp.innerHTML=DPL[v]||'';dp.querySelectorAll('[data-m]').forEach(ph=>ph.replaceWith($(ph.dataset.m)));
 {const pr=$('pcr');pr.classList.remove('on');pr.innerHTML=v==='co'?PCR:'';pr.querySelectorAll('[data-m]').forEach(ph=>ph.replaceWith($(ph.dataset.m)))}
-{const T=v==='co'?['Cargar','Sincr.','Desarmar']:['Cargar','SINCR.','Desarmar'];$('ch').textContent=T[0];$('sy').textContent=T[1];$('ds').textContent=T[2]}
+{const T=v==='co'?['Carga','Sincr.','Desarmar']:['Cargar','SINCR.','Desarmar'];$('ch').textContent=T[0];$('sy').textContent=T[1];$('ds').textContent=T[2]}
 if(v==='co')cWire();
 [['em','▼','−'],['ep','▲','+'],['rm','▼','−'],['rp','▲','+'],['am','▼','−'],['ap','▲','+']].forEach(([i,a,n])=>$(i).textContent=v==='lp'?a:n);
 $('sh').innerHTML=SHK[v]||'Descargar';$('pn').textContent=v==='act'?'Medir PNI':'PNI';$('ib').textContent='TA invasiva';$('e12').textContent=v==='act'?'ECG 12 derivaciones':'ECG 12 deriv.';

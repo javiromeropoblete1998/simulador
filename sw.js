@@ -1,7 +1,7 @@
 // Guarda la app en el dispositivo para que abra sin internet.
 // Con internet usa la versión más reciente, pero si la red no responde en 3 segundos
 // (WiFi sin internet, punto de acceso sin datos) abre al instante la copia guardada.
-const C = 'simulador-v37';
+const C = 'simulador-v38';
 const FILES = ['./', 'index.html', 'config.js', 'manifest.webmanifest', 'icon-192.png', 'icon-512.png', 'icon-maskable-512.png', 'apple-touch-icon.png', 'casos.js','ecgdata.js'].concat(['ecg/amb.jpg', 'ecg/b1.jpg', 'ecg/b2.jpg', 'ecg/b3.jpg', 'ecg/c4-5.jpg', 'ecg/emb.jpg', 'ecg/hiperk.jpg', 'ecg/hipot.jpg', 'ecg/hipov.jpg', 'ecg/s11.jpg', 'ecg/s12.jpg', 'ecg/s21.jpg', 'ecg/s22.jpg', 'ecg/s3.jpg', 'ecg/s4.jpg', 'ecg/s5.jpg', 'ecg/s72.jpg', 'ecg/s73.jpg', 'ecg/s74.jpg', 'ecg/t1.jpg', 'ecg/t2.jpg', 'ecg/t3.jpg', 'ecg/tca.jpg']);
 self.addEventListener('install', e => {
   e.waitUntil(caches.open(C).then(c => Promise.all(FILES.map(f => c.add(f).catch(() => {})))).then(() => self.skipWaiting()));
